@@ -1,0 +1,29 @@
+---
+title: Current Divider
+---
+
+
+import Flexed from "../../../../../components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+A current divider is a circuit that divides the input current into two or more parts.
+
+import current_divider from './current_divider.svg'
+
+<div class="supercenter">
+  <Image src={current_divider} alt="Current Divider" width={350} />
+</div>
+
+**Formulas for current division:**
+
+<Flexed>
+
+```math
+I_{\textcolor{red}{2}} = \frac{R_{\textcolor{red}{1}} * I}{R_1 + R_2}
+```
+
+```math
+I_{\textcolor{red}{1}} = \frac{R_{\textcolor{red}{2}} * I}{R_1 + R_2}
+```
+
+</Flexed>

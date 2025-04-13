@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" fill="none" stroke-width="1.5" stroke="black">
+    <path d="m40 20v10m-21 21a21 21 90 1142 0 21 21 90 11-42 0m21 32v-11m0-37-4 8h8zm0 31v-23" stroke="black" />
+    <path d="M40 20v-10h50" stroke="black" />
+    <path d="M40 83v10h50" stroke="black" />
+    <path d="M75 10v25" stroke="black" />
+    <path d="M75 66v27" stroke="black" />
+
+    <path d="m75 35v7m3-0v17h-6.5v-17zm-3 17v7" />
+    <text x="82" y="55" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+
+    <circle cx="90" cy="10" r="1" stroke="green" fill="green" />
+    <circle cx="90" cy="93" r="1" stroke="green" fill="green" />
+    <text x="90" y="20" font-size="10" fill="green" stroke="green" stroke-width="0.25">A</text>
+    <text x="90" y="90" font-size="10" fill="green" stroke="green" stroke-width="0.25">B</text>
+</svg>

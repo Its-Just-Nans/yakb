@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" fill="none" stroke-width="1.5" stroke="black">
+    <path d="m40 40v10.5m21 0h-42m31.5 5.25h-21m10.5 0v26.25m18.75-42h-8.25m3.75 3.75v-8.25" stroke="black" />
+    <path d="M40 40v-30h50" stroke="black" />
+    <path d="M40 72v21h50" stroke="black" />
+    <text x="55" y="65" font-size="10" fill="black" stroke="black" stroke-width="0.25">5V</text>
+    <circle cx="90" cy="10" r="1" stroke="green" fill="green" />
+    <circle cx="90" cy="93" r="1" stroke="green" fill="green" />
+    <text x="90" y="20" font-size="10" fill="green" stroke="green" stroke-width="0.25">A</text>
+    <text x="90" y="90" font-size="10" fill="green" stroke="green" stroke-width="0.25">B</text>
+</svg>

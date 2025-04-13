@@ -1,0 +1,171 @@
+---
+title: Electricity
+date: 2025-02-25
+description: Electricity basics
+sidebar:
+  order: 1
+---
+
+
+import Flexed from "../../../../components/Flexed/Flexed.astro"
+
+export const Style = () => {
+  return (
+    <style>
+      {`
+      .details-bordered {
+        border-left: 1px solid;
+        padding: 10px;
+        border-top: 1px solid;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+      .details-bordered summary *{
+        margin: 0;
+      }
+      `}
+    </style>
+  )
+}
+
+<Style />
+
+import { Image } from 'astro:assets'
+
+import resistor_iec from './components/resistor_iec.svg'
+import inductance from './components/inductance.svg'
+import capacitor from './components/capacitor.svg'
+
+# Introduction
+
+## **Electricity**
+
+Electricity is the set of physical phenomena associated with the presence and flow of electric charge. It is a form of energy that comes in positive and negative forms, that occur naturally (as in lightning), or is produced (as in a generator).
+
+## **Electric Circuit**
+
+An electric circuit is a closed path in which electrons from a voltage or current source flow. The electrons flow from the negative side of the voltage source, through the circuit, and back to the positive side of the voltage source.
+
+A node is a point in the circuit where three or more circuit elements are connected.
+
+import node_law from './node_law.svg'
+
+<div class="supercenter">
+  <Image src={node_law} alt="Node Law" width={200} />
+</div>
+
+```math
+I_1 = I_2 + I_3
+```
+
+## Measurement
+
+### **Voltage**
+
+Voltage is the difference in electric potential between two points. It is the force that pushes the electric current through a circuit. It is measured in Volts (V).
+
+We use the volmeter in **parallel** to measure the voltage.
+
+import voltage_measurement from './voltage_measurement.svg'
+
+<div class="supercenter">
+  <Image src={voltage_measurement} alt="Voltage Measurement" width={400} />
+</div>
+
+### **Current**
+
+Current is the flow of electric charge. It is measured in Amperes (A).
+
+We use the ammeter (ampere meter) in **series** to measure the current.
+
+import current_measurement from './current_measurement.svg'
+
+<div class="supercenter">
+  <Image src={current_measurement} alt="Current Measurement" width={400} />
+</div>
+
+## Electrical Dipoles
+
+### Definition
+
+A dipole is a portion of a circuit between two terminals (dipole).
+
+### Characteristics of a Dipole
+
+It is the graphical representation of the relationship between the current $ i $ (passing through the dipole) and the voltage $ u $ (at its terminals).
+
+import linear from './linear.svg'
+import non_linear from './non_linear.svg'
+
+<div class="supercenter">
+
+| **Linear Dipole**                                      |                      **Non-linear Dipole**                     |
+|--------------------------------------------------------|----------------------------------------------------------------|
+| straight line                                          | non-straight line                                              |
+| <Image src={linear} alt="Linear Dipole" width={200} /> | <Image src={non_linear} alt="Non-linear Dipole" width={200} /> |
+
+</div>
+
+### Generator Dipole vs Receptor Dipole
+
+import dipole_generator from './dipole_generator.svg'
+import dipole_receptor from './dipole_receptor.svg'
+
+<div class="supercenter">
+
+
+| **Generator Dipole** | **Receptor Dipole** |
+|----------------------|----------------------|
+| A dipole is a generator when it supplies energy to the circuit it is connected to. <br/> The current exits from the positive side. <br/> The arrows representing voltage and current are in the **same** direction. | A dipole is a receptor when it consumes energy. <br/> The positive side of the dipole is the one through which the current enters. <br/> The arrows representing voltage and current are in **opposite** directions. |
+| <Image src={dipole_generator} alt="Generator Dipole" width={200} /> | <Image src={dipole_receptor} alt="Receptor Dipole" width={200} /> |
+
+</div>
+
+### **The Four Quadrants of a characteristic**
+
+<div class="supercenter">
+
+| $ U > 0, I < 0 $ <br/> **Generator Dipole** | $ U > 0, I > 0 $ <br/> **Receptor Dipole**   |
+|---------------------------------------------|----------------------------------------------|
+| $ U < 0, I < 0 $ <br/> **Receptor Dipole**  | $ U < 0, I > 0 $ <br/> **Generator Dipole**  |
+
+
+</div>
+
+
+## **Common Passive Dipole**
+
+- Resistor
+- Inductance
+- Capacitor
+
+# Electrical Circuits in Direct Current (DC)
+
+The current is the same at all points in the circuit
+
+## Equivalent Electrical Diagram of Passive Elements
+
+import open_circuit from './open_circuit.svg'
+import cable from './cable.svg'
+
+<div class="supercenter">
+
+| **Element**  | **In direct current** |
+|--------------------------------------------------------------------------------|-----------------|
+| Resistor <br/> <Image src={resistor_iec} alt="Resistor IEEE" width={200} />   | $ U = RI $ <br/>  <Image src={resistor_iec} alt="Resistor IEEE" width={200} />     |
+| Inductance <br/> <Image src={inductance} alt="Inductance" width={200} />       | a cable <br/> <Image src={cable} alt="Capacitor" width={100} />       |
+| Capacitor  <br/> <Image src={capacitor} alt="Capacitor" width={100} />         | an open circuit <br/> <Image src={open_circuit} alt="Capacitor" width={100} />|
+
+</div>
+
+# Links to Resources
+
+- https://falstad.com/circuit/ - Online circuit simulator
+- https://www.allaboutcircuits.com/ - All About Circuits
+- https://digital.r2.enst.fr/ - Digital Electronics Course simulator
+
+
+- https://www.youtube.com/playlist?list=PLjS13O8ZcTgYIn2cPTT-uSOF8G0CBrtrZ - Des atomes et l'électricité
+- https://www.youtube.com/playlist?list=PLjS13O8ZcTgZpoGv5QAMoHt4be6gIcjJU - Voyage en électricité
+- https://www.youtube.com/playlist?list=PLjS13O8ZcTgY_7sK64W6wDdfzdZvVshiE - Petit voyage en électricité

@@ -1,0 +1,38 @@
+---
+title: Inductance
+---
+
+
+import Flexed from "../../../../../components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+## **Definition**
+
+An inductance is a passive linear dipole such that the voltage across its terminals is proportional to the derivative of the current passing through it.
+
+## **Symbol**
+
+import inductance from './inductance.svg'
+
+<div class="supercenter">
+  <Image src={inductance} alt="Inductance" width={200} />
+</div>
+
+
+- Inductance $ L $ is measured in [Henry (H)](https://en.wikipedia.org/wiki/Henry_(unit))
+- Typical range: $ [ 1 \mu \text{H} ; 100 \text{mH} ] $
+
+
+## **Formula**
+
+import inductance_annotated from './inductance_annotated.svg'
+
+<div class="supercenter">
+  <Image src={inductance_annotated} alt="Inductance" width={300} />
+</div>
+
+Voltage-Current Relationship
+
+```math
+U_{AB}(t) = L \frac{\mathrm{d} i_{AB}(t)}{\mathrm{d} t}
+```

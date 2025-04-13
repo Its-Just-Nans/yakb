@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="100" width="150" fill="none" stroke-width="1.5" stroke="black">
+    <path d="m40 20v10m-21 21a21 21 90 1142 0 21 21 90 11-42 0m21 32v-11m0-37-4 8h8zm0 31v-23" stroke="black" />
+    <path d="M40 20v-10h80v25" stroke="black" />
+    <path d="M40 83v10h80v-30" stroke="black" />
+
+    <path d="M85 10v25" stroke="black" />
+    <path d="M85 66v27" stroke="black" />
+    <path d="m88 20-3 5-3-5z" fill="red" stroke="red" />
+    <path d="m85 35v7m3-0v17h-6.5v-17zm-3 17v7" />
+    <text x="90" y="55" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="97" y="57" font-size="5" fill="black" stroke="black" stroke-width="0.25">1</text>
+    <text x="91" y="30" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="96" y="33" font-size="5" fill="red" stroke="red" stroke-width="0.25">1</text>
+
+    <path d="m120 35v7m3-0v17h-6.5v-17zm-3 17v7" />
+    <path d="m123 20-3 5-3-5z" fill="red" stroke="red" />
+    <text x="125" y="30" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="130" y="33" font-size="5" fill="red" stroke="red" stroke-width="0.25">2</text>
+    <text x="125" y="55" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="132" y="57" font-size="5" fill="black" stroke="black" stroke-width="0.25">2</text>
+
+    <path d="m37 22 3-5 3 5z" fill="red" stroke="red" />
+    <text x="29" y="26" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+</svg>

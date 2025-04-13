@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" fill="none" stroke-width="1.5" stroke="black">
+    <path d="m40 20v10m-4 35h8m-25-14a21 21 90 1142 0 21 21 90 11-42 0m21 32v-11m0-37v7m-4-4h8" stroke="black" />
+    <path d="M40 20v-10h10m30 0h10" stroke="black" />
+    <path d="M40 83v10h50" stroke="black" />
+
+    <path d="m50 10h7m0-3h17v6.5h-17zm17 3h7" />
+    <text x="65" y="24" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+
+    <circle cx="90" cy="10" r="1" stroke="green" fill="green" />
+    <circle cx="90" cy="93" r="1" stroke="green" fill="green" />
+    <text x="90" y="20" font-size="10" fill="green" stroke="green" stroke-width="0.25">A</text>
+    <text x="90" y="90" font-size="10" fill="green" stroke="green" stroke-width="0.25">B</text>
+</svg>

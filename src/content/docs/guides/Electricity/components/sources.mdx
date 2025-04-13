@@ -1,0 +1,45 @@
+---
+title: Sources
+---
+
+import { Image } from 'astro:assets'
+
+Electrical energy sources are devices that provide electrical energy to a circuit.
+
+## Ideal energy sources
+
+Ideal energy sources don't have an internal resistance.
+
+import voltage_source_ideal from './voltage_source_ideal.svg'
+import current_source_ideal from './current_source_ideal.svg'
+
+<div class="supercenter">
+
+| **Voltage** | **Current** |
+|-----------|----------|
+|<Image src={voltage_source_ideal} title="Ideal voltage source" alt="Ideal voltage source" width={200}/>| <Image src={current_source_ideal} title="Ideal current source" alt="Ideal current source" width={200}/> |
+
+</div>
+
+## Real energy sources
+
+Real energy sources have an internal resistance.
+
+import voltage_source_real from './voltage_source_real.svg'
+import current_source_real from './current_source_real.svg'
+
+<div class="supercenter">
+
+| **Voltage** | **Current** |
+|-----------|----------|
+| <Image src={voltage_source_real} title="Real voltage source" alt="Real voltage source" width={200}/> | <Image src={current_source_real} title="Real current source" alt="Real current source" width={200}/> |
+
+</div>
+
+Symbol for a battery:
+
+import battery from './battery.svg'
+
+<div class="supercenter">
+  <Image src={battery} alt="Battery" width={200} />
+</div>

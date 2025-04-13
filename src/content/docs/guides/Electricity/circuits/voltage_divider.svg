@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="100" width="170" fill="none" stroke-width="1.5" stroke="black">
+    <path d="m40 40v10.5m21 0h-42m31.5 5.25h-21m10.5 0v26.25m18.75-42h-8.25m3.75 3.75v-8.25" stroke="black" />
+    <path d="M40 40v-30h20" stroke="black" />
+    <path d="M40 72v21h70" stroke="black" />
+
+    <path d="m58 10h14m0-6h34v13h-34zm34 6h14" />
+    <text x="58" y="7" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="65" y="8" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
+    <path d="m65 20-7.5 4.5 7.5 4.5zm-7.5 4.5h55" fill="green" stroke="green" />
+    <text x="85" y="35" font-size="10" fill="green" stroke="green" stroke-width="0.25">U</text>
+    <text x="92" y="38" font-size="5" fill="green" stroke="green" stroke-width="0.35">1</text>
+
+    <path d="m130 20v14m6-0v34h-13v-34zm-6 34v14" />
+    <text x="110" y="75" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="118" y="77" font-size="5" fill="black" stroke="black" stroke-width="0.35">2</text>
+    <path d="m110 93h20v-20" />
+    <path d="m112 10h18v14" />
+    <path d="m150 30-4.5-7.5-4.5 7.5zm-4.5 -7.5v55" fill="green" stroke="green" />
+    <text x="150" y="55" font-size="10" fill="green" stroke="green" stroke-width="0.25">U</text>
+    <text x="157" y="58" font-size="5" fill="green" stroke="green" stroke-width="0.35">2</text>
+
+    <text x="25" y="70" font-size="10" fill="green" stroke="green" stroke-width="0.25">E</text>
+
+</svg>

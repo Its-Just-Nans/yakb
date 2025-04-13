@@ -1,0 +1,182 @@
+---
+title: Resistors
+sidebar:
+  order: 2
+---
+
+import Flexed from "../../../../../components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+
+## **Definition**
+
+A resistor is a passive linear dipole such that the voltage across its terminals is proportional to the current passing through it.
+
+## **Symbol**
+
+import resistor_iec from './resistor_iec.svg'
+import resistor_ieee from './resistor_ieee.svg'
+
+
+<div class="supercenter">
+
+<Flexed>
+<div>
+<Image src={resistor_iec} title="Resistor IEC" alt="Resistor IEC" width={200} />
+IEC symbol
+</div>
+
+<div>
+or
+</div>
+
+<div>
+<Image src={resistor_ieee} title="Resistor IEEE" alt="Resistor IEEE" width={200} />
+IEEE symbol
+</div>
+</Flexed>
+
+</div>
+
+## **Resistance value**
+
+import resistor_annotated from './resistor_annotated.svg'
+
+<div class="supercenter">
+  <Image src={resistor_annotated} alt="Inductance" width={300} />
+</div>
+
+
+The resistance unit is the [Ohm](https://en.wikipedia.org/wiki/Ohm) ($ \Omega $). It can also be defined with [Siemens](https://en.wikipedia.org/wiki/Siemens_(unit)) ($ S $) as the reciprocal of the resistance.
+
+```math
+\Omega = \frac{1}{S}
+```
+
+## **Formulas**
+
+
+```math
+U = R \times I
+```
+
+where:
+- $ U $: voltage in Volts (V)
+- $ I $: current in Amperes (A)
+- $ R $: resistance in Ohms ($ \Omega $)
+
+Or using the conductance:
+
+```math
+I = G \times U
+```
+
+where:
+- $ G = \frac{1}{R} $ is the conductance in Siemens (S)
+
+
+The resistance of a wire-like conductor with a uniform cross-section is given by:
+
+```math
+R = \rho \times \frac{l}{A}
+```
+
+where:
+- $ \rho $: resistivity of the material ($ \Omega.m $)
+- $ l $: length of the wire (m)
+- $ A $: cross-sectional area of the wire (m²)
+
+## **Series Connection**
+
+import resistor_series from './resistor_series.svg'
+import resistor_series_equivalent from './resistor_series_equivalent.svg'
+
+<div class="supercenter">
+
+<Image src={resistor_series} alt="Resistors in Series" width={500} />
+
+</div>
+
+A circuit composed of multiple resistors connected in series can be reduced to a single equivalent resistance $ R_e $, given by:
+
+```math
+R_e = R_1 + R_2 + \dots + R_n
+```
+
+<div class="supercenter">
+
+<Image src={resistor_series_equivalent} alt="Resistors in Series" width={200} />
+
+</div>
+
+## **Parallel Connection**
+
+import resistor_parallel from './resistor_parallel.svg'
+import resistor_parallel_equivalent from './resistor_parallel_equivalent.svg'
+
+<div class="supercenter">
+
+<Image src={resistor_parallel} alt="Resistors in Parallel" width={320} />
+
+</div>
+
+A circuit composed of multiple resistors connected in parallel can be reduced to a single equivalent resistance $ R_e $, given by:
+
+```math
+\frac{1}{R_e} = \frac{1}{R_1} + \frac{1}{R_2} + \dots + \frac{1}{R_n}
+```
+
+
+<div class="supercenter">
+
+<Image src={resistor_parallel_equivalent} alt="Resistors in Parallel" width={200} />
+
+</div>
+
+
+<blockquote>
+
+## **Formula for two resistors in parallel**
+
+For two resistors:
+
+```math
+\frac{1}{R_e} = \frac{1}{R_1} + \frac{1}{R_2}
+```
+
+The formula can be simplified to:
+
+```math
+R_e = \frac{R_1 * R_2}{R_1 + R_2}
+```
+
+<details>
+<summary>Details</summary>
+
+```math
+\frac{1}{R_e} = \frac{1}{R_1} + \frac{1}{R_2}
+```
+
+```math
+\frac{1}{R_e} * (R_1 * R_2) = (\frac{1}{R_1} + \frac{1}{R_2}) * (R_1 * R_2)
+```
+
+```math
+\frac{R_1 * R_2}{R_e} = \frac{R_1 * R_2}{R_1} + \frac{R_1 * R_2}{R_2}
+```
+
+```math
+\frac{R_1 * R_2}{R_e} = R_2 + R_1
+```
+
+```math
+\frac{1}{R_e} = \frac{R_2 + R_1}{R_1 * R_2}
+```
+
+```math
+R_e = \frac{R_1 * R_2}{R_2 + R_1} = \frac{R_1 * R_2}{R_1 + R_2}
+```
+
+</details>
+
+</blockquote>

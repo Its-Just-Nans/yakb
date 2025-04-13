@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170" stroke-linecap="round" fill="none" stroke="black">
+    <path d="m40 30v10.5m21 0h-42m31.5 5.25h-21m10.5 0v26.25m18.75-42h-8.25m3.75 3.75v-8.25" stroke="black" />
+    <path d="M40 40v-30h90" stroke="black" />
+
+    <path d="m58 70h14m0-6h34v13h-34zm34 6h14" />
+    <text x="61" y="80" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="68" y="82" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
+    <path d="m110 63 7.5-4.5-7.5-4.5zm7.5-4.5h-55" fill="green" stroke="green" />
+    <text x="84" y="53" font-size="10" fill="green" stroke="green" stroke-width="0.25">U</text>
+    <text x="92" y="54" font-size="5" fill="green" stroke="green" stroke-width="0.35">1</text>
+
+
+    <text x="25" y="70" font-size="10" fill="green" stroke="green" stroke-width="0.25">E</text>
+    <g transform="translate(60, 80) scale(0.75)">
+        <path fill="#999999" d="m10 10h59c3 0 6 3 6 6v81c0 3-3 6-6 6h-59c-3 0-6-3-6-6v-81c0-3 3-6 6-6z" />
+        <path fill="#5599ff" stroke="black" d="m60 95a2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 012-2 2 2 0 012 2z" />
+        <path fill="#ff0000" stroke="black" d="m70 95a2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 012-2 2 2 0 012 2z" />
+        <rect rx="5" ry="5" x="12.5" y="20" height="45" width="55" fill="white" stroke="black" />
+        <text x="15" y="97" font-size="40" fill="green" stroke="black">V</text>
+    </g>
+    <path d="M40 72v89h63.5v-10" />
+    <path d="m112 10h18v151.2h-19v-10" />
+    <path d="m40 70h20" stroke="black" />
+    <path d="m110 70h20" stroke="black" />
+
+    <path d="m133 20-3 5-3-5z" fill="red" stroke="red" />
+    <text x="135" y="30" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="140" y="33" font-size="5" fill="red" stroke="red" stroke-width="0.25">1</text>
+    <text x="82" y="117" font-size="15" fill="green" stroke="black" stroke-width="0.25">U</text>
+    <text x="93" y="120" font-size="10" fill="green" stroke="black" stroke-width="0.25">1</text>
+</svg>

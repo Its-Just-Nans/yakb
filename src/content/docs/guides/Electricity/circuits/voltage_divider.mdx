@@ -1,0 +1,29 @@
+---
+title: Voltage Divider
+---
+
+
+import Flexed from "../../../../../components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+A voltage divider is a circuit that divides the input voltage into two or more parts.
+
+import voltage_divider from './voltage_divider.svg'
+
+<div class="supercenter">
+  <Image src={voltage_divider} alt="Voltage Divider" width={350} />
+</div>
+
+**Formulas for voltage division:**
+
+<Flexed>
+
+```math
+U_{\textcolor{blue}{2}} = E * \frac{R_{\textcolor{blue}{2}}}{R_1 + R_2} = \frac{R_{\textcolor{blue}{2}} * E}{R_1 + R_2}
+```
+
+```math
+U_{\textcolor{blue}{1}} = E * \frac{R_{\textcolor{blue}{1}}}{R_1 + R_2} = \frac{R_{\textcolor{blue}{1}} * E}{R_1 + R_2}
+```
+
+</Flexed>
