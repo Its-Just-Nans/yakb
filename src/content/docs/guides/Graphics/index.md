@@ -1,5 +1,5 @@
 ---
-title: Web
+title: Graphics
 ---
 
 ## Don't do that
