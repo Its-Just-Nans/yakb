@@ -5,8 +5,6 @@ title: Maths letters
 
 ### Quelques lettres grecques
 
-<div class="block-math">
-
 $$$
 \alpha~\text{(alpha)}
 $$$
@@ -115,4 +113,4 @@ $$$
 \Omega~\text{(Omega maj)}
 $$$
 
-</div>
+> <https://katex.org/docs/supported.html>

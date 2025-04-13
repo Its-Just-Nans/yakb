@@ -2,8 +2,12 @@
     --sl-content-width: 60rem;
 }
 
-.sl-markdown-content
-    :not(a, strong, em, del, span, input, code, br)
-    + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
-    margin-top: 4px;
+html[data-theme="dark"] .sl-markdown-content img {
+    background: lightgray;
+}
+.supercenter {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }

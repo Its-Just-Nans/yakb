@@ -17,6 +17,10 @@ export default defineConfig({
         starlight({
             title: "YakB",
             favicon: "/favicon.ico",
+            logo: {
+                light: "./src/assets/logo/yakb.svg",
+                dark: "./src/assets/logo/yakb.svg",
+            },
             editLink: {
                 baseUrl: "https://github.com/Its-Just-Nans/yakb/edit/main/",
             },
