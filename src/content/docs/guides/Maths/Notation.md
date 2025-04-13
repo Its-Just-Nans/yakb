@@ -1,87 +1,86 @@
 ---
 title: Notation
-description: Notation mathématique
+description: Mathematical notation
 ---
 
-
-### Ensembles de nombres
-
-$$$
-\N = \text{Ensemble des entiers naturels} = \{ 0;1;2;3; ... \}
-$$$
+### Sets of Numbers
 
 $$$
-\Z = \text{Ensemble des entiers relatifs} = \{ ... ; -3 ; -2 ; -1 ; 0 ; 1 ; 2 ; 3 ; ... \}
+\N = \text{Set of natural numbers} = \{ 0;1;2;3; ... \}
 $$$
 
 $$$
-\mathbb{Q} = \text{Ensemble des nombres rationnels} = \{ \frac{a}{b}~\text{tels que}~a \in \Z \text{,}~b \in \Z~\text{et}~b \ne 0 \}
+\Z = \text{Set of integers} = \{ ... ; -3 ; -2 ; -1 ; 0 ; 1 ; 2 ; 3 ; ... \}
 $$$
 
 $$$
-\R = \text{Ensembles des nombres réels}
+\mathbb{Q} = \text{Set of rational numbers} = \left\{ \frac{a}{b}~\text{such that}~a \in \Z \text{,}~b \in \Z~\text{and}~b \ne 0 \right\}
 $$$
 
 $$$
-\mathbb{C} = \text{Ensembles des nombres complexes}
+\R = \text{Set of real numbers}
 $$$
 
 $$$
-~~~~~~~\text{Notons A un ensemble de nombres réels}
+\mathbb{C} = \text{Set of complex numbers}
 $$$
 
 $$$
-\mathbb{R} \setminus A = \text{Ensemble des réels, privé de tous les réels qui appartiennent à A}
+~~~~~~~\text{Let A be a set of real numbers}
 $$$
 
 $$$
-\R^* = \text{Ensembles des nombres réels non nuls} = \R \setminus \{ 0 \}
+\mathbb{R} \setminus A = \text{Set of real numbers excluding all real numbers that belong to A}
 $$$
 
 $$$
-\mathbb{R}^+ = \text{Ensembles des nombres réels positifs}
+\R^* = \text{Set of nonzero real numbers} = \R \setminus \{ 0 \}
 $$$
 
 $$$
-\R^- = \text{Ensembles des nombres réels négatifs}
+\mathbb{R}^+ = \text{Set of positive real numbers}
+$$$
+
+$$$
+\R^- = \text{Set of negative real numbers}
 $$$
 
 ### Intervals
 
 $$$
-\lbrack a ; b \rbrack~\text{Ensemble de tous les réels compris entre a et b, les bornes a et b comprises.}
+\lbrack a ; b \rbrack~\text{Set of all real numbers between a and b, including the endpoints a and b.}
 $$$
 
 $$$
-\text{Il est appelé "intervalle fermé a, b".}
+\text{This is called the "closed interval a, b".}
 $$$
 
 $$$
-\rbrack a ; b \lbrack~\text{Ensemble de tous les réels compris entre a et b, les bornes a et b exclues.}
+\rbrack a ; b \lbrack~\text{Set of all real numbers between a and b, excluding the endpoints a and b.}
 $$$
 
 $$$
-\text{Il est appelé "intervalle ouvert a, b".}
+\text{This is called the "open interval a, b".}
 $$$
 
 $$$
-\lbrack a ; b \lbrack~\text{Ensemble de tous les réels compris entre a et b, la borne a comprise et la borne b exclue.}
+\lbrack a ; b \lbrack~\text{Set of all real numbers between a and b, including a and excluding b.}
 $$$
 
 $$$
-\text{Il est appelé "intervalle fermé en a, ouvert en b".}
+\text{This is called the "half-open interval closed at a, open at b".}
 $$$
 
-### Some symbols
+### Some Symbols
 
 $$$
-\forall~\text{quel que soit}
-$$$
-
-$$$
-\exists~\text{il existe}
+\forall~\text{for all}
 $$$
 
 $$$
-\in~\text{appartient}
+\exists~\text{there exists}
+$$$
+
+$$$
+\in~\text{belongs to}
 $$$

@@ -3,8 +3,6 @@ title: Maths letters
 ---
 
 
-### Quelques lettres grecques
-
 $$$
 \alpha~\text{(alpha)}
 $$$
