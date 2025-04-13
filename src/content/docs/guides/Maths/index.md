@@ -21,3 +21,4 @@ title: Maths
 - [http://perso.eleves.ens-rennes.fr/~tpier758/cours.html](http://perso.eleves.ens-rennes.fr/~tpier758/cours.html) - Clean math courses
 - [https://www.math.univ-paris13.fr/~borello/teaching](https://www.math.univ-paris13.fr/~borello/teaching)
 - [https://www.youtube.com/watch?v=wENkW8SXYXw](https://www.youtube.com/watch?v=wENkW8SXYXw) - La Magie des Maths de Prépa (1 et 2)
+- [https://www.matematica.pt/util/formulas.php](https://www.matematica.pt/util/formulas.php) - Math formulas
