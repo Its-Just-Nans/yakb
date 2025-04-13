@@ -1,0 +1,289 @@
+<style is:inline>
+    #canvas {
+        border: 1px solid black;
+        margin-top: 5px;
+        margin: auto;
+    }
+    #binaire {
+        font-size: 0;
+    }
+    .buttonBinary {
+        height: 40px;
+        width: 40px;
+        font-size: large;
+        margin-left: 2px;
+        margin-right: 2px;
+        display: inline-block;
+    }
+</style>
+<div style="text-align: center">
+    <div id="binaire"></div>
+
+    <canvas id="canvas" width="800px" height="100px"></canvas>
+    <br />
+    <select id="motif">
+        <option value="nrz">Non Return to Zero (NRZ)</option>
+        <option value="rz">Return to Zero (RZ)</option>
+        <option value="bip">Biphase</option>
+    </select>
+    <select id="format">
+        <option value="unip">Unipolar</option>
+        <option value="bipo">Bipolar</option>
+        <option value="alte">Alternate</option>
+    </select>
+    <br />
+    <br />
+    <button id="addButton">Add a button</button>
+    <button id="suprrButton">Delete a button</button>
+</div>
+
+<script type="application/javascript" is:inline>
+    function init() {
+        document.getElementById("addButton").addEventListener(
+            "click",
+            function () {
+                addButton();
+            },
+            false
+        );
+        document.getElementById("suprrButton").addEventListener(
+            "click",
+            function () {
+                suprrButton();
+            },
+            false
+        );
+        nbButton = document.getElementsByClassName("buttonBinary");
+        canvas = document.getElementById("canvas");
+        if (canvas.getContext) {
+            inCanvas = canvas.getContext("2d");
+            traceCanvas();
+        }
+        for (let i = 0; i < 10; i++) {
+            addButton();
+        }
+    }
+
+    function traceCanvas() {
+        document.getElementById("canvas").style.width = nbButton.length * 44 + "px";
+        document.getElementById("canvas").style.height = canvas.height + "px";
+        Yzero = canvas.height / 2;
+        Xzero = canvas.width / 2;
+        inCanvas.clearRect(0, 0, canvas.width, canvas.height);
+        inCanvas.fillStyle = "white";
+        inCanvas.fillRect(0, 0, canvas.width, canvas.height);
+        grille();
+        trace();
+    }
+    function trace() {
+        let motif = document.getElementById("motif").selectedOptions[0].value;
+        let format = document.getElementById("format").selectedOptions[0].value;
+        inCanvas.strokeStyle = "red";
+        inCanvas.lineWidth = 2;
+        inCanvas.beginPath();
+        inCanvas.moveTo(-1, Yzero);
+        var compteur = 0;
+        var compteurUn = 0;
+        if (motif === "nrz") {
+            if (format === "unip") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero - 2 * Ycase);
+                    }
+                }
+            } else if (format === "bipo") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero + 2 * Ycase);
+                    } else {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero - 2 * Ycase);
+                    }
+                }
+            } else if (format === "alte") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        compteurUn++;
+                        if (compteurUn % 2 == 0) {
+                            inCanvas.lineTo(Xcase * (compteur - 1), Yzero + 2 * Ycase);
+                            inCanvas.lineTo(Xcase * compteur, Yzero + 2 * Ycase);
+                        } else {
+                            inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                            inCanvas.lineTo(Xcase * compteur, Yzero - 2 * Ycase);
+                        }
+                    }
+                }
+            }
+        } else if (motif === "rz") {
+            if (format === "unip") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    }
+                }
+            } else if (format === "bipo") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    }
+                }
+            } else if (format === "alte") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        compteurUn++;
+                        if (compteurUn % 2 == 0) {
+                            inCanvas.lineTo(Xcase * (compteur - 1), Yzero + 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero);
+                            inCanvas.lineTo(Xcase * compteur, Yzero);
+                        } else {
+                            inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero);
+                            inCanvas.lineTo(Xcase * compteur, Yzero);
+                        }
+                    }
+                }
+            }
+        } else if (motif === "bip") {
+            if (format === "unip") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    }
+                }
+            } else if (format === "bipo") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero - 2 * Ycase);
+                    } else {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                        inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                        inCanvas.lineTo(Xcase * compteur, Yzero + 2 * Ycase);
+                    }
+                }
+            } else if (format === "alte") {
+                for (let item of document.getElementsByClassName("buttonBinary")) {
+                    compteur++;
+                    if (item.innerHTML === "0") {
+                        inCanvas.lineTo(Xcase * (compteur - 1), Yzero);
+                        inCanvas.lineTo(Xcase * compteur, Yzero);
+                    } else {
+                        compteurUn++;
+                        if (compteurUn % 2 == 0) {
+                            inCanvas.lineTo(Xcase * (compteur - 1), Yzero + 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                            inCanvas.lineTo(Xcase * compteur, Yzero - 2 * Ycase);
+                        } else {
+                            inCanvas.lineTo(Xcase * (compteur - 1), Yzero - 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero - 2 * Ycase);
+                            inCanvas.lineTo(Xcase * (compteur - 1) + Xcase / 2, Yzero + 2 * Ycase);
+                            inCanvas.lineTo(Xcase * compteur, Yzero + 2 * Ycase);
+                        }
+                    }
+                }
+            }
+        }
+        inCanvas.stroke();
+    }
+    function grille() {
+        inCanvas.fillStyle = "grey";
+        Ycase = canvas.height / 6;
+        Xcase = canvas.width / nbButton.length;
+        var compteur = 0;
+        for (var i = 0; i < canvas.height; i += Ycase) {
+            compteur++;
+            if (i == Ycase || i == 3 * Ycase || i == 5 * Ycase) {
+                inCanvas.fillRect(0, Math.floor(i), canvas.width, 1);
+            }
+        }
+        for (var f = 0; f < canvas.width - Xcase / 2; f += Xcase) {
+            if (f != 0) {
+                inCanvas.fillRect(Math.floor(f), 0, 1, canvas.height);
+            }
+        }
+    }
+
+    function addButton() {
+        let button = document.createElement("button");
+        button.className = "buttonBinary";
+        button.id = "button-" + (nbButton.length + 1);
+        button.innerHTML = "0";
+        document.getElementById("binaire").append(button);
+        button.addEventListener(
+            "click",
+            function () {
+                let numero = parseInt(this.id.split("-")[1], 10);
+                changeValue(numero);
+                traceCanvas();
+            },
+            false
+        );
+        traceCanvas();
+    }
+
+    function suprrButton() {
+        if (nbButton.length >= 11) {
+            document.getElementById("button-" + nbButton.length).remove();
+        }
+        traceCanvas();
+    }
+
+    function changeValue(valeur) {
+        let buttonActual = document.getElementById("button-" + valeur);
+        if (buttonActual.innerHTML == "0") {
+            buttonActual.innerHTML = "1";
+        } else {
+            buttonActual.innerHTML = "0";
+        }
+    }
+
+    document.getElementById("motif").addEventListener("input", traceCanvas, false);
+    document.getElementById("format").addEventListener("input", traceCanvas, false);
+    init();
+</script>
