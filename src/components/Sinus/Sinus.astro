@@ -16,7 +16,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <span id="textAmpli">Amplitude : 2</span>
+                        <span id="textAmpli">Amplitude: 2</span>
                     </td>
                     <td>
                         <input type="range" id="ampli" min="0" max="5" value="2" step="0.1" />
@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span id="textFreq">Frequency : 0.5</span>
+                        <span>Frequency: </span><span id="textFreq">0.5</span>
                     </td>
                     <td>
                         <input type="range" id="freq" min="0" max="2" value="0.5" step="0.01" />
@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span id="textMoy">Mean : 0</span>
+                        <span>Mean: </span><span id="textMoy">0</span>
                     </td>
                     <td>
                         <input type="range" id="moy" min="-5" max="5" value="0" step="0.1" />
@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span id="textRet">Delay : 0π</span>
+                        <span>Phase: </span><span id="textRet">0π</span>
                     </td>
                     <td>
                         <input type="range" id="ret" min="0" max="2" value="0" step="0.1" />
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <span id="textEch">Scale : 27</span>
+                        <span>Scale: </span><span id="textEch">27</span>
                     </td>
                     <td>
                         <input type="range" id="ech" min="10" max="50" value="27" step="1" />
@@ -154,7 +154,7 @@
         "input",
         function () {
             ampli = document.getElementById("ampli").value;
-            document.getElementById("textAmpli").innerHTML = "Amplitude : " + ampli;
+            document.getElementById("textAmpli").innerHTML = ampli;
             TraceCanvas();
         },
         false
@@ -164,7 +164,7 @@
         "input",
         function () {
             freq = document.getElementById("freq").value;
-            document.getElementById("textFreq").innerHTML = "Frequency : " + freq;
+            document.getElementById("textFreq").innerHTML = freq;
             TraceCanvas();
         },
         false
@@ -174,7 +174,7 @@
         "input",
         function () {
             moy = document.getElementById("moy").value;
-            document.getElementById("textMoy").innerHTML = "Mean : " + moy;
+            document.getElementById("textMoy").innerHTML = moy;
             TraceCanvas();
         },
         false
@@ -184,7 +184,7 @@
         "input",
         function () {
             ret = document.getElementById("ret").value;
-            document.getElementById("textRet").innerHTML = "Delay : " + ret + "π";
+            document.getElementById("textRet").innerHTML = ret + "π";
             TraceCanvas();
         },
         false
@@ -207,7 +207,7 @@
             }
             //Xzero = Math.round(canvas.width/Tcase/2)*Tcase;
             //Yzero = Math.round(canvas.height/Tcase/2)*Tcase;
-            document.getElementById("textEch").innerHTML = "Scale : " + Tcase;
+            document.getElementById("textEch").innerHTML = Tcase;
             TraceCanvas();
         },
         false
