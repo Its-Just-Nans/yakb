@@ -5,6 +5,7 @@ import rehypeKatex from "rehype-katex";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
+import starlightLinksValidator from 'starlight-links-validator'
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
     },
     integrations: [
         starlight({
+            plugins: [starlightLinksValidator()],
             title: "YakB",
             favicon: "/favicon.ico",
             logo: {
