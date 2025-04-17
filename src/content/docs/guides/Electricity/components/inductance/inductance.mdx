@@ -1,0 +1,85 @@
+---
+title: Inductance
+---
+
+
+import Flexed from "../../../../../../components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+## **Definition**
+
+An inductance is a passive linear dipole such that the voltage across its terminals is proportional to the derivative of the current passing through it.
+
+## **Symbol**
+
+import inductance from './inductance.svg'
+
+<div class="supercenter">
+  <Image src={inductance} alt="Inductance" width={200} />
+</div>
+
+
+- Inductance $ L $ is measured in [Henry (H)](https://en.wikipedia.org/wiki/Henry_(unit))
+- Typical range: $ [ 1 \mu \text{H} ; 100 \text{mH} ] $
+
+
+## **Formula**
+
+import inductance_annotated from './inductance_annotated.svg'
+
+<div class="supercenter">
+  <Image src={inductance_annotated} alt="Inductance" width={300} />
+</div>
+
+Voltage-Current Relationship
+
+```math
+U_{AB}(t) = L \frac{\mathrm{d} i_{AB}(t)}{\mathrm{d} t}
+```
+
+## **Series Connection**
+
+import inductance_series from './inductance_series.svg'
+import inductance_series_equivalent from './inductance_series_equivalent.svg'
+
+<div class="supercenter">
+
+<Image src={inductance_series} alt="inductances in Series" width={500} />
+
+</div>
+
+A circuit composed of multiple inductances connected in series can be reduced to a single equivalent resistance $ L_e $, given by:
+
+```math
+L_e = L_1 + L_2 + \dots + L_n
+```
+
+<div class="supercenter">
+
+<Image src={inductance_series_equivalent} alt="inductances in Series" width={200} />
+
+</div>
+
+## **Parallel Connection**
+
+import inductance_parallel from './inductance_parallel.svg'
+import inductance_parallel_equivalent from './inductance_parallel_equivalent.svg'
+
+<div class="supercenter">
+
+<Image src={inductance_parallel} alt="Inductances in Parallel" width={320} />
+
+</div>
+
+A circuit composed of multiple inductances connected in parallel can be reduced to a single equivalent resistance $ L_e $, given by:
+
+```math
+\frac{1}{L_e} = \frac{1}{L_1} + \frac{1}{L_2} + \dots + \frac{1}{L_n}
+```
+
+
+<div class="supercenter">
+
+<Image src={inductance_parallel_equivalent} alt="Inductances in Parallel" width={200} />
+
+</div>

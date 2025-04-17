@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="45" width="220" fill="none" stroke-width="1" stroke="black">
+
+
+    <path d="m7 25h16c0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0h11" stroke="black" />
+    <path d="m68 25h10c0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0h11" stroke="black" />
+    <path d="m147 25h10c0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0h11" stroke="black" />
+    <circle cx="6" cy="25" r="1" fill="none" />
+    <circle cx="211" cy="25" r="1" fill="none" />
+    <path d="m133.5,25h2" stroke="black" />
+    <path d="m138,25h2" stroke="black" />
+    <path d="m142.5,25h2" stroke="black" />
+
+
+    <path d="m10 22 5 3-5 3" fill="red" stroke="red" />
+    <text x="12" y="20" font-size="10" fill="red" stroke="red" stroke-width="0.25">i</text>
+
+    <text x="35" y="10" font-size="10" fill="black" stroke="black" stroke-width="0.25">L</text>
+    <text x="42" y="11" font-size="5" fill="black" stroke="black" stroke-width="0.25">1</text>
+    <path d="m 20,35h45" stroke="black" />
+    <path d="m20 32-5 3 5 3" fill="black" stroke="black" />
+    <text x="35" y="42.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+    <text x="40" y="44" font-size="5" fill="black" stroke="black" stroke-width="0.25">1</text>
+
+
+    <text x="100" y="10" font-size="10" fill="black" stroke="black" stroke-width="0.25">L</text>
+    <text x="107" y="11" font-size="5" fill="black" stroke="black" stroke-width="0.25">2</text>
+    <path d="m75,35h50" stroke="black" />
+    <path d="m80 32-5 3 5 3" fill="black" stroke="black" />
+    <text x="100" y="42.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+    <text x="105" y="44" font-size="5" fill="black" stroke="black" stroke-width="0.25">2</text>
+
+    <text x="180" y="10" font-size="10" fill="black" stroke="black" stroke-width="0.25">L</text>
+    <text x="187" y="11" font-size="5" fill="black" stroke="black" stroke-width="0.25">n</text>
+    <path d="m155,35h50" stroke="black" />
+    <path d="m160 32-5 3 5 3" fill="black" stroke="black" />
+    <text x="180" y="42.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+    <text x="185" y="44" font-size="5" fill="black" stroke="black" stroke-width="0.25">n</text>
+
+</svg>

@@ -1,0 +1,85 @@
+---
+title: Capacitor
+---
+
+
+import Flexed from "../../../../../../components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+## **Definition**
+
+A capacitor is a passive linear dipole such that the current passing through it is proportional to the derivative of the voltage across its terminals.
+
+## **Symbol**
+
+import capacitor from './capacitor.svg'
+
+<div class="supercenter">
+  <Image src={capacitor} alt="Capacitor" width={100} />
+</div>
+
+- Capacitance $ C $ is measured in [Farads (F)](https://en.wikipedia.org/wiki/Farad)
+- Typical range: $ [ 1 \text{pF} ; 100 \mu \text{F} ] $
+
+## **Formula**
+
+import capacitor_annotated from './capacitor_annotated.svg'
+
+<div class="supercenter">
+  <Image src={capacitor_annotated} alt="Capacitor" width={200} />
+</div>
+
+
+- **Charge Relationship:**
+
+```math
+i_{AB} = C \frac{\mathrm{d} U_{AB}}{\mathrm{d} t}
+```
+
+
+## **Series Connection**
+
+import capacitor_series from './capacitor_series.svg'
+import capacitor_series_equivalent from './capacitor_series_equivalent.svg'
+
+<div class="supercenter">
+
+<Image src={capacitor_series} alt="Capacitors in Series" width={500} />
+
+</div>
+
+A circuit composed of multiple capacitors connected in series can be reduced to a single equivalent resistance $ C_e $, given by:
+
+```math
+\frac{1}{C_e} = \frac{1}{C_1} + \frac{1}{C_2} + \dots + \frac{1}{C_n}
+```
+
+<div class="supercenter">
+
+<Image src={capacitor_series_equivalent} alt="capacitors in Series" width={200} />
+
+</div>
+
+## **Parallel Connection**
+
+import capacitor_parallel from './capacitor_parallel.svg'
+import capacitor_parallel_equivalent from './capacitor_parallel_equivalent.svg'
+
+<div class="supercenter">
+
+<Image src={capacitor_parallel} alt="capacitors in Parallel" width={320} />
+
+</div>
+
+A circuit composed of multiple capacitors connected in parallel can be reduced to a single equivalent resistance $ C_e $, given by:
+
+```math
+C_e = C_1 + C_2 + \dots + C_n
+```
+
+
+<div class="supercenter">
+
+<Image src={capacitor_parallel_equivalent} alt="capacitors in Parallel" width={200} />
+
+</div>

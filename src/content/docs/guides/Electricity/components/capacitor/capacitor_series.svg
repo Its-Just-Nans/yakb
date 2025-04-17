@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="55" width="220" fill="none" stroke-width="1" stroke="black">
+
+    <path d="m7 25h30m0-10.5v21m5.25-21v21m0-10.5h30" stroke="black" />
+    <path d="m68 25h30m0-10.5v21m5.25-21v21m0-10.5h30" stroke="black" />
+    <path d="m147 25h30m0-10.5v21m5.25-21v21m0-10.5h30" stroke="black" />
+
+    <circle cx="6" cy="25" r="1" fill="none" />
+    <circle cx="211" cy="25" r="1" fill="none" />
+    <path d="m133.5,25h2" stroke="black" />
+    <path d="m138,25h2" stroke="black" />
+    <path d="m142.5,25h2" stroke="black" />
+
+
+    <path d="m10 22 5 3-5 3" fill="red" stroke="red" />
+    <text x="12" y="20" font-size="10" fill="red" stroke="red" stroke-width="0.25">i</text>
+
+    <text x="50" y="15" font-size="10" fill="black" stroke="black" stroke-width="0.25">C</text>
+    <text x="57" y="17" font-size="5" fill="black" stroke="black" stroke-width="0.25">1</text>
+    <path d="m 20,40h45" stroke="black" />
+    <path d="m20 37-5 3 5 3" fill="black" stroke="black" />
+    <text x="35" y="47.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+    <text x="41" y="49" font-size="5" fill="black" stroke="black" stroke-width="0.25">1</text>
+
+
+    <text x="115" y="15" font-size="10" fill="black" stroke="black" stroke-width="0.25">C</text>
+    <text x="122" y="17" font-size="5" fill="black" stroke="black" stroke-width="0.25">2</text>
+    <path d="m75,40h50" stroke="black" />
+    <path d="m80 37-5 3 5 3" fill="black" stroke="black" />
+    <text x="100" y="47.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+    <text x="105" y="49" font-size="5" fill="black" stroke="black" stroke-width="0.25">2</text>
+
+    <text x="190" y="15" font-size="10" fill="black" stroke="black" stroke-width="0.25">C</text>
+    <text x="197" y="17" font-size="5" fill="black" stroke="black" stroke-width="0.25">n</text>
+    <path d="m155,40h50" stroke="black" />
+    <path d="m160 37-5 3 5 3" fill="black" stroke="black" />
+    <text x="180" y="47.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+    <text x="185" y="49" font-size="5" fill="black" stroke="black" stroke-width="0.25">n</text>
+
+</svg>

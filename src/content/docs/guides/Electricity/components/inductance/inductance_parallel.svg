@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="100" width="140" fill="none" stroke-width="1" stroke="black">
+
+    <path
+        d="m37 70h15c0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0h6"
+        stroke="black" />
+    <circle cx="6" cy="40" r="1" fill="none" />
+    <circle cx="131" cy="40" r="1" fill="none" />
+    <path d="m7,40h40" stroke="black" />
+    <path d="m100,40h30" stroke="black" />
+    <path d="m37,17.5v31" stroke="black" />
+    <path d="m37,51v2" stroke="black" />
+    <path d="m37,55v2" stroke="black" />
+    <path d="m37,59v2" stroke="black" />
+    <path d="m37,63v7.5" stroke="black" />
+
+    <path d="m100,51v2" stroke="black" />
+    <path d="m100,55v2" stroke="black" />
+    <path d="m100,59v2" stroke="black" />
+    <path d="m100,63v7.5" stroke="black" />
+    <path d="m100,17.5v31" stroke="black" />
+
+    <path
+        d="m37 18h15c0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0h6"
+        stroke="black" />
+    <path d="m40 15 5 3-5 3" fill="red" stroke="red" />
+    <text x="40" y="10" font-size="10" fill="red" stroke="red" stroke-width="0.25">i</text>
+    <text x="44" y="10" font-size="5" fill="red" stroke="red" stroke-width="0.25">1</text>
+    <text x="60" y="8" font-size="10" fill="black" stroke="black" stroke-width="0.25">L</text>
+    <text x="67" y="9" font-size="5" fill="black" stroke="black" stroke-width="0.25">1</text>
+
+    <path
+        d="m37 40h15c0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0 0-9.6 8.4-9.6 8.4 0h6"
+        stroke="black" />
+    <path d="m40 37 5 3-5 3" fill="red" stroke="red" />
+    <text x="40" y="34.5" font-size="10" fill="red" stroke="red" stroke-width="0.25">i</text>
+    <text x="44" y="34.5" font-size="5" fill="red" stroke="red" stroke-width="0.25">2</text>
+    <text x="60" y="30" font-size="10" fill="black" stroke="black" stroke-width="0.25">L</text>
+    <text x="67" y="31" font-size="5" fill="black" stroke="black" stroke-width="0.25">2</text>
+
+    <path d="m40 67 5 3-5 3" fill="red" stroke="red" />
+    <text x="40" y="64" font-size="10" fill="red" stroke="red" stroke-width="0.25">i</text>
+    <text x="44" y="64.5" font-size="5" fill="red" stroke="red" stroke-width="0.25">n</text>
+    <text x="60" y="61" font-size="10" fill="black" stroke="black" stroke-width="0.25">L</text>
+    <text x="67" y="61.5" font-size="5" fill="black" stroke="black" stroke-width="0.25">n</text>
+
+
+
+    <path d="m25,93h90" stroke="black" />
+    <path d="m25 90-5 3 5 3" fill="black" stroke="black" />
+    <text x="65" y="90" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+
+</svg>

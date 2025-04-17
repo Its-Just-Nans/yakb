@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="45" width="75" fill="none" stroke-width="1" stroke="black">
+
+    <path d="m7 20h30m0-9.8v19.6m4.9-19.6v19.6m0-9.8h28" stroke="black" />
+
+
+    <circle cx="6" cy="20" r="1" fill="none" />
+    <circle cx="71" cy="20" r="1" fill="none" />
+
+
+    <path d="M10 17 15 20 10 23" fill="red" stroke="red" />
+    <text x="12" y="14" font-size="10" fill="red" stroke="red" stroke-width="0.25">i</text>
+    <text x="16" y="16" font-size="5" fill="red" stroke="red" stroke-width="0.25">e</text>
+
+    <text x="47" y="12" font-size="10" fill="black" stroke="black" stroke-width="0.25">C</text>
+    <text x="54" y="14" font-size="5" fill="black" stroke="black" stroke-width="0.25">e</text>
+    <path d="m20,35h40" stroke="black" />
+    <path d="m20 32-5 3 5 3" fill="black" stroke="black" />
+    <text x="35" y="42.5" font-size="10" fill="black" stroke="black" stroke-width="0.25">u</text>
+
+</svg>
