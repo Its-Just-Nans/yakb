@@ -116,6 +116,15 @@ Any linear circuit located between points A and B can be modeled by an equivalen
 
 ### Example
 
+- Isolate the network (i.e., remove all elements that are not part of the subnetwork for which you want to determine the Thévenin equivalent generator).
+- Replace voltage sources with short circuits and current sources with open circuits.
+- Calculate the Thévenin resistance (the equivalent resistance of the circuit).
+- Reconnect the sources (undo step 2).
+- Calculate the Thévenin voltage (the equivalent voltage between the two terminals of the network for which you are finding the Thévenin generator).
+
 (Figure 8 → Figure 9)
 
 
+## Norton's Theorem
+
+Any subnetwork of a circuit can be replaced by a current source in parallel with a resistor.
