@@ -1,16 +1,23 @@
 ---
+interface Props {
+    vertical: boolean;
+}
 
+const { vertical } = Astro.props;
+const direction = vertical ? "column" : "row";
 ---
 
 <div class="flexed-container">
     <slot />
 </div>
 
-<style>
+<style define:vars={{ direction }}>
     .flexed-container {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+        gap: 20px;
+        flex-direction: var(--direction);
     }
     @media screen and (max-width: 750px) {
         .flexed-container {

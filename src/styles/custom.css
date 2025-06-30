@@ -4,6 +4,8 @@
 
 html[data-theme="dark"] .sl-markdown-content img {
     background: lightgray;
+    /* border: 3px solid black; */
+    border-radius: 10px;
 }
 .supercenter {
     display: flex;

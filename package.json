@@ -11,8 +11,8 @@
         "logo": "sh ./src/assets/logo/gen_logo.sh"
     },
     "dependencies": {
-        "@astrojs/starlight": "^0.33.1",
-        "astro": "^5.6.1",
+        "@astrojs/starlight": "^0.34.4",
+        "astro": "^5.10.1",
         "rehype-external-links": "^3.0.0",
         "rehype-katex": "^7.0.1",
         "remark-math": "^6.0.0",

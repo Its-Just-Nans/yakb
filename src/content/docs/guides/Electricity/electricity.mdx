@@ -7,7 +7,7 @@ sidebar:
 ---
 
 
-import Flexed from "../../../../components/Flexed/Flexed.astro"
+import Flexed from "@components/Flexed/Flexed.astro"
 
 export const Style = () => {
   return (
@@ -103,7 +103,7 @@ import non_linear from './non_linear.svg'
 | **Linear Dipole**                                      |                      **Non-linear Dipole**                     |
 |--------------------------------------------------------|----------------------------------------------------------------|
 | straight line                                          | non-straight line                                              |
-| <Image src={linear} alt="Linear Dipole" width={200} /> | <Image src={non_linear} alt="Non-linear Dipole" width={200} /> |
+| <Flexed><Image src={linear} alt="Linear Dipole" width={200} /></Flexed> | <Flexed><Image src={non_linear} alt="Non-linear Dipole" width={200} /></Flexed> |
 
 </div>
 
@@ -118,7 +118,7 @@ import dipole_receptor from './dipole_receptor.svg'
 | **Generator Dipole** | **Receptor Dipole** |
 |----------------------|----------------------|
 | A dipole is a generator when it supplies energy to the circuit it is connected to. <br/> The current exits from the positive side. <br/> The arrows representing voltage and current are in the **same** direction. | A dipole is a receptor when it consumes energy. <br/> The positive side of the dipole is the one through which the current enters. <br/> The arrows representing voltage and current are in **opposite** directions. |
-| <Image src={dipole_generator} alt="Generator Dipole" width={200} /> | <Image src={dipole_receptor} alt="Receptor Dipole" width={200} /> |
+| <Flexed><Image src={dipole_generator} alt="Generator Dipole" width={200} /></Flexed> | <Flexed><Image src={dipole_receptor} alt="Receptor Dipole" width={200} /></Flexed> |
 
 </div>
 
@@ -152,10 +152,10 @@ import cable from './cable.svg'
 <div class="supercenter">
 
 | **Element**  | **In direct current** |
-|--------------------------------------------------------------------------------|-----------------|
-| Resistor <br/> <Image src={resistor_iec} alt="Resistor IEEE" width={200} />   | $ U = RI $ <br/>  <Image src={resistor_iec} alt="Resistor IEEE" width={200} />     |
-| Inductance <br/> <Image src={inductance} alt="Inductance" width={200} />       | a cable <br/> <Image src={cable} alt="Capacitor" width={100} />       |
-| Capacitor  <br/> <Image src={capacitor} alt="Capacitor" width={100} />         | an open circuit <br/> <Image src={open_circuit} alt="Capacitor" width={100} />|
+|--------------------------------------------------------------------------------------------------|-----------------|
+| <Flexed vertical>Resistor <Image src={resistor_iec} alt="Resistor IEEE" width={200} /></Flexed>  | <Flexed vertical>$ U = RI $ <Image src={resistor_iec} alt="Resistor IEEE" width={200} /></Flexed>     |
+| <Flexed vertical>Inductance <Image src={inductance} alt="Inductance" width={200} /></Flexed>     | <Flexed vertical>A cable <Image src={cable} alt="Capacitor" width={100} /></Flexed>       |
+| <Flexed vertical>Capacitor <Image src={capacitor} alt="Capacitor" width={100} /></Flexed>        | <Flexed vertical>An open circuit <Image src={open_circuit} alt="Capacitor" width={100} /></Flexed>|
 
 </div>
 

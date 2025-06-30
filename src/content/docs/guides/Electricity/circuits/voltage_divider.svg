@@ -5,8 +5,8 @@
     <path d="M40 72v21h70" stroke="black" />
 
     <path d="m58 10h14m0-6h34v13h-34zm34 6h14" />
-    <text x="58" y="7" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
-    <text x="65" y="8" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
+    <text x="58" y="8" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="65" y="8.5" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
     <path d="m65 20-7.5 4.5 7.5 4.5zm-7.5 4.5h55" fill="green" stroke="green" />
     <text x="85" y="35" font-size="10" fill="green" stroke="green" stroke-width="0.25">U</text>
     <text x="92" y="38" font-size="5" fill="green" stroke="green" stroke-width="0.35">1</text>
