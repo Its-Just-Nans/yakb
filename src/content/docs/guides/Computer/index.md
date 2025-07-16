@@ -3,7 +3,6 @@ title: Computer Science
 description: Computer science concepts and definitions.
 sidebar:
     title: Computer Science
-    order: 1
 ---
 
 

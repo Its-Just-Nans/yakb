@@ -1,7 +1,5 @@
 ---
 title: "Modulations"
-sidebar:
-    order: 3
 ---
 
 To transmit the signal, we modulate it using various modulation techniques.

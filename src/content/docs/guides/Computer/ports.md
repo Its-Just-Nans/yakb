@@ -1,9 +1,6 @@
 ---
 title: Ports
 description: Computer ports and protocols.
-sidebar:
-    title: Ports
-    order: 5
 ---
 
 ## Application Ports

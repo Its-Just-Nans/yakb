@@ -1,7 +1,5 @@
 ---
 title: "Telecommunications"
-sidebar:
-    order: 1
 ---
 
 ## Bit, Symbol and Valence
