@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="170" stroke-linecap="round" fill="none" stroke="black">
+    <!--resistor r1-->
+    <path d="M40 10h70" stroke="black" />
+    <path d="m100 10h10.5l3.5 7 7-14 7 14 7-14 7 14 7-14 3.5 7h10.5" />
+    <text x="130" y="30" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="138" y="32" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
+    <path d="M160 10h80" stroke="black" />
+
+    <!--source e1-->
+    <path d="M40 10v55" stroke="black" />
+    <path d="m40 60v10.5m21 0h-42m31.5 5.25h-21m10.5 0v26.25m18.75-42h-8.25m3.75 3.75v-8.25" stroke="black" />
+    <text x="20" y="60" font-size="10" fill="black" stroke="black" stroke-width="0.25">E</text>
+    <text x="27" y="63" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
+    <path d="M40 80v62" stroke="black" />
+
+    <!--resistor r2-->
+    <path d="m240 10v30" stroke="black" />
+    <text x="220" y="80" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="228" y="82" font-size="5" fill="black" stroke="black" stroke-width="0.35">2</text>
+    <path d="m240 100v-10.5l7-3.5-14-7 14-7-14-7 14-7-14-7 7-3.5v-10.5" />
+    <path d="m240 90v50" stroke="black" />
+
+    <!--source e2-->
+    <path d="m90 142h-10.5m0 21v-42m-5.25 31.5v-21m0 10.5h-26.25m42 18.75v-8.25m-3.75 3.75h8.25" stroke="black" />
+    <text x="85" y="130" font-size="10" fill="black" stroke="black" stroke-width="0.25">E</text>
+    <text x="92" y="132" font-size="5" fill="black" stroke="black" stroke-width="0.35">2</text>
+    <path d="M40 142h20" stroke="black" />
+    <path d="M80 142h40" stroke="black" />
+
+    <!--resistor r3-->
+    <path d="m120 142h10.5l3.5 7 7-14 7 14 7-14 7 14 7-14 3.5 7h10.5" />
+    <text x="150" y="130" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="158" y="132" font-size="5" fill="black" stroke="black" stroke-width="0.35">3</text>
+    <path d="M180 142h60" stroke="black" />
+
+    <!--current I1-->
+    <path d="m200 13-5-3 5-3z" fill="red" stroke="red" />
+    <text x="195" y="25" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="200" y="28" font-size="5" fill="red" stroke="red" stroke-width="0.25">1</text>
+
+
+    <!--current I2-->
+    <path d="m243 30-3 5-3-5z" fill="red" stroke="red" />
+    <text x="245" y="38" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="250" y="42" font-size="5" fill="red" stroke="red" stroke-width="0.25">2</text>
+
+
+    <!--current I3-->
+    <path d="m200 145-5-3 5-3z" fill="red" stroke="red" />
+    <text x="195" y="132" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="200" y="135" font-size="5" fill="red" stroke="red" stroke-width="0.25">3</text>
+
+
+    <!--node A-->
+    <path d="m40 142 -6 6z" stroke="black" />
+    <circle cx="40" cy="142" r="2" fill="blue" />
+    <text x="42" y="155" font-size="10" fill="blue" stroke="blue" stroke-width="0.25">N</text>
+    <text x="48" y="158" font-size="5" fill="blue" stroke="blue" stroke-width="0.25">A</text>
+
+
+    <!--node B-->
+    <path d="m240 10 6-6z" stroke="black" />
+    <circle cx="240" cy="10" r="2" fill="blue" />
+    <text x="242" y="20" font-size="10" fill="blue" stroke="blue" stroke-width="0.25">N</text>
+    <text x="250" y="22" font-size="5" fill="blue" stroke="blue" stroke-width="0.25">B</text>
+
+
+    <!--node C-->
+    <path d="m240 142 6 6z" stroke="black" />
+    <circle cx="240" cy="142" r="2" fill="blue" />
+    <text x="242" y="138" font-size="10" fill="blue" stroke="blue" stroke-width="0.25">N</text>
+    <text x="249" y="140" font-size="5" fill="blue" stroke="blue" stroke-width="0.25">C</text>
+
+    <!--branch 1-->
+    <path d="m70 110v-60h130v60h-110" stroke="green" />
+    <path d="m90 114-7.5-4.5 7.5-4.5z" fill="green" stroke="green" />
+    <text x="127" y="83" font-size="10" fill="green" stroke="green" stroke-width="0.25">B</text>
+    <text x="135" y="86" font-size="5" fill="green" stroke="green" stroke-width="0.35">1</text>
+
+</svg>

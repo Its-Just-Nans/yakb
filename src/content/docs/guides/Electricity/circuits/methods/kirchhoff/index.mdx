@@ -1,0 +1,128 @@
+---
+title: Kirchhoff's Laws
+---
+
+import Flexed from "@components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+### Node Law - Kirchhoff's Current Law (KCL)
+
+- The sum of currents at a node is zero.
+
+import node_law from '../../../node_law.svg'
+
+<div class="supercenter">
+  <Image src={node_law} alt="Node Law" width={200} />
+</div>
+
+```math
+I_1 = I_2 + I_3
+```
+
+### Mesh Law - Kirchhoff's Voltage Law (KVL)
+
+- The sum of voltage drops around a closed mesh is zero.
+
+```math
+\sum_k U_k = 0
+```
+
+Example:
+
+import kirchhoff_voltage from './kirchhoff_voltage.svg'
+
+<div class="supercenter">
+  <Image src={kirchhoff_voltage} alt="Node Law" width={600} />
+</div>
+
+
+$$$
+E_1 + R_1 I_1 - R_2 I_2 - R_3 I_3 - E_2 = 0
+$$$
+
+### Writing Equations Using Kirchhoff's Laws
+
+- If a circuit has **n** nodes and **b** branches:
+  - There are **(n-1)** independent node equations.
+  - There are **(b - (n-1))** independent mesh equations.
+
+#### Example with a circuit
+
+import kirchhoff from './kirchhoff.svg'
+
+<div class="supercenter">
+  <Image src={kirchhoff} alt="kirchhoff example" width={500} />
+</div>
+
+First we check for nodes and branches
+
+import kirchhoff_2 from './kirchhoff_2.svg'
+
+<div class="supercenter">
+  <Image src={kirchhoff_2} alt="kirchhoff example part 2" width={500} />
+</div>
+
+In the example, there is 2 nodes and 3 branches, so we have:
+
+$$$
+n=2\\
+b=3\\
+(n-1) = 2 - 1 = 1\\
+(b - (n-1)) = 3 - (2-1) = 3 - 1 = 1
+$$$
+
+Here is the node equation:
+
+$$$
+I = I_1 + I_2\\
+$$$
+
+And here is the 2 meshes equation:
+
+$$$
+E_1 - R_1 I_1 - R I = 0\\
+E_2 - R_3 I_2 - R I = 0
+$$$
+
+Some with have now 3 equations:
+
+$$$
+I - I_1 - I_2 = 0\\
+E_1 = R_1 I_1 + R I\\
+E_2 = R_2 I_2 + R I
+$$$
+
+Then we extract $I_1$ and $I_2$ from the equations:
+```math
+I_1 = \frac{E_1 - R I}{R_1}\\
+I_2 = \frac{E_2 - R I}{R_2}
+```
+Then we can replace $I_1$ and $I_2$ in the first equation:
+
+```math
+I = \frac{E_1 - R I}{R_1} + \frac{E_2 - R I}{R_2}
+```
+
+```math
+I = \frac{E_1}{R_1} - \frac{R I}{R_1} + \frac{E_2}{R_2} - \frac{R I}{R_2}
+```
+
+```math
+I = \frac{E_1}{R_1}  + \frac{E_2}{R_2} - \frac{R I}{R_2} - \frac{R I}{R_1}
+```
+
+```math
+I = \frac{E_1}{R_1}  + \frac{E_2}{R_2} - I \left(\frac{R}{R_1} + \frac{R}{R_2}\right)
+```
+
+Then we can solve for $I$:
+
+```math
+I \left(1 + \frac{R}{R_1} + \frac{R}{R_2}\right) = \frac{E_1}{R_1} + \frac{E_2}{R_2}
+```
+
+Finally, we can express $I$:
+
+```math
+I = \frac{ \frac{E_1}{R_1} + \frac{E_2}{R_2}}{1 + \frac{R}{R_1} + \frac{R}{R_2}}
+```

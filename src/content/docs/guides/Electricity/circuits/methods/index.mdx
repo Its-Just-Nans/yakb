@@ -2,13 +2,13 @@
 title: Methods for Analyzing Linear Circuits
 ---
 
-import Flexed from "../../../../../components/Flexed/Flexed.astro"
+import Flexed from "@components/Flexed/Flexed.astro"
 import { Image } from 'astro:assets'
 
 ## Definition
 
-- A **branch** consists of one or more elements connected in series and carrying the same current.
-- A **linear resistor** obeys Ohm's law: the voltage across it is proportional to the current through it.
+- **Network** A set of sources and dipoles connected together by conductors with zero resistance.
+- **Linear network** In a linear network, the voltage across a dipole is either constant or proportional to a current.
 
 ```math
 U = R I
@@ -19,41 +19,7 @@ U = R I
 - A **mesh** is a set of branches forming a closed circuit.
 - A **loop** in a circuit consists of a closed path without passing through the same mesh twice.
 
-  *(See Figure 2, Step 2)*
-
 - In a linear circuit, the values of sources and elements are assumed to be known. The goal is to calculate voltages and currents in the circuit.
-
-## Kirchhoff's Laws
-
-### Node Law (KCL - Kirchhoff's Current Law)
-
-- The sum of currents at a node is zero.
-
-### Mesh Law (KVL - Kirchhoff's Voltage Law)
-
-- The sum of voltage drops around a closed mesh is zero.
-
-```math
-\sum_k U_k = 0
-```
-
-- Example equation:
-
-```math
-E_1 + R_1 I_1 - R_2 I_2 - R_3 I_3 - E_3 = 0
-```
-
-### Writing Equations Using Kirchhoff's Laws
-
-- If a circuit has **n** nodes and **b** branches:
-  - There are **(n-1)** independent node equations.
-  - There are **(b - (n-1))** independent mesh equations.
-
-  *(Example: See Figure 3, Step 2)*
-
-## Node Potential Method
-
-**Objective:** TP n°5 (unspecified)
 
 ## Superposition Theorem
 
