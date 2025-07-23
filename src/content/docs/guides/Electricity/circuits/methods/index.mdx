@@ -21,52 +21,16 @@ U = R I
 
 - In a linear circuit, the values of sources and elements are assumed to be known. The goal is to calculate voltages and currents in the circuit.
 
-## Superposition Theorem
+## Which methods to use
 
-### Statement
+- Then simplify to a 2-mesh circuit
+  - Use Kirchhoff's Method
 
-A linear circuit containing several sources obeys the principle of superposition.
-The current or voltage produced by the sources acts independently.
+- If it's has multiple mesh circuit:
+  - Use Thevenin or Norton to reduce the circuit to a 2-mesh circuit
 
-#### Rules for Source Elimination
-
-(Figure 4)
-
-#### Example
-
-(Figure 5)
-
-```math
-I = I_{\alpha} + I_{\beta}
-```
-
-<Flexed>
-<div>
-
-Calculation of $ I_\alpha $ (Figure 6)
-
-```math
-I_{\alpha} = \frac{R_2}{R_1 + R_2} \times I_1
-```
-
-</div>
-<div>
-
-Calculation of $ I_\beta $
-
-```math
-I_{\beta} = \frac{R_2}{R_1 + R_2} \times I_2
-```
-
-</div>
-
-</Flexed>
-
-Conclusion for $ I $
-
-```math
-I = I_{\alpha} + I_{\beta} = \frac{R_2}{R_1 + R_2} \times (I_1 + I_2)
-```
+- If it has multiples sources:
+  - Use Superposition
 
 ## Thévenin's Theorem
 

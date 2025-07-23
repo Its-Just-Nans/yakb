@@ -1,0 +1,74 @@
+---
+title: Superposition Theorem
+---
+
+import Flexed from "@components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+This theorem is used to analyze linear circuits with multiple sources.
+
+### Statement
+
+A linear circuit containing several sources obeys the principle of superposition.
+The current or voltage produced by the sources acts independently.
+
+#### Rules for Source Elimination
+
+- Replace all voltage sources with short circuits (wires)
+- Replace all current sources with open circuits (breaks)
+
+#### Example
+
+import superposition_1 from './superposition_1.svg'
+
+<div class="supercenter">
+  <Image src={superposition_1} alt="Superposition Theorem - part 1" width={500} />
+</div>
+
+```math
+I = I_1 + I_2
+```
+
+Calculation of $ I_\alpha $
+
+We replace the current source $ I_2 $ with an open circuit.
+
+We analyze the circuit with the current source $ I_1 $ only.
+
+import superposition_2 from './superposition_2.svg'
+
+<div class="supercenter">
+  <Image src={superposition_2} alt="Superposition Theorem - part 2" width={500} />
+</div>
+
+```math
+I_{\alpha} = \frac{R_2}{R_1 + R_2} \cdot I_1
+```
+
+Calculation of $ I_\beta $
+
+We replace the current source $ I_1 $ with an open circuit.
+
+We analyze the circuit with the current source $ I_2 $ only.
+
+import superposition_3 from './superposition_3.svg'
+
+<div class="supercenter">
+  <Image src={superposition_3} alt="Superposition Theorem - part 3" width={500} />
+</div>
+
+```math
+I_{\beta} = \frac{R_2}{R_1 + R_2} \cdot I_2
+```
+
+Conclusion for $ I $
+
+```math
+I = I_{\alpha} + I_{\beta}
+```
+```math
+I = \frac{R_2}{R_1 + R_2} \cdot I_1 + \frac{R_2}{R_1 + R_2} \cdot I_2
+```
+```math
+I = \frac{R_2}{R_1 + R_2} \cdot (I_1 + I_2)
+```

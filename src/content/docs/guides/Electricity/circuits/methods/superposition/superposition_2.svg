@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="155" stroke-linecap="round" fill="none" stroke="black">
+    <!--source 1-->
+    <path d="M40 10v30" stroke="black" />
+    <path d="m15 50-4.5-7.5-4.5 7.5zm-4.5 -7.5v55" fill="red" stroke="red" />
+    <text x="15" y="103" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="20" y="105" font-size="5" fill="red" stroke="red" stroke-width="0.35">1</text>
+    <path d="m40 40v10m-21 21a21 21 90 1142 0 21 21 90 11-42 0m21 32v-11m0-37-4 8h8zm0 31v-23" stroke="black" />
+    <path d="M40 92v50" stroke="black" />
+
+    <!--resistor r-->
+    <path d="M40 10h100" stroke="black" />
+    <text x="115" y="80" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="123" y="82" font-size="5" fill="black" stroke="black" stroke-width="0.35">1</text>
+    <path d="m140 100v-10.5l7-3.5-14-7 14-7-14-7 14-7-14-7 7-3.5v-10.5" />
+    <path d="m140 10v30" stroke="black" />
+    <path d="m140 100v42" stroke="black" />
+
+    <!--resistor r2-->
+    <path d="m140 10h100v30" stroke="black" />
+    <text x="215" y="80" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="223" y="82" font-size="5" fill="black" stroke="black" stroke-width="0.35">2</text>
+    <path d="m240 100v-10.5l7-3.5-14-7 14-7-14-7 14-7-14-7 7-3.5v-10.5" />
+    <path d="m240 100v42" stroke="black" />
+
+    <!--source 2-->
+    <path d="M240 10h100v30" stroke="black" />
+    <path d="M340 92v50" stroke="black" />
+
+    <path d="M40 142h300" stroke="black" />
+
+    <!--current-->
+    <path d="m143 30-3 5-3-5z" fill="red" stroke="red" />
+    <text x="125" y="35" font-size="10" fill="red" stroke="red" stroke-width="0.25">I</text>
+    <text x="130" y="37" font-size="5" fill="red" stroke="red" stroke-width="0.25">α</text>
+</svg>
