@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="275" height="130" stroke-linecap="round" fill="none" stroke="black">
+    <!--source e1-->
+    <path d="M40 10v20" stroke="black" />
+    <path d="m40 30v10m-21 21a21 21 90 1142 0 21 21 90 11-42 0m21 32v-11m0-37-4 8h8zm0 31v-23" stroke="black" />
+    <text x="68" y="65" font-size="10" fill="black" stroke="black" stroke-width="0.25">I</text>
+    <text x="72" y="70" font-size="5" fill="black" stroke="black" stroke-width="0.25">N</text>
+    <path d="M40 90v30" stroke="black" />
+
+    <path d="M40 120h150" stroke="black" />
+    <path d="M40 10h150" stroke="black" />
+
+    <!--resistor r-->
+    <path d="M140 10v30" stroke="black" />
+    <text x="118" y="80" font-size="10" fill="black" stroke="black" stroke-width="0.25">R</text>
+    <text x="125" y="85" font-size="5" fill="black" stroke="black" stroke-width="0.25">N</text>
+    <path d="m140 100v-10.5l7-3.5-14-7 14-7-14-7 14-7-14-7 7-3.5v-10.5" />
+    <path d="m140 100v20" stroke="black" />
+
+
+    <!--resistor r1-->
+
+    <path d="m190 5v10" stroke="black" />
+    <text x="190" y="28" font-size="10" fill="black" stroke="black" stroke-width="0.25">A</text>
+
+    <path d="m190 115v10" stroke="black" />
+    <text x="190" y="108" font-size="10" fill="black" stroke="black" stroke-width="0.25">B</text>
+</svg>

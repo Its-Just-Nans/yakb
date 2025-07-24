@@ -1,0 +1,77 @@
+---
+title: Norton's Theorem
+---
+
+import Flexed from "@components/Flexed/Flexed.astro"
+import { Image } from 'astro:assets'
+
+## Objective
+
+The objective of the Norton theorem is to simplify a complex linear circuit into an equivalent circuit consisting of a single current source in parallel with a resistance, making analysis between two terminals (A and B) easier.
+
+<Flexed>
+
+import norton_base from './norton_base.svg'
+
+<div class="supercenter">
+  <Image src={norton_base} alt="Norton's Theorem" width={500} />
+</div>
+
+import norton_base_1 from './norton_base_1.svg'
+
+<div class="supercenter">
+  <Image src={norton_base_1} alt="Norton's Theorem" width={500} />
+</div>
+
+</Flexed>
+
+## Statement
+
+Any linear circuit located between points A and B can be modeled by an equivalent generator $(I_{N}, R_{N})$, where:
+
+- $I_{N}$ is the short-circuit current between A and B
+- $R_{N}$ is the equivalent resistance seen between A and B when the sources are deactivated
+
+## Example
+
+import norton_0 from './norton_0.svg'
+
+<div class="supercenter">
+  <Image src={norton_0} alt="Norton's Theorem - part 1" width={500} />
+</div>
+
+Determination of $ I_N $ with a short-circuit
+
+import norton_1 from './norton_1.svg'
+
+<div class="supercenter">
+  <Image src={norton_1} alt="Norton's Theorem - part 2" width={500} />
+</div>
+
+
+```math
+I_{AB} = \frac{E}{R}
+```
+
+Determination of $ R_N $ without the sources
+
+
+import norton_2 from './norton_2.svg'
+
+<div class="supercenter">
+  <Image src={norton_2} alt="Norton's Theorem - part 3" width={500} />
+</div>
+
+
+```math
+R_N = \frac{R \cdot R}{R + R} = \frac{R \cdot R}{2R} = \frac{R}{2}
+```
+
+Finally, you can replace the original circuit with the Thévenin equivalent generator, which consists of a current source $ I_{N} = \frac{E}{R} $ in series with a resistance $ R_{N} = \frac{R}{2} $.
+
+
+import norton_3 from './norton_3.svg'
+
+<div class="supercenter">
+  <Image src={norton_3} alt="Norton's Theorem - part 3" width={500} />
+</div>

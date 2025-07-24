@@ -32,29 +32,12 @@ U = R I
 - If it has multiples sources:
   - Use Superposition
 
-## Thévenin's Theorem
 
-### Objective
+### Thévenin ↔ Norton Equivalence
 
-(Figure 7)
-
-### Statement
-
-Any linear circuit located between points A and B can be modeled by an equivalent generator $ (E_{th}, R_{th}) $, where:
-- $ E_{th} $ is the open-circuit voltage between A and B
-- $ R_{th} $ is the equivalent resistance seen between A and B when the sources are deactivated
-
-### Example
-
-- Isolate the network (i.e., remove all elements that are not part of the subnetwork for which you want to determine the Thévenin equivalent generator).
-- Replace voltage sources with short circuits and current sources with open circuits.
-- Calculate the Thévenin resistance (the equivalent resistance of the circuit).
-- Reconnect the sources (undo step 2).
-- Calculate the Thévenin voltage (the equivalent voltage between the two terminals of the network for which you are finding the Thévenin generator).
-
-(Figure 8 → Figure 9)
-
-
-## Norton's Theorem
-
-Any subnetwork of a circuit can be replaced by a current source in parallel with a resistor.
+```math
+\begin{cases}
+R_{Th} = R_N \\
+E_{Th} = R_N \times I_N
+\end{cases}
+```
