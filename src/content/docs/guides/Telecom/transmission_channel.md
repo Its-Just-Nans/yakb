@@ -1,7 +1,5 @@
 ---
 title: "Transmission Channel"
-sidebar:
-    order: 2
 ---
 
 - `BER`: Bit Error Rate, number of bit errors
