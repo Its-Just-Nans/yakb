@@ -34,7 +34,7 @@ Modulation is done by varying the **amplitude**.
 
 ## FSK
 
-_**F**requency-**S**hift **K**eying_ (also called **FSK** - Frequency Shift Keying in French too).
+_**F**requency-**S**hift **K**eying_.
 
 Modulation is done by varying the **frequency**.
 
