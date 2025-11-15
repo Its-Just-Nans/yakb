@@ -13,3 +13,7 @@ html[data-theme="dark"] .sl-markdown-content img {
     text-align: center;
     align-items: center;
 }
+
+.sl-markdown-content {
+    overflow-x: auto;
+}

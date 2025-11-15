@@ -6,6 +6,17 @@ import rehypeExternalLinks from "rehype-external-links";
 import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 import starlightLinksValidator from "starlight-links-validator";
+import { downloadScript } from "./src/utils";
+
+await downloadScript({
+    "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css": "katex.min.css",
+    "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_Main-Regular.woff2": "fonts/KaTeX_Main-Regular.woff2",
+    "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_Main-Italic.woff2": "fonts/KaTeX_Main-Italic.woff2",
+    "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_Math-Italic.woff2": "fonts/KaTeX_Math-Italic.woff2",
+    "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_Size2-Regular.woff2":
+        "fonts/KaTeX_Size2-Regular.woff2",
+    "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_AMS-Regular.woff2": "fonts/KaTeX_AMS-Regular.woff2",
+});
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +27,16 @@ export default defineConfig({
     },
     integrations: [
         starlight({
+            head: [
+                // Example: add Fathom analytics script tag.
+                {
+                    tag: "link",
+                    attrs: {
+                        href: "/downloaded/katex.min.css",
+                        rel: "stylesheet",
+                    },
+                },
+            ],
             plugins: [starlightLinksValidator()],
             title: "YakB",
             favicon: "/favicon.ico",
@@ -34,7 +55,7 @@ export default defineConfig({
                     autogenerate: { directory: "guides" },
                 },
             ],
-            customCss: ["./src/styles/custom.css", "./src/styles/katex.min.css"],
+            customCss: ["./src/styles/custom.css"],
         }),
     ],
     image: {
