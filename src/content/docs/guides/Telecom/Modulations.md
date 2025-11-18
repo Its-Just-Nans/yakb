@@ -32,18 +32,6 @@ Modulation is done by varying the **amplitude**.
 
 ---
 
-## FSK
-
-_**F**requency-**S**hift **K**eying_.
-
-Modulation is done by varying the **frequency**.
-
-|                              Operation                              |
-| :-----------------------------------------------------------------: |
-| ![FSK](https://upload.wikimedia.org/wikipedia/commons/3/39/Fsk.svg) |
-
----
-
 ## MSK
 
 **MSK** (Minimum Shift Keying), used in GSM, is a variant of FSK where the signal is coherently demodulated.
