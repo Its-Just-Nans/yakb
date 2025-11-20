@@ -1,34 +1,42 @@
+// This file is part of https://github.com/Its-Just-Nans/yakb
+// It is licensed under the same license of https://github.com/Its-Just-Nans/yakb
+
 class LineCode extends HTMLElement {
     constructor() {
         super();
 
         // Shadow DOM
-        this.shadow = this.attachShadow({ mode: "open" });
+        this.root = this.attachShadow({ mode: "open" });
 
         // Root container
         const container = document.createElement("div");
-        container.style.textAlign = "center";
+        container.className = "web-component-line-code";
 
         // Styles
         const style = document.createElement("style");
         style.textContent = `
-            #canvas {
+            .web-component-line-code {
+                text-align: center;
+            }
+            .web-component-line-code #canvas {
                 border: 1px solid black;
                 margin-top: 5px;
                 margin: auto;
                 display: block;
             }
-            #binaire {
+            .web-component-line-code #binaire {
                 font-size: 0;
+                display: flex;
+                justify-content: center;
             }
-            .buttonBinary {
+            .web-component-line-code .buttonBinary {
                 height: 40px;
                 width: 40px;
                 font-size: large;
                 margin: 0 2px;
                 display: inline-block;
             }
-            .delButton, .addButton {
+            .web-component-line-code .delButton, .addButton {
                 padding: 10px;
             }
         `;
@@ -81,8 +89,8 @@ class LineCode extends HTMLElement {
         container.appendChild(this.addButton);
         container.appendChild(this.delButton);
 
-        this.shadow.appendChild(style);
-        this.shadow.appendChild(container);
+        container.appendChild(style);
+        this.root.appendChild(container);
     }
 
     connectedCallback() {
@@ -317,7 +325,7 @@ class LineCode extends HTMLElement {
     }
 
     changeValue(valeur) {
-        let buttonActual = this.shadow.getElementById("button-" + valeur);
+        let buttonActual = this.root.getElementById("button-" + valeur);
         if (buttonActual.innerHTML == "0") {
             buttonActual.innerHTML = "1";
         } else {
@@ -346,7 +354,7 @@ class LineCode extends HTMLElement {
 
     delButtonFn() {
         if (this.getBinaryButtons().length >= 11) {
-            this.shadow.getElementById("button-" + this.getBinaryButtons().length).remove();
+            this.root.getElementById("button-" + this.getBinaryButtons().length).remove();
         }
         this.traceCanvas();
     }

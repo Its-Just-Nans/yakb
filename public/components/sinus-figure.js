@@ -1,34 +1,35 @@
+// This file is part of https://github.com/Its-Just-Nans/yakb
+// It is licensed under the same license of https://github.com/Its-Just-Nans/yakb
+
 class SinusFigure extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: "open" });
+        this.root = this.attachShadow({ mode: "open" });
+        /* -------------------- WRAPPER -------------------- */
+        const wrapper = document.createElement("div");
+        wrapper.className = "web-component-sinus-figure";
+        this.root.appendChild(wrapper);
 
-        const root = this.shadowRoot;
-
-        /* -------------------- STYLES -------------------- */
         const style = document.createElement("style");
         style.textContent = `
-            #canvas {
+            .web-component-sinus-figure {
+                text-align: center;
+            }
+            .web-component-sinus-figure #canvas {
                 border: 2px solid black;
                 display: block;
                 margin: auto;
             }
-            .table-wrap {
+            .web-component-sinus-figure .table-wrap {
                 display: inline-block;
                 text-align: left;
             }
-            table td {
+            .web-component-sinus-figure table td {
                 border-bottom: 1px solid hsl(224, 10%, 23%);;
                 padding: 0.5rem 1rem;
             }
         `;
-        root.appendChild(style);
-
-        /* -------------------- WRAPPER -------------------- */
-        const wrapper = document.createElement("div");
-        wrapper.className = "sinus-figure-component";
-        wrapper.style.textAlign = "center";
-        root.appendChild(wrapper);
+        wrapper.appendChild(style);
 
         /* -------------------- CANVAS -------------------- */
         this.canvas = document.createElement("canvas");
@@ -98,7 +99,7 @@ class SinusFigure extends HTMLElement {
         this.ampli.addEventListener(
             "input",
             () => {
-                this.shadowRoot.getElementById("textAmpli").innerHTML = this.ampli.value;
+                this.root.getElementById("textAmpli").innerHTML = this.ampli.value;
                 this.traceCanvas();
             },
             false
@@ -107,7 +108,7 @@ class SinusFigure extends HTMLElement {
         this.freq.addEventListener(
             "input",
             () => {
-                this.shadowRoot.getElementById("textFreq").innerHTML = this.freq.value;
+                this.root.getElementById("textFreq").innerHTML = this.freq.value;
                 this.traceCanvas();
             },
             false
@@ -116,7 +117,7 @@ class SinusFigure extends HTMLElement {
         this.moy.addEventListener(
             "input",
             () => {
-                this.shadowRoot.getElementById("textMoy").innerHTML = this.moy.value;
+                this.root.getElementById("textMoy").innerHTML = this.moy.value;
                 this.traceCanvas();
             },
             false
@@ -125,7 +126,7 @@ class SinusFigure extends HTMLElement {
         this.ret.addEventListener(
             "input",
             () => {
-                this.shadowRoot.getElementById("textRet").innerHTML = this.ret.value + "π";
+                this.root.getElementById("textRet").innerHTML = this.ret.value + "π";
                 this.traceCanvas();
             },
             false
@@ -149,7 +150,7 @@ class SinusFigure extends HTMLElement {
                 }
                 //Xzero = Math.round(canvas.width/Tcase/2)*Tcase;
                 //Yzero = Math.round(canvas.height/Tcase/2)*Tcase;
-                this.shadowRoot.getElementById("textEch").innerHTML = this.Tcase;
+                this.root.getElementById("textEch").innerHTML = this.Tcase;
                 this.traceCanvas();
             },
             false
