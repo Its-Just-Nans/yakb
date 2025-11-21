@@ -2,13 +2,82 @@
 title: SQL
 ---
 
+SQL is a standard language for managing and manipulating relational databases. It allows you to perform various operations such as querying data, inserting new records, updating existing records, and deleting records.
 
-SQL provides several commands to manipulate data:
+## How to use SQL
+
+To use SQL, you typically interact with a database management system (DBMS) such as PostgreSQL, SQLite or MySQL. You can execute SQL commands through command-line interfaces, graphical user interfaces (GUIs), or programmatically using various programming languages. You write SQL statements to perform specific tasks, and the DBMS processes these statements to interact with the database.
+
+## Some SQL Commands
+
+### CREATE Command
+
+- **`CREATE TABLE`**: Define a new table and its columns.
+- **`DROP TABLE`**: Remove an existing table from the database.
+
+```sql
+-- drop the employees table if it already exists
+DROP TABLE IF EXISTS employees;
+
+-- create a table named employees
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    department VARCHAR(50),
+    salary NUMERIC(10, 2),
+    hire_date DATE
+);
+```
+
+### SELECT Command
 
 - **`SELECT`**: Retrieve data from the database.
+
+```sql
+-- select all columns from the employees table
+SELECT
+  department,
+  COUNT(*) as employee_count,
+  ROUND(AVG(salary), 2) as avg_salary
+FROM employees
+GROUP BY department
+ORDER BY avg_salary DESC;
+```
+
+### INSERT Command
+
 - **`INSERT`**: Add new rows to a table.
+
+```sql
+-- insert multiple rows into the employees table
+INSERT INTO employees (name, department, salary, hire_date) VALUES
+  ('Alice Smith', 'Engineering', 85000, '2020-01-15'),
+  ('Bob Johnson', 'Marketing', 72000, '2019-03-20'),
+  ('Carol Williams', 'Engineering', 92000, '2018-11-07'),
+  ('Dave Brown', 'Finance', 115000, '2017-05-12'),
+  ('Eve Davis', 'Engineering', 110000, '2021-08-30');
+```
+
+### UPDATE Command
+
 - **`UPDATE`**: Modify the values of existing rows.
+
+```sql
+-- give a 10% raise to all employees in the Engineering department
+UPDATE employees
+SET salary = salary * 1.10
+WHERE department = 'Engineering';
+```
+
+### DELETE Command
+
 - **`DELETE`**: Remove rows from a table.
+
+```sql
+-- delete employees hired before 2018
+DELETE FROM employees
+WHERE hire_date < '2018-01-01';
+```
 
 ## Aggregate Functions
 
