@@ -29,6 +29,20 @@ CREATE TABLE employees (
 );
 ```
 
+### INSERT Command
+
+- **`INSERT`**: Add new rows to a table.
+
+```sql
+-- insert multiple rows into the employees table
+INSERT INTO employees (name, department, salary, hire_date) VALUES
+  ('Alice Smith', 'Engineering', 85000, '2020-01-15'),
+  ('Bob Johnson', 'Marketing', 72000, '2019-03-20'),
+  ('Carol Williams', 'Engineering', 92000, '2018-11-07'),
+  ('Dave Brown', 'Finance', 115000, '2017-05-12'),
+  ('Eve Davis', 'Engineering', 110000, '2021-08-30');
+```
+
 ### SELECT Command
 
 - **`SELECT`**: Retrieve data from the database.
@@ -42,20 +56,6 @@ SELECT
 FROM employees
 GROUP BY department
 ORDER BY avg_salary DESC;
-```
-
-### INSERT Command
-
-- **`INSERT`**: Add new rows to a table.
-
-```sql
--- insert multiple rows into the employees table
-INSERT INTO employees (name, department, salary, hire_date) VALUES
-  ('Alice Smith', 'Engineering', 85000, '2020-01-15'),
-  ('Bob Johnson', 'Marketing', 72000, '2019-03-20'),
-  ('Carol Williams', 'Engineering', 92000, '2018-11-07'),
-  ('Dave Brown', 'Finance', 115000, '2017-05-12'),
-  ('Eve Davis', 'Engineering', 110000, '2021-08-30');
 ```
 
 ### UPDATE Command
@@ -95,3 +95,13 @@ You can use the `DISTINCT` keyword before the argument to exclude duplicate valu
 
 - `COUNT(*)` counts **all rows** in a table, including those with `NULL` values.
 - Other forms of `COUNT` (e.g. `COUNT(column_name)`) ignore `NULL` values.
+
+## Playground
+
+import SqlPlayground from "/components/sql-playground.js?url";
+
+<script src={SqlPlayground} type="module"></script>
+
+<sql-playground>
+    <noscript>Javascript is disable, cannot load web-component</noscript>
+</sql-playground>
