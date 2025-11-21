@@ -22,7 +22,47 @@ SVG is a format based on XML, so you can create SVG images using any text editor
 </svg>
 ```
 
-## Don't do that
+## Metadata
+
+SVG files can include metadata using the `<metadata>` element. This can be useful for adding information about the image, such as the author, description, or copyright information. Without altering the visual representation of the SVG, metadata can be included like this:
+
+An important metadata is the license of the SVG image. Here is an example using a public domain license:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- xlmns elements are important -->
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg"
+  xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" xml:space="preserve"
+  viewBox="0 0 370 370" version="1.0" y="0px" x="0px">
+  <g>
+    <!-- SVG content goes here -->
+  </g>
+  <!-- define metadata using RDF (Resource Description Framework) and Dublin Core (dc) -->
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:title>Yakb Logo - modified from Cartoon Yak</dc:title>
+        <dc:date>2012-05-10T12:13:39</dc:date>
+        <dc:description>Yakb Logo taken from clipart - Cartoon Yak in the style of lemmling.</dc:description>
+        <dc:source>https://openclipart.org/detail/169962/cartoon-yak-by-studiofibonacci</dc:source>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
+```
+
+## Embed images
+
+You can also embed raster images (like PNG or JPEG) inside an SVG file using the `<image>` element. However, this defeats the purpose of using SVG as a vector format, since the embedded raster image will not scale without loss of quality. **Don't do that**
 
 import Flexed from "@components/Flexed/Flexed.astro"
 

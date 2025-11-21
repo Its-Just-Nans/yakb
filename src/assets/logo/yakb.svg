@@ -58,29 +58,10 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
-        <dc:publisher>
-          <cc:Agent rdf:about="http://openclipart.org/">
-            <dc:title>Openclipart</dc:title>
-          </cc:Agent>
-        </dc:publisher>
-        <dc:title>Cartoon Yak</dc:title>
+        <dc:title>Yakb Logo - modified from Cartoon Yak</dc:title>
         <dc:date>2012-05-10T12:13:39</dc:date>
-        <dc:description>Cartoon Yak in the style of lemmling.</dc:description>
+        <dc:description>Yakb Logo taken from clipart - Cartoon Yak in the style of lemmling.</dc:description>
         <dc:source>https://openclipart.org/detail/169962/cartoon-yak-by-studiofibonacci</dc:source>
-        <dc:creator>
-          <cc:Agent>
-            <dc:title>StudioFibonacci</dc:title>
-          </cc:Agent>
-        </dc:creator>
-        <dc:subject>
-          <rdf:Bag>
-            <rdf:li>asia</rdf:li>
-            <rdf:li>bovine</rdf:li>
-            <rdf:li>cattle</rdf:li>
-            <rdf:li>himalaya</rdf:li>
-            <rdf:li>yak</rdf:li>
-          </rdf:Bag>
-        </dc:subject>
       </cc:Work>
       <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
         <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
