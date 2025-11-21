@@ -38,20 +38,42 @@ git push # push the changes to the remote repository
 
 > - for the first push : `git push -u origin main`
 
----
+## Basic GIT commands
 
 Some GIT commands :
 
 ```sh
 git init # create a new repository
-git clone <url> # clone a repository
-git add <file> # add a file to the staging area
+git clone <url> # clone a repository from the given <url>
+git add <file> # add a <file> to the staging area
 git commit -m "<message>" # commit the changes
 git push # push the changes to the remote repository
+git fetch # fetch the changes from the remote repository
 git pull # pull the changes from the remote repository
+
 git status # check the status of the repository
 git log # view the commit history
+
 git branch # list all branches
-git switch <branch> # switch to a branch
+git switch <branch> # switch to a <branch>
+git checkout <branch> # switch to a <branch>
+git merge <branch> # merge a <branch> into the current branch
 git reset --soft HEAD~1 # remove the last commit
+```
+
+## git bisect
+
+git bisect is a command that helps you find the commit that introduced a bug by performing a binary search through the commit history. It allows you to quickly narrow down the range of commits to identify the specific commit that caused the issue.
+
+```sh
+git bisect start
+git bisect bad # mark the current commit as bad
+git bisect good <commit> # mark a known good commit
+# git will checkout a commit in the middle of the range
+# test the code
+git bisect good # if the commit is good
+# or
+git bisect bad # if the commit is bad
+# repeat the testing process until the bad commit is found
+git bisect reset # reset to the original HEAD
 ```
