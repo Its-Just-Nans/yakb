@@ -359,4 +359,13 @@ class LineCode extends HTMLElement {
         this.traceCanvas();
     }
 }
-customElements.define("line-code", LineCode);
+
+if (!customElements) {
+    console.warn("line-code: Web Component not registered because customElements is undefined");
+} else {
+    if (customElements.get("line-code")) {
+        console.warn("line-code: Web Component not registered because line-code is already defined.");
+    } else {
+        customElements.define("line-code", LineCode);
+    }
+}

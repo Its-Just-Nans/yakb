@@ -118,4 +118,12 @@ class SqlPlayground extends HTMLElement {
     }
 }
 
-customElements.define("sql-playground", SqlPlayground);
+if (!customElements) {
+    console.warn("sql-playground: Web Component not registered because customElements is undefined");
+} else {
+    if (customElements.get("sql-playground")) {
+        console.warn("sql-playground: Web Component not registered because sql-playground is already defined.");
+    } else {
+        customElements.define("sql-playground", SqlPlayground);
+    }
+}

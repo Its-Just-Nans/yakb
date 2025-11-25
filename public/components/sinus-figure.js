@@ -253,4 +253,12 @@ class SinusFigure extends HTMLElement {
     }
 }
 
-customElements.define("sinus-figure", SinusFigure);
+if (!customElements) {
+    console.warn("sinus-figure: Web Component not registered because customElements is undefined");
+} else {
+    if (customElements.get("sinus-figure")) {
+        console.warn("sinus-figure: Web Component not registered because sinus-figure is already defined.");
+    } else {
+        customElements.define("sinus-figure", SinusFigure);
+    }
+}
