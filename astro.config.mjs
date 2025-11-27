@@ -6,9 +6,9 @@ import rehypeExternalLinks from "rehype-external-links";
 import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 import starlightLinksValidator from "starlight-links-validator";
-import { downloadScript } from "./src/utils";
+import { download } from "./src/utils";
 
-await downloadScript({
+await download("public/downloaded", {
     "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css": "katex.min.css",
     "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_Main-Regular.woff2": "fonts/KaTeX_Main-Regular.woff2",
     "https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/fonts/KaTeX_Main-Italic.woff2": "fonts/KaTeX_Main-Italic.woff2",
