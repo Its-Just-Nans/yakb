@@ -8,7 +8,7 @@ const { src, alt, source } = Astro.props;
 <Flexed>
     <div>
         <Image src={src} alt={alt} />
-        <span class="subtext">This image has its own license</span>
+        <span class="subtext border">This image has its own license</span>
         {
             source && (
                 <>
@@ -22,6 +22,9 @@ const { src, alt, source } = Astro.props;
 <style>
     div {
         border: 1px solid black;
+    }
+    .border {
+        border-top: 1px solid black;
     }
     .subtext {
         display: block;
