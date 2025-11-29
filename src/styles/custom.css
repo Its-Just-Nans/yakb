@@ -1,3 +1,5 @@
+@import "katex/dist/katex.min.css";
+
 * {
     --sl-content-width: 60rem;
 }
