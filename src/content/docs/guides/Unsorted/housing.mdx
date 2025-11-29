@@ -3,9 +3,6 @@ title: Housing
 ---
 
 
-import { Image } from "astro:assets";
-
-
 https://fr.wikipedia.org/wiki/NF_C_15-100
 
 https://fr.wikipedia.org/wiki/G%C3%A9onef
@@ -61,10 +58,7 @@ Taxe aménagement
 Taxe de racordement à l'égout PFAC
 Etude du sol (micropieux) étude de sol G1
 
+import ImageLicensed from "@components/ImageLisenced.astro";
+import EcoQuartier from '/public/downloaded/images/ecoquartier.jpg'
 
-import EcoQuartier from './ecoquartier.jpg'
-
-<Image src={EcoQuartier} alt="EcoQuartier" />
-
-> Caption :
-> Not created by me
+<ImageLicensed src={EcoQuartier} alt="EcoQuartier" />

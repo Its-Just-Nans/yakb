@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import Flexed from "./Flexed/Flexed.astro";
+
+const { src, alt, source } = Astro.props;
+---
+
+<Flexed>
+    <div>
+        <Image src={src} alt={alt} />
+        <span class="subtext">This image has its own license</span>
+        {
+            source && (
+                <>
+                    <span class="subtext">From {source}</span>
+                </>
+            )
+        }
+    </div>
+</Flexed>
+
+<style>
+    div {
+        border: 1px solid black;
+    }
+    .subtext {
+        display: block;
+        text-align: center;
+    }
+</style>

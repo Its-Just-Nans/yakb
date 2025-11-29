@@ -64,12 +64,9 @@ An important metadata is the license of the SVG image. Here is an example using 
 
 You can also embed raster images (like PNG or JPEG) inside an SVG file using the `<image>` element. However, this defeats the purpose of using SVG as a vector format, since the embedded raster image will not scale without loss of quality. **Don't do that**
 
-import Flexed from "@components/Flexed/Flexed.astro"
 
-<Flexed>
+import ImageLicensed from "@components/ImageLisenced.astro";
+import SvgDont from '/public/downloaded/images/svg.jpg'
 
-![svg](./svg.jpg)
+<ImageLicensed src={SvgDont} alt="svg meme" source={"https://www.reddit.com/r/ProgrammerHumor/comments/sa6ls7/svg/"}/>
 
-</Flexed>
-
-> From https://www.reddit.com/r/ProgrammerHumor/comments/sa6ls7/svg/
