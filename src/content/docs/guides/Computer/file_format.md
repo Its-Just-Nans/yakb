@@ -59,3 +59,8 @@ title: File format
 ## `.zip`
 
 - <https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT>
+
+## `.cls`
+
+- <https://citationstyles.org/>
+- <https://github.com/citation-style-language/styles>
