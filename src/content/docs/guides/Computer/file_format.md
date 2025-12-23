@@ -64,3 +64,8 @@ title: File format
 
 - <https://citationstyles.org/>
 - <https://github.com/citation-style-language/styles>
+
+## `.pdf`
+
+- <https://github.com/pdf-association>
+- <https://pdfa.org/>
