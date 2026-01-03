@@ -5,7 +5,7 @@ description: Computer ports and protocols.
 
 ## Application Ports
 
-### Difference Between Ports
+### Difference between Ports
 
 - **Hardware port**: Refers to the physical interface where a cable must be connected.
 - **Software port**: A point of entry for communication using a specific protocol.
