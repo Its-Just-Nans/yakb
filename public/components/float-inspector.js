@@ -252,15 +252,24 @@ class FloatInspector extends HTMLElement {
 
         this.shadowRoot.getElementById("exp").value = exp;
         this.shadowRoot.getElementById("man").value = significand;
-
         this.shadowRoot.getElementById("valueInput").value = raw;
-        const sign = bits[0] == "0" ? 1 : -1;
-        const maxExponent = (1n << BigInt(f.exp - 1)) - 1n;
-        const frac = this.significandToFraction(manBits);
-        this.shadowRoot.getElementById("significand-frac").innerText = ` = ${frac}`;
-        this.shadowRoot.getElementById("calc").innerText = `${sign} × Math.pow(2, ${
-            BigInt(exp) - maxExponent
-        }) × (1 + ${frac})`;
+        if (raw == Number.POSITIVE_INFINITY || raw == Number.NEGATIVE_INFINITY) {
+            const sign = bits[0] == "0" ? "" : "-";
+            this.shadowRoot.getElementById("calc").innerText = `${sign}Infinity`;
+        } else if (Number.isNaN(raw)) {
+            this.shadowRoot.getElementById("calc").innerText = "NaN";
+        } else if (raw == 0.0) {
+            const sign = bits[0] == "0" ? "" : "-";
+            this.shadowRoot.getElementById("calc").innerText = `${sign}0.0`;
+        } else {
+            const maxExponent = (1n << BigInt(f.exp - 1)) - 1n;
+            const sign = bits[0] == "0" ? 1 : -1;
+            const frac = this.significandToFraction(manBits);
+            this.shadowRoot.getElementById("significand-frac").innerText = ` = ${frac}`;
+            this.shadowRoot.getElementById("calc").innerText = `${sign} × Math.pow(2, ${
+                BigInt(exp) - maxExponent
+            }) × (1 + ${frac})`;
+        }
     }
 
     significandToFraction(significandStr) {
