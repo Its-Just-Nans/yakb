@@ -13,5 +13,3 @@ title: Optical
 | Preferred type of emission     | Stimulated                                  | Spontaneous                                 |
 | Threshold presence             | Yes                                         | No                                          |
 | Quantum efficiency             | `2*10^-2`                                   | `2*10^-3`                                   |
-
-- [http://www.sosryko.fr/](http://www.sosryko.fr/) - Optics material
