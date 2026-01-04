@@ -7,7 +7,6 @@ class FloatInspector extends HTMLElement {
         this.attachShadow({ mode: "open" });
         this.mode = "float";
         this.value = 0;
-        this.bits = [];
     }
 
     connectedCallback() {
@@ -22,14 +21,24 @@ class FloatInspector extends HTMLElement {
                 bits: 16,
                 exp: 5,
                 man: 10,
-                bias: 15,
+                stringToBits: (str) => {
+                    const f16 = new Float16Array(1);
+                    f16[0] = parseFloat(str);
+                    const u16 = new Uint16Array(f16.buffer);
+                    const bits = u16[0].toString(2).padStart(16, "0");
+                    return bits;
+                },
+                bitsToNumber: (bits_string) => {
+                    const u16 = new Uint16Array(1);
+                    u16[0] = parseInt(bits_string, 2);
+                    const f16 = new Float16Array(u16.buffer);
+                    return f16[0];
+                },
             },
-            bfloat: { bits: 16, exp: 8, man: 7, bias: 127 },
             float: {
                 bits: 32,
                 exp: 8,
                 man: 23,
-                bias: 127,
                 stringToBits: (str) => {
                     const f32 = new Float32Array(1);
                     f32[0] = parseFloat(str);
@@ -44,7 +53,24 @@ class FloatInspector extends HTMLElement {
                     return f32[0];
                 },
             },
-            double: { bits: 64, exp: 11, man: 52, bias: 1023 },
+            double: {
+                bits: 64,
+                exp: 11,
+                man: 52,
+                stringToBits: (str) => {
+                    const f64 = new Float64Array(1);
+                    f64[0] = parseFloat(str);
+                    const u64 = new BigUint64Array(f64.buffer);
+                    const bits = u64[0].toString(2).padStart(64, "0");
+                    return bits;
+                },
+                bitsToNumber: (bits_string) => {
+                    const u64 = new BigUint64Array(1);
+                    u64[0] = BigInt("0b" + bits_string);
+                    const f64 = new Float64Array(u64.buffer);
+                    return f64[0];
+                },
+            },
         }[this.mode];
     }
 
@@ -53,7 +79,8 @@ class FloatInspector extends HTMLElement {
         <div class="float-inspector">
       <style>
         :host { font-family: system-ui; display:block; max-width:760px; margin:20px auto }
-        .tabs { display:inline-flex; border:1px solid #ccc; border-radius:8px; overflow:hidden }
+        .wrap-tabs {display: flex;justify-self: center;}
+        .tabs { flex:1; display:inline-flex; border:1px solid #ccc; border-radius:8px; overflow:hidden }
         .tab { padding:6px 14px; cursor:pointer; border-right:1px solid #ccc }
         .tab:last-child { border-right:none }
         .tab.active { background:#333; color:#fff }
@@ -73,18 +100,20 @@ class FloatInspector extends HTMLElement {
         .sign-radio {flex:0.5}
       </style>
 
-      <!-- <div class="tabs">
-        ${["half", "bfloat", "float", "double"]
+    <div class="wrap-tabs">
+        <div class="tabs">
+        ${["half", "float", "double"]
             .map((m) => `<div class="tab ${m === this.mode ? "active" : ""}" data-mode="${m}">${m}</div>`)
             .join("")}
-      </div> -->
+        </div>
+    </div>
 
-      <div class="center">
-        <input id="valueInput" type="text" step="any">
-      </div>
+    <div class="center">
+    <input id="valueInput" type="text" step="any">
+    </div>
 
-      <div class="bits"></div>
-      <br/>
+    <div class="bits"></div>
+    <br/>
     <div class="row">
         <div class="field sign-radio">
             <label>Sign</label>
@@ -153,28 +182,14 @@ class FloatInspector extends HTMLElement {
 
     setFromValue() {
         const f = this.format;
-        let raw;
-
-        if (this.mode === "float") {
-            const bits = f.stringToBits(this.value);
-            raw = f.bitsToNumber(bits);
-        } else if (this.mode === "double") {
-            const dv = new DataView(new ArrayBuffer(8));
-            dv.setFloat64(0, this.value);
-            raw = dv.getBigUint64(0);
-        } else if (this.mode === "bfloat") {
-            const dv = new DataView(new ArrayBuffer(4));
-            dv.setFloat32(0, this.value);
-            raw = BigInt(dv.getUint32(0) >>> 16);
-        } else {
-            raw = BigInt(this.floatToHalf(this.value));
-        }
-
-        this.updateUI(raw);
+        const bits = f.stringToBits(this.value);
+        const newNumber = f.bitsToNumber(bits);
+        this.updateUI(newNumber);
     }
 
     intToBits(n, nbBits) {
-        const max = (1 << nbBits) - 1; // max value for nbBits
+        // max value for nbBits - need to convert to BigInt
+        const max = (1n << BigInt(nbBits)) - 1n;
         if (n < 0 || n > max) {
             n = max;
         }
@@ -183,7 +198,7 @@ class FloatInspector extends HTMLElement {
 
     setFromFields() {
         const f = this.format;
-        let bits = Array.from({ length: f.bits });
+        const bits = Array.from({ length: f.bits });
         if (this.shadowRoot.getElementById("positive").checked) {
             bits[0] = "0";
         } else {
@@ -211,7 +226,7 @@ class FloatInspector extends HTMLElement {
 
     updateUI(raw) {
         const f = this.format;
-        let bits = f.stringToBits(raw).split("");
+        const bits = f.stringToBits(raw).split("");
         const bitsEl = this.shadowRoot.querySelector(".bits");
         bitsEl.innerHTML = "";
 
@@ -245,11 +260,11 @@ class FloatInspector extends HTMLElement {
 
         this.shadowRoot.getElementById("valueInput").value = raw;
         const sign = bits[0] == "0" ? 1 : -1;
-        const maxExponent = (1 << (f.exp - 1)) - 1;
+        const maxExponent = (1n << BigInt(f.exp - 1)) - 1n;
         const frac = this.significandToFraction(manBits);
         this.shadowRoot.getElementById("significand-frac").innerText = ` = ${frac}`;
         this.shadowRoot.getElementById("calc").innerText = `${sign} × Math.pow(2, ${
-            exp - maxExponent
+            BigInt(exp) - maxExponent
         }) × (1 + ${frac})`;
     }
 
@@ -261,20 +276,6 @@ class FloatInspector extends HTMLElement {
             }
         }
         return fraction;
-    }
-
-    floatToHalf(val) {
-        const dv = new DataView(new ArrayBuffer(4));
-        dv.setFloat32(0, val);
-        const x = dv.getUint32(0);
-        const sign = x >>> 31;
-        let exp = (x >>> 23) & 0xff;
-        let man = x & 0x7fffff;
-
-        if (exp === 0) return sign << 15;
-        exp = exp - 127 + 15;
-        man >>= 13;
-        return (sign << 15) | (exp << 10) | man;
     }
 }
 
