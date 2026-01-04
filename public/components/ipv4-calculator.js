@@ -1,3 +1,6 @@
+// This file is part of https://github.com/Its-Just-Nans/yakb
+// It is licensed under the same license of https://github.com/Its-Just-Nans/yakb
+
 class IPv4Calculator extends HTMLElement {
     constructor() {
         super();
