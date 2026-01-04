@@ -1,0 +1,17 @@
+---
+title: Encoding
+---
+
+## Base 64
+
+> The `=` sign at the end is used for padding, it can be omitted
+
+import TextBase64 from "/components/text-base64-converter.js?url";
+
+<script src={TextBase64} type="module"></script>
+
+<text-base64-converter style="justify-self: center;width: 100%;">
+    <noscript>Javascript is disabled, cannot load web-component</noscript>
+</text-base64-converter>
+
+> Base64 use `A–Z a–z 0–9 + /` vs Base64URL `A–Z a–z 0–9 - _`, `+` is `-` and `/` is `_`

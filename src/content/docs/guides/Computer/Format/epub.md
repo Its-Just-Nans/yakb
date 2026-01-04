@@ -27,9 +27,9 @@ Note that the folder `EPUB/` is optional, you can directly use a `package.opf` a
   ```
 
 - `META-INF/container.xml`
-  - an `xml` file which contains the link to the `package.opf`
+  - a `xml` file which contains the link to the `package.opf`
 - `EPUB/package.opf`
-  - an `xml` file which contains four child:
+  - a `xml` file which contains four child:
     - `<metadata>`: informations about the epub (e.g. title, language, isbn, creator..)
     - `<manifest>`: list all the content files available in the epub
     - `<spine>`: all the content in reading order
