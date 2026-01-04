@@ -1,0 +1,9 @@
+---
+title: TCP
+---
+
+## TCP (Transmission Control Protocol)
+
+TCP (Transmission Control Protocol) is a **connection-oriented**, **reliable**, and **secure** transport-layer protocol, making it more robust than UDP. Before data transmission begins, TCP establishes a connection using a **three-way handshake**, and it also ensures a clean termination of the connection when communication ends. TCP guarantees that data arrives **in order**, **without duplication**, and **without loss**, or else it retransmits missing segments.  
+
+TCP achieves reliability through several mechanisms. It uses **acknowledgements (ACKs)** to confirm successful data reception and implements **flow control** by adjusting the sender’s transmission rate based on the receiver’s capacity, using a **sliding window** system. Additionally, TCP manages **network congestion** with a **dynamic congestion window**, whose size evolves according to mathematical rules combining arithmetic and geometric progression. This allows TCP to probe the network capacity carefully, increase throughput when conditions are good, and reduce traffic when congestion is detected. These features make TCP ideal for applications such as web browsing, file transfers, and email, where data integrity is critical.

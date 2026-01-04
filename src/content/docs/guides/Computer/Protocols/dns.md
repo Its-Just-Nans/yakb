@@ -6,7 +6,7 @@ The DNS (Domain Name System) service is essential for accessing the internet. Wh
 
 13 [root name server](https://en.wikipedia.org/wiki/Root_name_server) in the world, but replicated !
 
-### TLD (Top Level Domain)
+## TLD (Top Level Domain)
 
 TLDs are the extensions at the end of a URL that uniquely identify a FQDN (Fully Qualified Domain Name), which is the complete domain name (including the extension).
 
