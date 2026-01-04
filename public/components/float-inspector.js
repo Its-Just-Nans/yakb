@@ -98,7 +98,14 @@ class FloatInspector extends HTMLElement {
         .field label { display: block;font-size:13px; color: light-dark(#555, #eee) }
         .field input { font-family:monospace }
         .sign-radio {flex:0.5}
-      </style>
+        @media only screen and (max-width: 600px) {
+            .row {
+                flex-direction: column;
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
 
     <div class="wrap-tabs">
         <div class="tabs">
@@ -265,10 +272,10 @@ class FloatInspector extends HTMLElement {
             const maxExponent = (1n << BigInt(f.exp - 1)) - 1n;
             const sign = bits[0] == "0" ? 1 : -1;
             const frac = this.significandToFraction(manBits);
-            this.shadowRoot.getElementById("significand-frac").innerText = ` = ${frac}`;
-            this.shadowRoot.getElementById("calc").innerText = `${sign} × Math.pow(2, ${
-                BigInt(exp) - maxExponent
-            }) × (1 + ${frac})`;
+            this.shadowRoot.getElementById("significand-frac").innerText = ` = ${frac} (as fraction)`;
+            const formula1 = `${sign} × 2<sup>(${exp} - ${maxExponent})</sup> × (1 + ${frac})`;
+            const formula2 = `${sign} × 2<sup>${BigInt(exp) - maxExponent}</sup> × ${1 + frac}`;
+            this.shadowRoot.getElementById("calc").innerHTML = `${formula1}<br/>${formula2}`;
         }
     }
 
