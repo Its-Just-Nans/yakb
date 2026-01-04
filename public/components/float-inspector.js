@@ -21,11 +21,11 @@ class FloatInspector extends HTMLElement {
                 bits: 16,
                 exp: 5,
                 man: 10,
-                stringToBits: (str) => {
+                stringNumberToBits: (str) => {
                     const f16 = new Float16Array(1);
                     f16[0] = parseFloat(str);
                     const u16 = new Uint16Array(f16.buffer);
-                    const bits = u16[0].toString(2).padStart(16, "0");
+                    const bits = u16[0].toString(2).padStart(16, "0").split("");
                     return bits;
                 },
                 bitsToNumber: (bits_string) => {
@@ -39,11 +39,11 @@ class FloatInspector extends HTMLElement {
                 bits: 32,
                 exp: 8,
                 man: 23,
-                stringToBits: (str) => {
+                stringNumberToBits: (str) => {
                     const f32 = new Float32Array(1);
                     f32[0] = parseFloat(str);
                     const u32 = new Uint32Array(f32.buffer);
-                    const bits = u32[0].toString(2).padStart(32, "0");
+                    const bits = u32[0].toString(2).padStart(32, "0").split("");
                     return bits;
                 },
                 bitsToNumber: (bits_string) => {
@@ -57,11 +57,11 @@ class FloatInspector extends HTMLElement {
                 bits: 64,
                 exp: 11,
                 man: 52,
-                stringToBits: (str) => {
+                stringNumberToBits: (str) => {
                     const f64 = new Float64Array(1);
                     f64[0] = parseFloat(str);
                     const u64 = new BigUint64Array(f64.buffer);
-                    const bits = u64[0].toString(2).padStart(64, "0");
+                    const bits = u64[0].toString(2).padStart(64, "0").split("");
                     return bits;
                 },
                 bitsToNumber: (bits_string) => {
@@ -182,9 +182,8 @@ class FloatInspector extends HTMLElement {
 
     setFromValue() {
         const f = this.format;
-        const bits = f.stringToBits(this.value);
-        const newNumber = f.bitsToNumber(bits);
-        this.updateUI(newNumber);
+        const bits = f.stringNumberToBits(this.value);
+        this.updateUI(bits);
     }
 
     intToBits(n, nbBits) {
@@ -218,15 +217,12 @@ class FloatInspector extends HTMLElement {
         for (let i = minMan; i < maxMan; i++) {
             bits[i] = man[i - minMan];
         }
-
-        const raw = f.bitsToNumber(bits.join(""));
-
-        this.updateUI(raw);
+        this.updateUI(bits);
     }
 
-    updateUI(raw) {
+    updateUI(bits) {
         const f = this.format;
-        const bits = f.stringToBits(raw).split("");
+        const raw = f.bitsToNumber(bits.join(""));
         const bitsEl = this.shadowRoot.querySelector(".bits");
         bitsEl.innerHTML = "";
 
@@ -237,8 +233,7 @@ class FloatInspector extends HTMLElement {
 
             el.onclick = () => {
                 bits[i] = bits[i] === "0" ? "1" : "0";
-                const newNumber = f.bitsToNumber(bits.join(""));
-                this.updateUI(newNumber);
+                this.updateUI(bits);
             };
 
             bitsEl.appendChild(el);
