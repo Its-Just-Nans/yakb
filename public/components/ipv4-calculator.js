@@ -124,7 +124,7 @@ class IPv4Calculator extends HTMLElement {
         const last = broadcast - (cidr >= 31 ? 0 : 1);
         const usable =
             cidr === 31
-                ? `2 (<a href="https://datatracker.ietf.org/doc/html/rfc3021">RFC 3021</a>)`
+                ? `2 (<a href="https://datatracker.ietf.org/doc/html/rfc3021" style="color: blue;">RFC 3021</a>)`
                 : cidr === 32
                 ? "1"
                 : `${last - first + 1}`;
@@ -193,7 +193,6 @@ class IPv4Calculator extends HTMLElement {
             return false;
         }
         const num = nums.map(Number);
-        console.log(num);
         if (num.length !== 4 || num.some((n) => !validOctets.includes(n))) return false;
         // Additionally, ensure overall mask is contiguous 1s followed by 0s
         const bin = num.map((n) => n.toString(2).padStart(8, "0")).join("");
