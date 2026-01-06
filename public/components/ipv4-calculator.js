@@ -122,7 +122,12 @@ class IPv4Calculator extends HTMLElement {
         const broadcast = network | (~maskNum >>> 0);
         const first = network + (cidr >= 31 ? 0 : 1);
         const last = broadcast - (cidr >= 31 ? 0 : 1);
-        const usable = cidr === 31 ? 2 : cidr === 32 ? 1 : last - first + 1;
+        const usable =
+            cidr === 31
+                ? `2 (<a href="https://datatracker.ietf.org/doc/html/rfc3021">RFC 3021</a>)`
+                : cidr === 32
+                ? "1"
+                : `${last - first + 1}`;
 
         const ipBin = this.toBinary(ipNum);
         const maskBin = this.toBinary(maskNum);
