@@ -87,7 +87,7 @@ $$$
 > - `B`: bandwidth
 > - `R`: symbol rate
 
-Since channel bandwidth is limited, symbol time is limited too — so the transmission speed is limited.
+Since channel bandwidth is limited, symbol time is limited too - so the transmission speed is limited.
 
 ### Eye Diagram
 

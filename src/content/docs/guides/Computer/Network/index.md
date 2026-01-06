@@ -7,7 +7,7 @@ title: Computer Networks
 
 ## OSI Model
 
-The OSI model is a seven-layer conceptual framework that standardizes and describes the distinct functions of network communication — from physical bit transmission to application-level services — to guide interoperability, design, and troubleshooting.
+The OSI model is a seven-layer conceptual framework that standardizes and describes the distinct functions of network communication - from physical bit transmission to application-level services - to guide interoperability, design, and troubleshooting.
 
 | No. | OSI Layer        | Responsibilities                                    |
 | --- | :--------------- | --------------------------------------------------- |
@@ -29,7 +29,7 @@ As the OSI model is only conceptual, the TCP/IP is the most used for communicati
 | **Transport**   | Segment          | Host-to-host communication, ports, reliability                                                                  | TCP, UDP             |
 | **Internet**    | Datagram/Packet  | Logical addressing and routing (IP)                                                                             | IPv4, IPv6, ICMP     |
 | **Link**        | Frame            | Physical addressing and local delivery                                                                          | Ethernet, Wi‑Fi      |
-| (part of Link)  | Bits             | —                                                                                                               | Cables, fiber        |
+| (part of Link)  | Bits             | /                                                                                                               | Cables, fiber        |
 
 ## Acronyms for Area Network
 

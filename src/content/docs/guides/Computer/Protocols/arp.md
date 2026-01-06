@@ -6,7 +6,7 @@ title: ARP
 
 ARP (Address Resolution Protocol) is a fundamental networking protocol used to map a **logical IP address (Layer 3)** to a **physical MAC address (Layer 2)** within a local network.
 
-Even though ARP is closely related to IP, its packets are encapsulated directly inside **Ethernet frames**, which is why ARP is often described as operating at **Layer 2.5**—a layer between the Data Link layer and the Network layer.
+Even though ARP is closely related to IP, its packets are encapsulated directly inside **Ethernet frames**, which is why ARP is often described as operating at **Layer 2.5** - a layer between the Data Link layer and the Network layer.
 
 When a device wants to communicate with another device on the same local network, it must know the destination’s MAC address.
 

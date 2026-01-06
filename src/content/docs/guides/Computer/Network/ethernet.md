@@ -19,4 +19,4 @@ A **MAC (Media Access Control) address** uniquely identifies each network interf
 - **First 24 bits:** Assigned by the IEEE (manufacturer identifier).
 - **Last 24 bits:** Chosen by the manufacturer (OUI – Organizationally Unique Identifier).
 - **Format:** Hexadecimal numbers separated by colons, e.g., `98:01:A7:90:51:25`.
-- **Broadcast Address:** `FF:FF:FF:FF:FF:FF` — used to communicate with all devices on the network simultaneously.
+- **Broadcast Address:** `FF:FF:FF:FF:FF:FF` - used to communicate with all devices on the network simultaneously.
