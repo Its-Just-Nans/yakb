@@ -17,7 +17,7 @@ title: "Transmission Channel"
 
 The modulator transmits bits in groups called **symbols**. Symbols form an **alphabet**.
 
-Example of a 4-symbol alphabet:  
+Example of a 4-symbol alphabet:
 m₁ = 00, m₂ = 01, m₃ = 10, m₄ = 11
 
 The digital modulator is composed of two parts:
@@ -37,9 +37,9 @@ $$$
 
 > Caption:
 >
-> - `x(t)`: received signal  
-> - `S'ₖ(t)`: the signal distorted by the band-pass filter  
-> - `w(t)`: the noise  
+> - `x(t)`: received signal
+> - `S'ₖ(t)`: the signal distorted by the band-pass filter
+> - `w(t)`: the noise
 
 ## 5. Digital Demodulator
 
