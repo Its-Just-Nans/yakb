@@ -1,0 +1,24 @@
+---
+title: File permissions
+---
+
+## Unix file permissions
+
+import Chmod from "/components/chmod-selector.js?url";
+
+<script src={Chmod} type="module"></script>
+
+<chmod-selector>
+    <noscript>Javascript is disabled, cannot load web-component</noscript>
+</chmod-selector>
+
+**Permissions (rwx):**
+Add the values per user, group, or other to form the permission digit.
+- `r` = read (4)
+- `w` = write (2)
+- `x` = execute (1).
+
+**Special bits:**
+- `setuid` (4) run as file owner
+- `setgid` (2) run as group owner
+- `sticky` (1) restrict delete to owner (commonly on `/tmp`)
