@@ -51,6 +51,9 @@ class IPv4Calculator extends HTMLElement {
         display: inline-block;
         margin-top: 2px;
     }
+    #cidr {
+        color: red;
+    }
     </style>
         <label>IPv4 Address:
         <input type="text" id="ip" placeholder="e.g. 192.168.0.1">
