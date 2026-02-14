@@ -51,14 +51,14 @@ class IPv4Calculator extends HTMLElement {
         display: inline-block;
         margin-top: 2px;
     }
-    #cidr {
+    .span-cidr {
         color: red;
     }
     </style>
         <label>IPv4 Address:
         <input type="text" id="ip" placeholder="e.g. 192.168.0.1">
         </label>
-        <label>Mask (CIDR):
+        <label>Mask <span class="span-cidr">(CIDR)</span>:
         <input type="number" id="cidr" min="0" max="32" placeholder="e.g. 24">
         </label>
         <label>Mask (255 style):
