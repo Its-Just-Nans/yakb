@@ -1,4 +1,4 @@
 ---
 title: Zip
-description:  format
+description: zip format
 ---
