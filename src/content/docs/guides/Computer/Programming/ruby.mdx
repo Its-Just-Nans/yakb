@@ -5,9 +5,109 @@ description: Ruby programming language
 
 Ruby, created in 1995. https://www.ruby-lang.org/
 
-Famous book: "Pickage book"
+## Example
+
+```rb
+# demo.rb
+
+puts "=== Ruby Demo: 11 Examples ===\n\n"
+
+# 1. Hello World
+puts "1) Hello World:"
+puts "Hello, world!\n\n"
+
+# 2. Variables and arithmetic
+puts "2) Variables & Arithmetic:"
+a = 5
+b = 3
+puts "a = #{a}, b = #{b}, sum = #{a + b}\n\n"
+
+# 3. Arrays
+puts "3) Arrays:"
+fruits = ["apple", "banana", "cherry"]
+puts "First fruit: #{fruits[0]}"
+puts "All fruits: #{fruits.join(', ')}\n\n"
+
+# 4. Hashes
+puts "4) Hashes:"
+ages = { "Alice" => 25, "Bob" => 30 }
+puts "Alice is #{ages["Alice"]} years old\n\n"
+
+# 5. Conditionals
+puts "5) Conditionals:"
+if a > b
+  puts "#{a} is greater than #{b}\n\n"
+else
+  puts "#{b} is greater or equal to #{a}\n\n"
+end
+
+# 6. Loops
+puts "6) Loops:"
+(1..3).each do |i|
+  puts "Loop iteration #{i}"
+end
+puts
+
+# 7. Methods
+puts "7) Methods:"
+def greet(name)
+  "Hello, #{name}!"
+end
+puts greet("Ruby User")
+puts
+
+# 8. File handling
+puts "8) File Handling (write & read):"
+filename = "demo.txt"
+
+# Write
+File.open(filename, "w") do |f|
+  f.puts "This is a test file."
+end
+
+# Read
+File.open(filename, "r") do |f|
+  f.each_line do |line|
+    puts "Read: #{line}"
+  end
+end
+puts
+
+# 9. Regular expressions
+puts "9) Regular Expressions:"
+text = "Ruby is powerful"
+if text =~ /powerful/
+  puts "Match found in text!\n\n"
+end
+
+# 10. Command-line arguments
+puts "10) Command-line Arguments:"
+if ARGV.any?
+  puts "Arguments passed: #{ARGV.join(' ')}\n\n"
+else
+  puts "No arguments provided\n\n"
+end
+
+# 11. Method using shift
+puts "11) Method with shift:"
+def add_numbers(*args)
+  x = args.shift   # first argument
+  y = args.shift   # second argument
+  x + y
+end
+
+result = add_numbers(10, 20)
+puts "10 + 20 = #{result}"
+
+puts "\n=== End of Demo ==="
+```
+
+## Famous book
+
+- "Pickage book"
 
 ## Famous library/framework
 
 - Ruby on Rails: https://rubyonrails.org/
 
+Similar to Perl and Python
