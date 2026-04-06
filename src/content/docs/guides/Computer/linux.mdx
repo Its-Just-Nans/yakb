@@ -1,0 +1,46 @@
+---
+title: Linux
+---
+
+## Starting Linux
+
+### Pre-Loader
+
+- Boot ROM
+- Secondary Program Loader for U-Boot
+- Commom Firmware Environment (CFE)
+- Bootloader
+  - BIOS: GRUB, Limine
+  - UEFI: GRUB, Limine, rEFInd, systemd-boot
+
+### Bootloader
+
+> <https://wiki.cachyos.org/installation/boot_managers/>
+
+UEFI (Unified Extensible Firmware Interface) is a specification: <https://uefi.org/>
+
+During the bootloader, basic initialization of the system:
+- RAM
+- Serial port
+- Hardware detection
+  - ARM Tags (ATAG) - old
+  - Device tree
+- Loading and calling the image
+
+Device Tree is made of two format:
+
+- Device Tree Source, DTS
+- Device Tree Blob, DTB or Flattened Devicetree
+
+Examples of bootloader:
+
+- Das U-Boot (embedded)
+- GRUB, systemd-boot
+- Windows Boot Manager
+
+### Starting the image
+
+- `r0`: 0
+- `r1`: platform ID
+- `r2`: ATAG or device tree (known by the magic `0xd00dfeed`)
+
