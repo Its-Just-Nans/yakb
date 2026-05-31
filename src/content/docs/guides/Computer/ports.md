@@ -33,6 +33,7 @@ The software port is also called an **application port** because it matches a 16
 - 389 TCP/UDP – LDAP: Directory services
 - **443 TCP/UDP** – HTTPS: Secure web traffic
 - 587 TCP – SMTP Submission
+- 631 TCP/UDP - Printer (CUPS, Internet Printing Protocol)
 - 993 TCP – IMAPS: IMAP over SSL/TLS
 - 995 TCP – POP3S: POP3 over SSL/TLS
 - 3306 TCP – MySQL / MariaDB
