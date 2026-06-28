@@ -6,9 +6,17 @@ title: File format
 
 - <http://www.libpng.org/pub/png/spec/>
 
+## `.qoi`
+
+- <https://qoiformat.org/qoi-specification.pdf>
+
 ## `.svg`
 
 - <https://www.w3.org/TR/SVG11/>
+
+## `.webp`
+
+- <https://developers.google.com/speed/webp/docs/riff_container>
 
 ## `.dxf`
 
