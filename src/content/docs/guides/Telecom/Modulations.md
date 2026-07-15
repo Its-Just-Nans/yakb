@@ -8,9 +8,9 @@ If we want to reduce the frequency bandwidth occupied by the signal, we use rais
 
 We measure the efficiency (which we aim to maximize) of the modulation using the following formula:
 
-$$$
+```math
 p = \frac{R_b}{B}
-$$$
+```
 
 > Caption:
 >

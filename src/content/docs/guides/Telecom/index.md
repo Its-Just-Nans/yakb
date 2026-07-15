@@ -10,9 +10,9 @@ The number of possible signal states is denoted by `M` - called [valence](https:
 
 It is calculated from the valence (number of possible states) as:
 
-$$$
+```math
 M = 2^n
-$$$
+```
 
 ---
 
@@ -22,25 +22,25 @@ The symbol rate is also called **modulation rate**. It is the inverse of the sym
 
 Symbol rate (**in baud**)
 
-$$$
+```math
 R = \frac{1}{T_s}
-$$$
+```
 
 The bitrate is the inverse of the **bit time**:
 
 Bitrate (**in bits/s**)
 
-$$$
+```math
 R_b = \frac{1}{T_b}
-$$$
+```
 
 We can convert between symbol rate and bitrate using valence:
 
 Bitrate from symbol rate and valence (**in bits/s**)
 
-$$$
+```math
 R_b = R \cdot \log_2(M) = R \cdot n
-$$$
+```
 
 ---
 
@@ -50,9 +50,9 @@ $$$
 
 The Shannon-Hartley theorem allows us to determine channel capacity:
 
-$$$
+```math
 C = B \cdot \log_2\left(1 + \frac{S}{N}\right)
-$$$
+```
 
 > Caption:
 >
@@ -65,9 +65,9 @@ Noise limits the valence, which in turn limits the channel capacity.
 
 So we have:
 
-$$$
+```math
 R_b \le C
-$$$
+```
 
 > Caption:
 >
@@ -78,9 +78,9 @@ $$$
 
 Nyquist's theorem defines the minimum required bandwidth for a channel (to avoid intersymbol interference - ISI):
 
-$$$
+```math
 B \ge R
-$$$
+```
 
 > Caption:
 >

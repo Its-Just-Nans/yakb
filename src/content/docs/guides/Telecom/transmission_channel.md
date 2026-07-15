@@ -31,9 +31,9 @@ The channel acts like a **band-pass filter**. It also adds **noise** and causes 
 
 The received signal is therefore:
 
-$$$
+```math
 x(t) = S'ₖ(t) + w(t)
-$$$
+```
 
 > Caption:
 >
