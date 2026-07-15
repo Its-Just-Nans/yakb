@@ -20,6 +20,6 @@
         "remark-math": "^6.0.0",
         "remark-toc": "^9.0.0",
         "sharp": "^0.32.5",
-        "starlight-links-validator": "^0.16.0"
+        "starlight-links-validator": "^0.25.2"
     }
 }
