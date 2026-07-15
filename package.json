@@ -12,8 +12,8 @@
         "upgrade": "npx @astrojs/upgrade"
     },
     "dependencies": {
-        "@astrojs/starlight": "^0.37.0",
-        "astro": "^5.16.2",
+        "@astrojs/starlight": "^0.41.3",
+        "astro": "^7.0.6",
         "katex": "^0.16.25",
         "rehype-external-links": "^3.0.0",
         "rehype-katex": "^7.0.1",

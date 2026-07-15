@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350">
+  <style>
+.axis{stroke:#444;stroke-width:2}
+.lens{stroke:#0080ff;stroke-width:4}
+.obj,.img{stroke:#000;stroke-width:3}
+.ray{stroke:#d63b3b;stroke-width:3;fill:none}
+.virtual{stroke-dasharray:8 8}
+text{font-family:Arial,sans-serif;font-size:18px}
+</style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6Z" fill="currentColor" />
+    </marker>
+  </defs>
+  <line class="axis" x1="40" y1="180" x2="760" y2="180" />
+  <g>
+    <path d="M394 77L400 61L406 77Z" fill="#0080ff" />
+    <path d="M406 289L400 305L394 289Z" fill="#0080ff" />
+    <line stroke="#0080ff" stroke-width="4" class="lens" x1="400" y1="70" x2="400" y2="290" />
+  </g>
+  <text x="392" y="170">O</text>
+  <text x="250" y="205">F</text>
+  <text x="545" y="175">F'</text>
+  <line class="obj" x1="320" y1="180" x2="320" y2="120" />
+  <text x="315" y="205">A</text>
+  <text x="325" y="115">B</text>
+  <line class="img virtual" x1="120" y1="180" x2="120" y2="40" />
+  <text x="95" y="205">A'</text>
+  <text x="95" y="35">B'</text>
+  <polyline class="ray" points="320,120 400,120 700,230" marker-end="url(#arrow)" />
+  <line class="ray" x1="320" y1="120" x2="700" y2="300" marker-end="url(#arrow)" />
+  <line class="ray virtual" x1="320" y1="120" x2="120" y2="40" />
+  <line class="ray virtual" x1="400" y1="120" x2="120" y2="40" />
+</svg>
