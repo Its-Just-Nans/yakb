@@ -50,3 +50,12 @@ Examples of bootloader:
 - Filesystem Hierarchy Standard - https://refspecs.linuxfoundation.org/fhs.shtml
 
 - Linux Standard Base - https://refspecs.linuxfoundation.org/lsb.shtml
+
+## Debug linux
+
+- `pr_*` functions (ring buffer of dmesg)
+- `dev_*` functions (with a pointer to device)
+- Debugfs (`CONFIG_DEBUG_FS` and mounting `/sys/kernel/debug`
+- `kgdb` with serial
+- `JTAG/SWD` on the processor
+- QEMU (and `gdb`)
