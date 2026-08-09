@@ -2,6 +2,15 @@
 title: Linux driver
 ---
 
+## Kernel modules tools
+
+- `modinfo <module_name|module.ko>` provides information about a module (author, description, license, kernel version it was compiled for, list of accepted parameters, etc.).
+- `insmod <module.ko>` loads a module.
+- `modprobe <module_name>` loads a module and any required dependencies.
+- `lsmod` lists the modules currently loaded.
+- `rmmod <module_name>` unloads a module. This operation is only possible if the module is not currently in use.
+- `modprobe -r <module_name>` also unloads a module and all of its dependencies that are not being used.
+
 ## Debug linux
 
 - `pr_*` functions (ring buffer of dmesg)
