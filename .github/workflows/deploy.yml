@@ -30,6 +30,8 @@ jobs:
                   persist-credentials: false
             - name: Rust Cache # cache the rust build artefacts
               uses: Swatinem/rust-cache@v2
+              with:
+                  cache-directories: "yakb-rs/target"
             - run: bash .github/deploy.sh
               shell: bash
             - uses: its-just-nans/deploy-that@latest
