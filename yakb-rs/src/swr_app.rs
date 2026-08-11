@@ -1,5 +1,5 @@
 ///! swr app
-use bladvak::app::{Bladvak, BladvakApp, MainResult};
+
 use bladvak::eframe::egui::{self, Align2, Color32, FontId, Pos2, Rect, Stroke, Vec2};
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
