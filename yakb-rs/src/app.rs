@@ -86,7 +86,11 @@ impl BladvakApp<'_> for YakbApp {
     }
 
     fn central_panel(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
-        self.animation.show(ui);
+        egui::ScrollArea::vertical()
+            .id_salt("animation_viewer")
+            .show(ui, |ui| {
+                self.animation.show(ui);
+            });
     }
 
     fn menu_file(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
