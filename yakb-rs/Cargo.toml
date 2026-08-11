@@ -2,6 +2,7 @@
 name = "yakb"
 version = "0.1.0"
 edition = "2024"
+license = "MIT OR Apache-2.0"
 description = "Yet another knowledge base"
 homepage = "https://yakb.n4n5.dev"
 repository = "https://github.com/Its-Just-Nans/yakb"
