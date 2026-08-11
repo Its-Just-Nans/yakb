@@ -1,6 +1,9 @@
 //! Yakb app
 
-use bladvak::{BladvakApp, eframe, eframe::egui};
+use bladvak::{
+    BladvakApp,
+    eframe::{self, egui},
+};
 
 use crate::swr_app::WaveApp;
 
@@ -28,6 +31,17 @@ impl Animation {
     }
 }
 
+impl TryFrom<&str> for Animation {
+    type Error = String;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "swr" => Ok(Animation::Swr(WaveApp::default())),
+            _ => Err("No animation".to_string()),
+        }
+    }
+}
+
 /// Yakb app
 #[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
 pub struct YakbApp {
@@ -37,11 +51,25 @@ pub struct YakbApp {
 
 impl BladvakApp<'_> for YakbApp {
     fn try_new_with_args(
-        saved_state: Self,
-        _cc: &eframe::CreationContext<'_>,
+        mut saved_state: Self,
+        cc: &eframe::CreationContext<'_>,
         _args: &[String],
         _error_manager: &mut bladvak::ErrorManager,
     ) -> Result<Self, bladvak::AppError> {
+        #[cfg(target_arch = "wasm32")]
+        {
+            if let Some(names) = cc
+                .integration_info
+                .web_info
+                .location
+                .query_map
+                .get("animation")
+                && let Some(name) = names.first()
+                && let Ok(anim) = Animation::try_from(name.as_str())
+            {
+                saved_state.animation = anim;
+            }
+        }
         Ok(saved_state)
     }
 
