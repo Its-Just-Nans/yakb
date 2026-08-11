@@ -1,0 +1,8 @@
+[package]
+name = "yakb"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bladvak = "1.3.26"
+serde = { version = "1.0.229", features = ["derive"] }
