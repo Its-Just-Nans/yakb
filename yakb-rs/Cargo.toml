@@ -2,6 +2,7 @@
 name = "yakb"
 version = "0.1.0"
 edition = "2024"
+description = "Yet another knowledge base"
 
 [dependencies]
 bladvak = "1.3.26"

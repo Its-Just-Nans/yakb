@@ -4,11 +4,35 @@ use bladvak::{BladvakApp, eframe, eframe::egui};
 
 use crate::swr_app::WaveApp;
 
+/// All available animations
+#[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
+pub(crate) enum Animation {
+    /// base animation
+    #[default]
+    Base,
+    /// SWR animation
+    Swr(WaveApp),
+}
+
+impl Animation {
+    /// Show the current animation
+    pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
+        match self {
+            Animation::Base => {
+                bladvak::utils::central_ui(ui, |ui| {
+                    ui.label("Welcome to yakb");
+                });
+            }
+            Animation::Swr(wave_app) => wave_app.show(ui),
+        }
+    }
+}
+
 /// Yakb app
 #[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
 pub struct YakbApp {
-    /// swr app
-    swr: WaveApp,
+    /// current animation
+    animation: Animation,
 }
 
 impl BladvakApp<'_> for YakbApp {
@@ -34,6 +58,17 @@ impl BladvakApp<'_> for YakbApp {
     }
 
     fn central_panel(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
-        self.swr.show(ui);
+        self.animation.show(ui);
+    }
+
+    fn menu_file(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
+        ui.menu_button("Animation", |ui| {
+            if ui.button("Base").clicked() {
+                self.animation = Animation::Base;
+            }
+            if ui.button("SWR").clicked() {
+                self.animation = Animation::Swr(WaveApp::default());
+            }
+        });
     }
 }

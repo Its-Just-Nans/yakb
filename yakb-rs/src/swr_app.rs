@@ -1,18 +1,27 @@
-///! swr app
+//! swr app
 
 use bladvak::eframe::egui::{self, Align2, Color32, FontId, Pos2, Rect, Stroke, Vec2};
 
+/// Wave app
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
+#[allow(clippy::struct_excessive_bools)]
 pub(crate) struct WaveApp {
+    /// reflection coeff
     reflection: f32,
+    /// wave length
     length: f32,
 
+    /// is incident
     incident: bool,
+    /// is reflected
     reflected: bool,
+    /// is total
     total: bool,
+    /// is stationary
     stationary: bool,
+    /// is progressive
     progressive: bool,
-
+    /// current time
     time: f32,
 }
 
@@ -33,10 +42,10 @@ impl Default for WaveApp {
     }
 }
 
-// ============================================================================
-// WAVE CANVAS
-// ============================================================================
-
+/// Draw the canvas
+#[allow(clippy::too_many_arguments)]
+#[allow(clippy::too_many_lines)]
+#[allow(clippy::fn_params_excessive_bools)]
 fn draw_wave_canvas(
     painter: &egui::Painter,
     rect: Rect,
@@ -53,10 +62,7 @@ fn draw_wave_canvas(
 
     let axis_y = plot.center().y + 10.0;
 
-    // ------------------------------------------------------------------------
     // Axis
-    // ------------------------------------------------------------------------
-
     painter.line_segment(
         [
             Pos2::new(plot.left(), axis_y),
@@ -65,10 +71,7 @@ fn draw_wave_canvas(
         Stroke::new(1.0, Color32::LIGHT_GRAY),
     );
 
-    // ------------------------------------------------------------------------
     // Labels
-    // ------------------------------------------------------------------------
-
     painter.text(
         Pos2::new(plot.left() + 6.0, plot.top() + 8.0),
         Align2::LEFT_TOP,
@@ -85,23 +88,14 @@ fn draw_wave_canvas(
         Color32::GRAY,
     );
 
-    // ------------------------------------------------------------------------
     // Parameters
-    // ------------------------------------------------------------------------
 
-    // Slider range is 0.25 ..= 3.0.
-    //
-    // Map it to a useful visual wavelength.
     let wavelength = egui::lerp(80.0..=500.0, length / 3.0);
 
     let amplitude = 50.0;
 
     // Angular frequency.
     let omega = 2.0;
-
-    // ------------------------------------------------------------------------
-    // Incident wave
-    // ------------------------------------------------------------------------
 
     if show_incident {
         draw_incident_wave(
@@ -115,11 +109,6 @@ fn draw_wave_canvas(
             Color32::RED,
         );
     }
-
-    // ------------------------------------------------------------------------
-    // Reflected wave
-    // ------------------------------------------------------------------------
-
     if show_reflected {
         draw_reflected_wave(
             painter,
@@ -133,11 +122,6 @@ fn draw_wave_canvas(
             Color32::GREEN,
         );
     }
-
-    // ------------------------------------------------------------------------
-    // Total wave
-    // ------------------------------------------------------------------------
-
     if show_total {
         draw_total_wave(
             painter,
@@ -151,11 +135,6 @@ fn draw_wave_canvas(
             Color32::BLACK,
         );
     }
-
-    // ------------------------------------------------------------------------
-    // Stationary wave
-    // ------------------------------------------------------------------------
-
     if show_stationary {
         draw_stationary_wave(
             painter,
@@ -169,11 +148,6 @@ fn draw_wave_canvas(
             Color32::BLUE,
         );
     }
-
-    // ------------------------------------------------------------------------
-    // Progressive component
-    // ------------------------------------------------------------------------
-
     if show_progressive {
         draw_progressive_wave(
             painter,
@@ -187,10 +161,6 @@ fn draw_wave_canvas(
             Color32::MAGENTA,
         );
     }
-
-    // ------------------------------------------------------------------------
-    // Legend
-    // ------------------------------------------------------------------------
 
     let x = plot.right() + 8.0;
 
@@ -222,10 +192,8 @@ fn draw_wave_canvas(
     }
 }
 
-// ============================================================================
-// INCIDENT WAVE
-// ============================================================================
-
+/// Draw incident wave
+#[allow(clippy::too_many_arguments)]
 fn draw_incident_wave(
     painter: &egui::Painter,
     rect: Rect,
@@ -258,10 +226,8 @@ fn draw_incident_wave(
     painter.add(egui::Shape::line(points, Stroke::new(1.3, color)));
 }
 
-// ============================================================================
-// REFLECTED WAVE
-// ============================================================================
-
+/// draw reflected wave
+#[allow(clippy::too_many_arguments)]
 fn draw_reflected_wave(
     painter: &egui::Painter,
     rect: Rect,
@@ -300,10 +266,8 @@ fn draw_reflected_wave(
     painter.add(egui::Shape::line(points, Stroke::new(1.3, color)));
 }
 
-// ============================================================================
-// TOTAL WAVE
-// ============================================================================
-
+/// Draw total wave
+#[allow(clippy::too_many_arguments)]
 fn draw_total_wave(
     painter: &egui::Painter,
     rect: Rect,
@@ -352,10 +316,8 @@ fn draw_total_wave(
     painter.add(egui::Shape::line(points, Stroke::new(1.6, color)));
 }
 
-// ============================================================================
-// STATIONARY WAVE
-// ============================================================================
-
+/// Draw stationary wave
+#[allow(clippy::too_many_arguments)]
 fn draw_stationary_wave(
     painter: &egui::Painter,
     rect: Rect,
@@ -420,10 +382,8 @@ fn draw_stationary_wave(
     painter.add(egui::Shape::line(points, Stroke::new(1.5, color)));
 }
 
-// ============================================================================
-// PROGRESSIVE COMPONENT
-// ============================================================================
-
+/// Draw progrssive wave
+#[allow(clippy::too_many_arguments)]
 fn draw_progressive_wave(
     painter: &egui::Painter,
     rect: Rect,
@@ -469,10 +429,7 @@ fn draw_progressive_wave(
     painter.add(egui::Shape::line(points, Stroke::new(1.4, color)));
 }
 
-// ============================================================================
-// CONTROLS
-// ============================================================================
-
+/// Draw controls
 fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
     let panel_width = 320.0;
 
@@ -480,10 +437,7 @@ fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
 
     ui.separator();
 
-    // ------------------------------------------------------------------------
     // Reflection coefficient
-    // ------------------------------------------------------------------------
-
     ui.horizontal(|ui| {
         ui.label(egui::RichText::new("Coeff de Réflexion").color(Color32::WHITE));
 
@@ -492,24 +446,14 @@ fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
         ui.label(egui::RichText::new(format!("{:.2}", app.reflection)).color(Color32::LIGHT_BLUE));
     });
 
-    // ------------------------------------------------------------------------
     // Waves
-    // ------------------------------------------------------------------------
-
     checkbox(ui, "Onde Incidente", &mut app.incident);
-
     checkbox(ui, "Onde Réfléchie", &mut app.reflected);
-
     checkbox(ui, "Onde Totale", &mut app.total);
-
     checkbox(ui, "Onde Stationnaire", &mut app.stationary);
-
     checkbox(ui, "Composante Progressive", &mut app.progressive);
 
-    // ------------------------------------------------------------------------
     // Wavelength
-    // ------------------------------------------------------------------------
-
     ui.horizontal(|ui| {
         ui.label(egui::RichText::new("Longueur").color(Color32::WHITE));
 
@@ -519,11 +463,13 @@ fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
     });
 }
 
+/// utils checkbox and Rich text
 fn checkbox(ui: &mut egui::Ui, text: &str, value: &mut bool) {
     ui.checkbox(value, egui::RichText::new(text).color(Color32::WHITE));
 }
 
 impl WaveApp {
+    /// show the animations
     pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx();
 
@@ -542,9 +488,6 @@ impl WaveApp {
 
         ui.add_space(10.0);
 
-        // ====================================================================
-        // CANVAS
-        // ====================================================================
         ui.horizontal(|ui| {
             let available = ui.available_size();
 
@@ -577,31 +520,17 @@ impl WaveApp {
         });
 
         ui.add_space(10.0);
-
-        // ====================================================================
-        // CONTROLS
-        // ====================================================================
-
         draw_controls(ui, self);
-
         ui.add_space(10.0);
-
-        // ====================================================================
-        // INFORMATION
-        // ====================================================================
-
         egui::Grid::new("coefficient_grid")
             .num_columns(2)
             .spacing([20.0, 6.0])
             .show(ui, |ui| {
                 ui.label(egui::RichText::new("Coefficient de Réflexion").size(16.0));
-
                 ui.label(egui::RichText::new(format!("{:.2}", self.reflection)).size(16.0));
-
                 ui.end_row();
 
                 ui.label("R / Z₁");
-
                 ui.label(
                     egui::RichText::new(format!(
                         "{:.6}",
@@ -609,21 +538,11 @@ impl WaveApp {
                     ))
                     .size(16.0),
                 );
-
                 ui.end_row();
 
                 ui.label("Longueur d'onde");
-
                 let wavelength = egui::lerp(80.0..=500.0, self.length / 3.0);
-
-                ui.label(egui::RichText::new(format!("{:.1} px", wavelength)).size(16.0));
-
-                ui.end_row();
-
-                ui.label("Temps");
-
-                ui.label(egui::RichText::new(format!("{:.2}", self.time)).size(16.0));
-
+                ui.label(egui::RichText::new(format!("{wavelength:.1} px")).size(16.0));
                 ui.end_row();
             });
     }
