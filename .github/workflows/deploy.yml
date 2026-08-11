@@ -34,5 +34,5 @@ jobs:
               shell: bash
             - uses: its-just-nans/deploy-that@latest
               with:
-                  checkout_submodules: "true"
+                  should_checkout: "false"
                   language: "none"

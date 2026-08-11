@@ -4,7 +4,7 @@ npm install --force
 npm run build
 
 
-mkdir dist/animations/
+mkdir -p dist/animations/
 
 rustup update stable
 rustup default stable
