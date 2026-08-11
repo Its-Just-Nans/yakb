@@ -3,6 +3,10 @@ name = "yakb"
 version = "0.1.0"
 edition = "2024"
 description = "Yet another knowledge base"
+homepage = "https://yakb.n4n5.dev"
+repository = "https://github.com/Its-Just-Nans/yakb"
+documentation = "https://docs.rs/yakb"
+
 
 [dependencies]
 bladvak = "1.3.26"
