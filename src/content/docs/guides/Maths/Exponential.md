@@ -13,9 +13,10 @@ is called the `natural exponential function`
 ```math
 e=\sum \limits _{n=0}^{\infty }{\frac {1}{n!}}=1+{\frac {1}{1}}+{\frac {1}{1\cdot 2}}+{\frac {1}{1\cdot 2\cdot 3}}+\cdots
 ```
+
 ```math
 e= 2.718 281 828...
-```math
+```
 
 ## $\e```ix)$
 
