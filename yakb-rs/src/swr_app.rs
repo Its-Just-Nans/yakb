@@ -161,35 +161,6 @@ fn draw_wave_canvas(
             Color32::MAGENTA,
         );
     }
-
-    let x = plot.right() + 8.0;
-
-    let legend = [
-        ("Onde Incidente", Color32::RED),
-        ("Onde Réfléchie", Color32::GREEN),
-        ("Onde Totale", Color32::BLACK),
-        ("Onde Stationnaire", Color32::BLUE),
-        ("Composante Progressive", Color32::MAGENTA),
-    ];
-
-    let mut y = plot.top() + 20.0;
-
-    for (name, color) in legend {
-        painter.line_segment(
-            [Pos2::new(x, y + 8.0), Pos2::new(x + 25.0, y + 8.0)],
-            Stroke::new(2.0, color),
-        );
-
-        painter.text(
-            Pos2::new(x + 30.0, y),
-            Align2::LEFT_TOP,
-            name,
-            FontId::proportional(18.0),
-            color,
-        );
-
-        y += 27.0;
-    }
 }
 
 /// Draw incident wave
@@ -431,12 +402,6 @@ fn draw_progressive_wave(
 
 /// Draw controls
 fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
-    let panel_width = 320.0;
-
-    ui.set_width(panel_width);
-
-    ui.separator();
-
     // Reflection coefficient
     ui.horizontal(|ui| {
         ui.label(egui::RichText::new("Coeff de Réflexion").color(Color32::WHITE));
@@ -447,11 +412,16 @@ fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
     });
 
     // Waves
-    checkbox(ui, "Onde Incidente", &mut app.incident);
-    checkbox(ui, "Onde Réfléchie", &mut app.reflected);
-    checkbox(ui, "Onde Totale", &mut app.total);
-    checkbox(ui, "Onde Stationnaire", &mut app.stationary);
-    checkbox(ui, "Composante Progressive", &mut app.progressive);
+    checkbox(ui, "Onde Incidente", &mut app.incident, Color32::RED);
+    checkbox(ui, "Onde Réfléchie", &mut app.reflected, Color32::GREEN);
+    checkbox(ui, "Onde Totale", &mut app.total, Color32::BLACK);
+    checkbox(ui, "Onde Stationnaire", &mut app.stationary, Color32::BLUE);
+    checkbox(
+        ui,
+        "Composante Progressive",
+        &mut app.progressive,
+        Color32::MAGENTA,
+    );
 
     // Wavelength
     ui.horizontal(|ui| {
@@ -464,8 +434,13 @@ fn draw_controls(ui: &mut egui::Ui, app: &mut WaveApp) {
 }
 
 /// utils checkbox and Rich text
-fn checkbox(ui: &mut egui::Ui, text: &str, value: &mut bool) {
-    ui.checkbox(value, egui::RichText::new(text).color(Color32::WHITE));
+fn checkbox(ui: &mut egui::Ui, text: &str, value: &mut bool, color: Color32) {
+    ui.horizontal(|ui| {
+        let size = egui::vec2(10.0, 10.0);
+        let (rect, _) = ui.allocate_exact_size(size, egui::Sense::hover());
+        ui.painter().rect_filled(rect, 2.0, color);
+        ui.checkbox(value, egui::RichText::new(text).color(Color32::WHITE));
+    });
 }
 
 impl WaveApp {
@@ -491,7 +466,7 @@ impl WaveApp {
         ui.horizontal(|ui| {
             let available = ui.available_size();
 
-            let canvas_width = (available.x).max(500.0);
+            let canvas_width = available.x;
 
             let canvas_height = 300.0;
 
@@ -519,7 +494,6 @@ impl WaveApp {
                 });
         });
 
-        ui.add_space(10.0);
         draw_controls(ui, self);
         ui.add_space(10.0);
         egui::Grid::new("coefficient_grid")
