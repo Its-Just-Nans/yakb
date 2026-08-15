@@ -18,7 +18,7 @@ e=\sum \limits _{n=0}^{\infty }{\frac {1}{n!}}=1+{\frac {1}{1}}+{\frac {1}{1\cdo
 e= 2.718 281 828...
 ```
 
-## $\e```ix)$
+## $\exp^{ix}$
 
 ```math
 \exp^{ix} = cos(x) + i sin(x)
