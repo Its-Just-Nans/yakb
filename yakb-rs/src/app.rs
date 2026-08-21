@@ -51,8 +51,8 @@ pub struct YakbApp {
 
 impl BladvakApp<'_> for YakbApp {
     fn try_new_with_args(
-        mut saved_state: Self,
-        cc: &eframe::CreationContext<'_>,
+        #[cfg_attr(not(target_arch = "wasm32"), allow(unused_mut))] mut saved_state: Self,
+        #[cfg_attr(not(target_arch = "wasm32"), allow(unused))] cc: &eframe::CreationContext<'_>,
         _args: &[String],
         _error_manager: &mut bladvak::ErrorManager,
     ) -> Result<Self, bladvak::AppError> {
