@@ -14,15 +14,29 @@ First of all, send a few satellites to space.
 - Government aerial imagery
 - Private aerial imagery
 
-## OSM query
+## Data user
 
 - Overpass API: https://wiki.openstreetmap.org/wiki/Overpass_API
+- QGIS: https://qgis.org/
 
 ## Data Container
 
 - [PostGIS](https://postgis.net/) - a spatial database extender for PostgreSQL object-relational database
 - [MBTiles](https://github.com/mapbox/mbtiles-spec) a [Mapbox](https://www.mapbox.com/) specification for storing tiled map data in SQLite databases
-- [PMTiles](https://github.com/protomaps/PMTiles) is an open specification for single-file tile pyramids built on compressed Hilbert ordering and queryable via HTTP Range Requests
+
+### [PMTiles](https://github.com/protomaps/PMTiles)
+
+An open specification for single-file tile pyramids built on compressed Hilbert ordering and queryable via HTTP Range Requests.
+
+To use it:
+
+- expose the (big) `.pmtiles` file on an HTTP server
+- query the first 16,384 bytes with an HTTP range request
+- decode the header and the metadata which gives you the ranges of the tiles
+- fetch the tiles you want with an HTTP range request
+
+Viewer: https://pmtiles.io/
+Specifications: https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md
 
 ## Servers
 
@@ -33,7 +47,7 @@ Servers produces map from sources and serve them to clients.
 - https://openmaptiles.org/
 - https://github.com/systemed/tilemaker
 
-## Client
+## Tiles Client
 
 - https://leafletjs.com/ - an open-source JavaScript library for mobile-friendly interactive maps. Renders tiles as images.
 - https://maplibre.org/maplibre-gl-js - a JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles
@@ -46,7 +60,7 @@ Servers produces map from sources and serve them to clients.
 
 ## Others
 
-- https://www.bbox.earth/
+- https://www.bbox.earth/ - server using the OGC API (https://ogcapi.ogc.org/)
 
 ## Geocoder
 
@@ -70,5 +84,6 @@ Servers produces map from sources and serve them to clients.
 - https://en.wikipedia.org/wiki/Geohash
 
 ## Links
+
 - https://ihatecoordinatesystems.com/
 
