@@ -8,23 +8,33 @@ description: Understanding the underlying technology of maps
 
 First of all, send a few satellites to space.
 
-## Sources
+### Coordinates system
+
+- `ITRF`: International Terrestrial Reference Frame
+- `WGS 84`: World Geodetic System. The geodetic reference system used by GPS.
+- `EPSG:4326`: The EPSG code for the 2D geographic CRS based on WGS 84, using latitude and longitude coordinates.
+- `EPSG:3857`: Web Mercator, faster computations but no representation for North and South Pole (85.06°S and 85.06°N). It uses X/Y coordinates in meters rather than latitude/longitude.
+- `ETRS`: European Terrestrial Reference System
+
+## Map related software
+
+### Sources
 
 - [OSM](https://www.openstreetmap.org/)
 - Government aerial imagery
 - Private aerial imagery
 
-## Data user
+### Data user
 
 - Overpass API: https://wiki.openstreetmap.org/wiki/Overpass_API
 - QGIS: https://qgis.org/
 
-## Data Container
+### Data Container
 
 - [PostGIS](https://postgis.net/) - a spatial database extender for PostgreSQL object-relational database
 - [MBTiles](https://github.com/mapbox/mbtiles-spec) a [Mapbox](https://www.mapbox.com/) specification for storing tiled map data in SQLite databases
 
-### PMTiles - https://github.com/protomaps/PMTiles
+#### PMTiles - https://github.com/protomaps/PMTiles
 
 An open specification for single-file tile pyramids built on compressed Hilbert ordering and queryable via HTTP Range Requests.
 
@@ -38,7 +48,7 @@ To use it:
 Viewer: https://pmtiles.io/
 Specifications: https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md
 
-## Servers
+### Servers
 
 Servers produces map from sources and serve them to clients.
 
@@ -47,28 +57,28 @@ Servers produces map from sources and serve them to clients.
 - https://openmaptiles.org/
 - https://github.com/systemed/tilemaker
 
-## Tiles Client
+### Tiles Client
 
 - https://leafletjs.com/ - an open-source JavaScript library for mobile-friendly interactive maps. Renders tiles as images.
 - https://maplibre.org/maplibre-gl-js - a JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles
 
 
-## Data format
+### Data format
 
 - OSM: https://wiki.openstreetmap.org/wiki/OSM_XML
 - Geo JSON: https://geojson.org/
 
-## Others
+### Others
 
 - https://www.bbox.earth/ - server using the OGC API (https://ogcapi.ogc.org/)
 
-## Geocoder
+### Geocoder
 
 - https://github.com/pelias/pelias
 - https://nominatim.org/
 - https://github.com/komoot/photon
 
-## Routing engine
+### Routing engine
 
 - https://project-osrm.org/
 - https://github.com/motis-project/motis
@@ -77,7 +87,7 @@ Servers produces map from sources and serve them to clients.
 - https://transitous.org/
 - https://valhalla.github.io/valhalla/
 
-## Coordinates
+### Coordinates
 
 - https://what3words.com/
 - https://maps.google.com/pluscodes/
