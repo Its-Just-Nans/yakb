@@ -9,9 +9,12 @@ title: Shell
 - `$IFS`: separator
 - `$0`: name of the script
 - `$1`, `$2`: arguments
-- `$*`: list of arguments
+- `$*`: list of arguments - truncated with first char of `$IFS`
+- `$@`: list of arguments - as separated args
 - `$#`: number of arguments
 - `$?`: last return code
+
+> `man bash` can explain a lot
 
 ### Variable escaping
 
@@ -20,14 +23,11 @@ title: Shell
 x="hello world"
 
 # a variable without quote can be two separate arguments
-
-
 printf '%s\n' $x
 # hello
 # world
 
-# a variable
-
+# a variable with quote will be one argument (exception exists for $@)
 printf '%s\n' "$x"
 # hello world
 
