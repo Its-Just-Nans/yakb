@@ -1,0 +1,61 @@
+---
+title: Shell
+---
+
+## Variables
+
+- `$PS1`: prompt
+- `$HOME`: base directory
+- `$IFS`: separator
+- `$0`: name of the script
+- `$1`, `$2`: arguments
+- `$*`: list of arguments
+- `$#`: number of arguments
+- `$?`: last return code
+
+### Variable escaping
+
+```sh
+#!/bin/sh
+x="hello world"
+
+# a variable without quote can be two separate arguments
+
+
+printf '%s\n' $x
+# hello
+# world
+
+# a variable
+
+printf '%s\n' "$x"
+# hello world
+
+# the $IFS char will be replaced by space
+# you can also change the IFS temporarly
+
+IFS='w'
+printf '%s\n' $x
+# hello 
+# orld
+
+# note the space after hello and the missing 'w'
+
+printf '%s\n' "$x"
+# hello world
+
+IFS=' ' # reset the IFS
+```
+
+## Test command
+
+```sh
+test -f myfile # return 1
+touch myfile
+test -f myfile # return 0
+
+# You can also use the test binary with the '[' binary - it's the same form
+# but you need a closing ']'
+
+[ -f myfile ]
+```
