@@ -1,0 +1,459 @@
+---
+title: C
+---
+
+## Example
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+/* =========================
+   ENUM
+   ========================= */
+
+enum Gender {
+    MALE = 1,
+    FEMALE = 2
+};
+
+/* =========================
+   STRUCT
+   ========================= */
+
+struct Student {
+    char name[50];
+    int age;
+    float grade;
+    enum Gender gender;
+};
+
+/* =========================
+   FUNCTION PROTOTYPES
+   ========================= */
+
+void printStudent(struct Student s);
+void changeAge(struct Student *s, int newAge);
+void changeGrade(struct Student *s, float newGrade);
+
+int add(int a, int b);
+void swap(int *a, int *b);
+
+void saveStudent(struct Student s);
+void readFile(void);
+
+
+/* =========================
+   MAIN
+   ========================= */
+
+int main(void)
+{
+    /* -------------------------
+       BASIC TYPES
+       ------------------------- */
+
+    int age = 20;
+    float height = 1.75f;
+    double price = 99.99;
+    char letter = 'A';
+
+    const int MAX_AGE = 120;
+
+    printf("=== BASIC TYPES ===\n");
+
+    printf("Age: %d\n", age);
+    printf("Height: %.2f\n", height);
+    printf("Price: %.2f\n", price);
+    printf("Letter: %c\n", letter);
+
+    printf("\n=== SIZEOF ===\n");
+
+    printf("int    = %zu bytes\n", sizeof(int));
+    printf("float  = %zu bytes\n", sizeof(float));
+    printf("double = %zu bytes\n", sizeof(double));
+    printf("char   = %zu byte\n", sizeof(char));
+
+    printf("MAX_AGE = %d\n", MAX_AGE);
+
+
+    /* -------------------------
+       POINTER
+       ------------------------- */
+
+    printf("\n=== POINTER ===\n");
+
+    int number = 10;
+
+    int *ptr = &number;
+
+    printf("number = %d\n", number);
+    printf("*ptr   = %d\n", *ptr);
+    printf("address = %p\n", (void *)ptr);
+
+    /* Change number through pointer */
+
+    *ptr = 50;
+
+    printf("number after *ptr = 50: %d\n", number);
+
+
+    /* -------------------------
+       STRING FUNCTIONS
+       ------------------------- */
+
+    printf("\n=== STRINGS ===\n");
+    // string functions have safer version with the `strn` prefix
+
+    char name1[50] = "Alice";
+    char name2[50];
+
+    /* strcpy */
+
+    strcpy(name2, name1);
+
+    /* Safer bounded copy */
+    // strncpy(destination, source, sizeof(destination) - 1);
+    // destination[sizeof(destination) - 1] = '\0';
+
+    printf("name1 = %s\n", name1);
+    printf("name2 = %s\n", name2);
+
+    /* strlen */
+
+    printf("Length of name1 = %zu\n", strlen(name1));
+
+    /* strcmp */
+
+    if (strcmp(name1, name2) == 0) {
+        puts("name1 and name2 are equal.");
+    } else {
+        puts("name1 and name2 are different.");
+    }
+
+
+    /* -------------------------
+       SCANF
+       ------------------------- */
+
+    printf("\n=== INPUT ===\n");
+
+    printf("Enter your age: ");
+    scanf("%d", &age);
+
+    printf("You entered: %d\n", age);
+
+
+    /* -------------------------
+       ENUM + SWITCH
+       ------------------------- */
+
+    printf("\n=== ENUM + SWITCH ===\n");
+
+    enum Gender gender = MALE;
+
+    switch (gender) {
+
+        case MALE:
+            puts("Gender: Male");
+            break;
+
+        case FEMALE:
+            puts("Gender: Female");
+            break;
+
+        default:
+            puts("Unknown");
+            break;
+    }
+
+
+    /* -------------------------
+       STRUCT
+       ------------------------- */
+
+    printf("\n=== STRUCT ===\n");
+
+    struct Student student;
+
+    strcpy(student.name, "John");
+    student.age = 21;
+    student.grade = 15.5f;
+    student.gender = MALE;
+
+    printStudent(student);
+
+
+    /* -------------------------
+       FUNCTION WITH STRUCT POINTER
+       ------------------------- */
+
+    printf("\n=== FUNCTION + STRUCT POINTER ===\n");
+
+    changeAge(&student, 25);
+    changeGrade(&student, 18.0f);
+
+    printStudent(student);
+
+
+    /* -------------------------
+       NORMAL FUNCTION
+       ------------------------- */
+
+    printf("\n=== FUNCTION ===\n");
+
+    int result;
+
+    result = add(10, 20);
+
+    printf("10 + 20 = %d\n", result);
+
+
+    /* -------------------------
+       FUNCTION WITH POINTERS
+       ------------------------- */
+
+    printf("\n=== FUNCTION + POINTERS ===\n");
+
+    int a = 10;
+    int b = 20;
+
+    printf("Before swap: a=%d b=%d\n", a, b);
+
+    swap(&a, &b);
+
+    printf("After swap:  a=%d b=%d\n", a, b);
+
+
+    /* -------------------------
+       ARRAY / TABLE
+       ------------------------- */
+
+    printf("\n=== TABLE ===\n");
+
+    int numbers[5] = {
+        10,
+        20,
+        30,
+        40,
+        50
+    };
+
+    for (int i = 0; i < 5; i++) {
+        printf("numbers[%d] = %d\n", i, numbers[i]);
+    }
+
+
+    /* -------------------------
+       MALLOC
+       ------------------------- */
+
+    printf("\n=== MALLOC ===\n");
+
+    int size = 5;
+
+    int *dynamicNumbers;
+
+    dynamicNumbers = malloc(size * sizeof(int));
+
+    if (dynamicNumbers == NULL) {
+        puts("Memory allocation failed.");
+        return 1;
+    }
+
+    for (int i = 0; i < size; i++) {
+        dynamicNumbers[i] = (i + 1) * 10;
+    }
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", dynamicNumbers[i]);
+    }
+
+    printf("\n");
+
+    free(dynamicNumbers);
+
+    dynamicNumbers = NULL;
+
+
+    /* -------------------------
+       RAND
+       ------------------------- */
+
+    printf("\n=== RANDOM ===\n");
+
+    /* Initialize random generator */
+
+    srand((unsigned int)time(NULL));
+
+    for (int i = 0; i < 5; i++) {
+
+        int randomNumber = rand() % 100;
+
+        printf("Random number: %d\n", randomNumber);
+    }
+
+
+    /* -------------------------
+       FILE
+       ------------------------- */
+
+    printf("\n=== FILE ===\n");
+
+    saveStudent(student);
+
+    readFile();
+
+
+    printf("\nProgram finished.\n");
+
+    return 0;
+}
+
+
+/* =========================
+   FUNCTION: ADD
+   ========================= */
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+
+/* =========================
+   FUNCTION: SWAP
+   ========================= */
+
+void swap(int *a, int *b)
+{
+    int temp;
+
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+
+/* =========================
+   FUNCTION: PRINT STRUCT
+   ========================= */
+
+void printStudent(struct Student s)
+{
+    printf("Name: %s\n", s.name);
+    printf("Age: %d\n", s.age);
+    printf("Grade: %.2f\n", s.grade);
+}
+
+
+/* =========================
+   FUNCTION: MODIFY STRUCT
+   ========================= */
+
+void changeAge(struct Student *s, int newAge)
+{
+    s->age = newAge;
+}
+
+
+/* =========================
+   FUNCTION: MODIFY GRADE
+   ========================= */
+
+void changeGrade(struct Student *s, float newGrade)
+{
+    s->grade = newGrade;
+}
+
+
+/* =========================
+   SAVE STRUCT TO FILE
+   ========================= */
+
+void saveStudent(struct Student s)
+{
+    FILE *file;
+
+    /* Open file for writing */
+
+    file = fopen("student.txt", "w");
+
+    if (file == NULL) {
+        puts("Could not open file.");
+        return;
+    }
+
+    fprintf(file, "Name: %s\n", s.name);
+    fprintf(file, "Age: %d\n", s.age);
+    fprintf(file, "Grade: %.2f\n", s.grade);
+
+    /* Close file */
+
+    fclose(file);
+
+    puts("Student saved to student.txt");
+}
+
+
+/* =========================
+   READ FILE
+   ========================= */
+
+void readFile(void)
+{
+    FILE *file;
+
+    char line[100];
+
+    /* Open file for reading */
+
+    file = fopen("student.txt", "r");
+
+    if (file == NULL) {
+        puts("Could not open file.");
+        return;
+    }
+
+    puts("\nFile content:");
+
+    while (fgets(line, sizeof(line), file) != NULL) {
+        printf("%s", line);
+    }
+
+    /* Go to beginning */
+
+    rewind(file);
+
+    /* Move to the end */
+
+    fseek(file, 0, SEEK_END);
+
+    /* Get current position */
+
+    long position = ftell(file);
+
+    printf("\nFile size: %ld bytes\n", position);
+
+    /* Close */
+
+    fclose(file);
+}
+```
+
+## Compilation
+
+```sh
+gcc main.c -o main.out -Wall
+```
+
+
+## Online C
+
+- Online C by [France-IOI](http://www.france-ioi.org/)
+
+<div style="text-align:center">
+    <iframe style="height:80vh;width:100%" src="https://codecast.france-ioi.org/v2/"></iframe>
+</div>
