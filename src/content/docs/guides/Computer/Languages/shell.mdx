@@ -47,6 +47,41 @@ printf '%s\n' "$x"
 IFS=' ' # reset the IFS
 ```
 
+## Redirections
+
+```sh
+# Redirect stdout to FILE - override
+cmd > FILE
+# Redirect stdout to FILE - append
+cmd >> FILE
+
+# Redirect stdout and stderr to FILE
+cmd &> FILE
+
+# Redirect stderr to FILE
+cmd 2> FILE
+
+# Redirect stdout to FILE and stderr to stdout
+cmd > FILE 2>&1
+cmd >& FILE
+
+# The standard output of cmd is connected via a pipe to the standard input of cmd2
+cmd | cmd2
+
+# cmd's standard error, in addition to its standard output, is connected to cmd2's standard input through the pipe
+cmd |& cmd2
+
+# stdin from FILE
+cmd < FILE
+
+# string as stdin
+cmd <<< "string"
+echo -n string | cmd
+
+# stdin from FILE stdout to OUTPUT
+cmd < FILE > OUTPUT
+```
+
 ## Test command
 
 ```sh
