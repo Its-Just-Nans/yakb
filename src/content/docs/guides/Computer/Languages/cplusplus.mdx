@@ -1,0 +1,1865 @@
+---
+title: C++
+---
+
+```cpp
+/*
+    g++ -std=c++20 -Wall -Wextra -pedantic main.cpp -o demo
+*/
+
+#include <algorithm>
+#include <any>
+#include <array>
+#include <atomic>
+#include <chrono>
+#include <condition_variable>
+#include <concepts>
+#include <deque>
+#include <filesystem>
+#include <forward_list>
+#include <future>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <list>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <numeric>
+#include <optional>
+#include <queue>
+#include <ranges>
+#include <set>
+#include <span>
+#include <stack>
+#include <string>
+#include <string_view>
+#include <thread>
+#include <tuple>
+#include <type_traits>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
+#include <variant>
+#include <vector>
+
+using namespace std;
+
+
+// ============================================================
+// 1. BASIC TYPES
+// ============================================================
+
+void basicTypesDemo()
+{
+    cout << "\n=== 1. BASIC TYPES ===\n";
+
+    int integer = 42;
+    double decimal = 3.14;
+    char character = 'A';
+    bool flag = true;
+    string text = "Hello C++";
+
+    cout << integer << '\n';
+    cout << decimal << '\n';
+    cout << character << '\n';
+    cout << boolalpha << flag << '\n';
+    cout << text << '\n';
+}
+
+
+// ============================================================
+// 2. REFERENCES
+// ============================================================
+
+void increment(int& value)
+{
+    value++;
+}
+
+void referencesDemo()
+{
+    cout << "\n=== 2. REFERENCES ===\n";
+
+    int x = 10;
+
+    int& reference = x;
+
+    reference = 20;
+
+    cout << "x = " << x << '\n';
+
+    increment(x);
+
+    cout << "After increment: " << x << '\n';
+}
+
+
+// ============================================================
+// 3. POINTERS
+// ============================================================
+
+void pointersDemo()
+{
+    cout << "\n=== 3. POINTERS ===\n";
+
+    int value = 42;
+
+    int* ptr = &value;
+
+    cout << "Value: " << value << '\n';
+    cout << "Address: " << ptr << '\n';
+    cout << "Dereferenced: " << *ptr << '\n';
+
+    *ptr = 100;
+
+    cout << "Modified value: " << value << '\n';
+
+    int* empty = nullptr;
+
+    if (empty == nullptr)
+        cout << "Pointer is null\n";
+}
+
+
+// ============================================================
+// 4. const / constexpr
+// ============================================================
+
+constexpr int square(int x)
+{
+    return x * x;
+}
+
+void constDemo()
+{
+    cout << "\n=== 4. CONST / CONSTEXPR ===\n";
+
+    const int value = 10;
+
+    constexpr int compileTimeValue = square(5);
+
+    cout << "const: " << value << '\n';
+    cout << "constexpr: " << compileTimeValue << '\n';
+}
+
+
+// ============================================================
+// 5. ENUM CLASS
+// ============================================================
+
+enum class Color
+{
+    Red,
+    Green,
+    Blue
+};
+
+void enumDemo()
+{
+    cout << "\n=== 5. ENUM CLASS ===\n";
+
+    Color color = Color::Green;
+
+    if (color == Color::Green)
+        cout << "Color is green\n";
+}
+
+
+// ============================================================
+// 6. STRUCT
+// ============================================================
+
+struct Point
+{
+    int x;
+    int y;
+};
+
+void structDemo()
+{
+    cout << "\n=== 6. STRUCT ===\n";
+
+    Point point{10, 20};
+
+    cout << point.x << ", "
+         << point.y << '\n';
+}
+
+
+// ============================================================
+// 7. CLASS
+// ============================================================
+
+class Person
+{
+private:
+    string name;
+    int age;
+
+public:
+    Person(string name, int age)
+        : name(move(name)), age(age)
+    {
+    }
+
+    string getName() const
+    {
+        return name;
+    }
+
+    int getAge() const
+    {
+        return age;
+    }
+
+    void introduce() const
+    {
+        cout << "I'm " << name
+             << ", age " << age << '\n';
+    }
+};
+
+void classDemo()
+{
+    cout << "\n=== 7. CLASS ===\n";
+
+    Person person("Alice", 25);
+
+    person.introduce();
+}
+
+
+// ============================================================
+// 8. STATIC MEMBERS
+// ============================================================
+
+class Counter
+{
+private:
+    inline static int count = 0;
+
+public:
+    Counter()
+    {
+        ++count;
+    }
+
+    static int getCount()
+    {
+        return count;
+    }
+};
+
+void staticDemo()
+{
+    cout << "\n=== 8. STATIC MEMBERS ===\n";
+
+    Counter a;
+    Counter b;
+    Counter c;
+
+    cout << "Objects: "
+         << Counter::getCount()
+         << '\n';
+}
+
+
+// ============================================================
+// 9. INHERITANCE
+// ============================================================
+
+class Animal
+{
+public:
+    virtual void speak() const
+    {
+        cout << "Animal sound\n";
+    }
+
+    virtual ~Animal() = default;
+};
+
+class Dog : public Animal
+{
+public:
+    void speak() const override
+    {
+        cout << "Woof!\n";
+    }
+};
+
+class Cat : public Animal
+{
+public:
+    void speak() const override
+    {
+        cout << "Meow!\n";
+    }
+};
+
+
+// ============================================================
+// 10. POLYMORPHISM
+// ============================================================
+
+void polymorphismDemo()
+{
+    cout << "\n=== 9/10. INHERITANCE + POLYMORPHISM ===\n";
+
+    vector<unique_ptr<Animal>> animals;
+
+    animals.push_back(make_unique<Dog>());
+    animals.push_back(make_unique<Cat>());
+
+    for (const auto& animal : animals)
+        animal->speak();
+}
+
+
+// ============================================================
+// 11. ABSTRACT CLASS
+// ============================================================
+
+class Shape
+{
+public:
+    virtual double area() const = 0;
+
+    virtual ~Shape() = default;
+};
+
+class Rectangle : public Shape
+{
+private:
+    double width;
+    double height;
+
+public:
+    Rectangle(double w, double h)
+        : width(w), height(h)
+    {
+    }
+
+    double area() const override
+    {
+        return width * height;
+    }
+};
+
+void abstractClassDemo()
+{
+    cout << "\n=== 11. ABSTRACT CLASS ===\n";
+
+    Rectangle rectangle(5, 4);
+
+    cout << "Area: "
+         << rectangle.area()
+         << '\n';
+}
+
+
+// ============================================================
+// 12. OPERATOR OVERLOADING
+// ============================================================
+
+class Number
+{
+private:
+    int value;
+
+public:
+    explicit Number(int value)
+        : value(value)
+    {
+    }
+
+    Number operator+(const Number& other) const
+    {
+        return Number(value + other.value);
+    }
+
+    int getValue() const
+    {
+        return value;
+    }
+};
+
+void operatorDemo()
+{
+    cout << "\n=== 12. OPERATOR OVERLOADING ===\n";
+
+    Number a(10);
+    Number b(20);
+
+    Number c = a + b;
+
+    cout << c.getValue() << '\n';
+}
+
+
+// ============================================================
+// 13. COPY / MOVE SEMANTICS
+// ============================================================
+
+class Buffer
+{
+private:
+    size_t size;
+    int* data;
+
+public:
+    explicit Buffer(size_t size)
+        : size(size),
+          data(new int[size])
+    {
+        cout << "Constructor\n";
+    }
+
+    ~Buffer()
+    {
+        delete[] data;
+        cout << "Destructor\n";
+    }
+
+    // Copy constructor
+    Buffer(const Buffer& other)
+        : size(other.size),
+          data(new int[other.size])
+    {
+        copy(
+            other.data,
+            other.data + size,
+            data
+        );
+
+        cout << "Copy constructor\n";
+    }
+
+    // Copy assignment
+    Buffer& operator=(const Buffer& other)
+    {
+        if (this != &other)
+        {
+            int* newData = new int[other.size];
+
+            copy(
+                other.data,
+                other.data + other.size,
+                newData
+            );
+
+            delete[] data;
+
+            data = newData;
+            size = other.size;
+        }
+
+        cout << "Copy assignment\n";
+
+        return *this;
+    }
+
+    // Move constructor
+    Buffer(Buffer&& other) noexcept
+        : size(other.size),
+          data(other.data)
+    {
+        other.size = 0;
+        other.data = nullptr;
+
+        cout << "Move constructor\n";
+    }
+
+    // Move assignment
+    Buffer& operator=(Buffer&& other) noexcept
+    {
+        if (this != &other)
+        {
+            delete[] data;
+
+            size = other.size;
+            data = other.data;
+
+            other.size = 0;
+            other.data = nullptr;
+        }
+
+        cout << "Move assignment\n";
+
+        return *this;
+    }
+};
+
+void copyMoveDemo()
+{
+    cout << "\n=== 13. COPY / MOVE ===\n";
+
+    Buffer a(100);
+
+    Buffer b = a;
+
+    Buffer c = move(a);
+}
+
+
+// ============================================================
+// 14. RAII
+// ============================================================
+
+class Resource
+{
+public:
+    Resource()
+    {
+        cout << "Resource acquired\n";
+    }
+
+    ~Resource()
+    {
+        cout << "Resource released\n";
+    }
+};
+
+void raiiDemo()
+{
+    cout << "\n=== 14. RAII ===\n";
+
+    {
+        Resource resource;
+
+        cout << "Using resource...\n";
+    }
+
+    cout << "Resource automatically released\n";
+}
+
+
+// ============================================================
+// 15. SMART POINTERS
+// ============================================================
+
+void smartPointerDemo()
+{
+    cout << "\n=== 15. SMART POINTERS ===\n";
+
+    // unique_ptr
+    auto unique = make_unique<Person>(
+        "Alice", 25
+    );
+
+    unique->introduce();
+
+    // shared_ptr
+    auto shared1 = make_shared<Person>(
+        "Bob", 30
+    );
+
+    auto shared2 = shared1;
+
+    cout << "Reference count: "
+         << shared1.use_count()
+         << '\n';
+
+    // weak_ptr
+    weak_ptr<Person> weak = shared1;
+
+    if (auto locked = weak.lock())
+    {
+        cout << "weak_ptr -> "
+             << locked->getName()
+             << '\n';
+    }
+}
+
+
+// ============================================================
+// 16. VECTOR
+// ============================================================
+
+void vectorDemo()
+{
+    cout << "\n=== 16. VECTOR ===\n";
+
+    vector<int> numbers{
+        10, 20, 30
+    };
+
+    numbers.push_back(40);
+    numbers.emplace_back(50);
+
+    for (const auto& number : numbers)
+        cout << number << ' ';
+
+    cout << '\n';
+
+    cout << "Size: "
+         << numbers.size()
+         << '\n';
+
+    cout << "Capacity: "
+         << numbers.capacity()
+         << '\n';
+}
+
+
+// ============================================================
+// 17. ARRAY
+// ============================================================
+
+void arrayDemo()
+{
+    cout << "\n=== 17. ARRAY ===\n";
+
+    array<int, 5> values{
+        1, 2, 3, 4, 5
+    };
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 18. DEQUE
+// ============================================================
+
+void dequeDemo()
+{
+    cout << "\n=== 18. DEQUE ===\n";
+
+    deque<int> values;
+
+    values.push_back(2);
+    values.push_front(1);
+    values.push_back(3);
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 19. LIST
+// ============================================================
+
+void listDemo()
+{
+    cout << "\n=== 19. LIST ===\n";
+
+    list<int> values{
+        1, 2, 3, 4
+    };
+
+    values.push_front(0);
+    values.push_back(5);
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 20. STACK
+// ============================================================
+
+void stackDemo()
+{
+    cout << "\n=== 20. STACK ===\n";
+
+    stack<int> values;
+
+    values.push(10);
+    values.push(20);
+    values.push(30);
+
+    while (!values.empty())
+    {
+        cout << values.top() << ' ';
+        values.pop();
+    }
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 21. QUEUE
+// ============================================================
+
+void queueDemo()
+{
+    cout << "\n=== 21. QUEUE ===\n";
+
+    queue<string> queue;
+
+    queue.push("Alice");
+    queue.push("Bob");
+    queue.push("Charlie");
+
+    while (!queue.empty())
+    {
+        cout << queue.front() << ' ';
+        queue.pop();
+    }
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 22. PRIORITY QUEUE
+// ============================================================
+
+void priorityQueueDemo()
+{
+    cout << "\n=== 22. PRIORITY QUEUE ===\n";
+
+    priority_queue<int> values;
+
+    values.push(10);
+    values.push(50);
+    values.push(20);
+
+    while (!values.empty())
+    {
+        cout << values.top() << ' ';
+        values.pop();
+    }
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 23. SET
+// ============================================================
+
+void setDemo()
+{
+    cout << "\n=== 23. SET ===\n";
+
+    set<int> values{
+        5, 1, 5, 2, 2, 3
+    };
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 24. UNORDERED SET
+// ============================================================
+
+void unorderedSetDemo()
+{
+    cout << "\n=== 24. UNORDERED SET ===\n";
+
+    unordered_set<string> names{
+        "Alice",
+        "Bob",
+        "Charlie"
+    };
+
+    if (names.contains("Alice"))
+        cout << "Alice found\n";
+}
+
+
+// ============================================================
+// 25. MAP
+// ============================================================
+
+void mapDemo()
+{
+    cout << "\n=== 25. MAP ===\n";
+
+    map<string, int> ages{
+        {"Alice", 25},
+        {"Bob", 30}
+    };
+
+    for (const auto& [name, age] : ages)
+        cout << name << " -> "
+             << age << '\n';
+}
+
+
+// ============================================================
+// 26. UNORDERED MAP
+// ============================================================
+
+void unorderedMapDemo()
+{
+    cout << "\n=== 26. UNORDERED MAP ===\n";
+
+    unordered_map<string, int> scores;
+
+    scores["Alice"] = 95;
+    scores["Bob"] = 87;
+
+    for (const auto& [name, score] : scores)
+        cout << name << " -> "
+             << score << '\n';
+}
+
+
+// ============================================================
+// 27. PAIR
+// ============================================================
+
+void pairDemo()
+{
+    cout << "\n=== 27. PAIR ===\n";
+
+    pair<string, int> person{
+        "Alice", 25
+    };
+
+    cout << person.first
+         << " "
+         << person.second
+         << '\n';
+}
+
+
+// ============================================================
+// 28. TUPLE
+// ============================================================
+
+void tupleDemo()
+{
+    cout << "\n=== 28. TUPLE ===\n";
+
+    tuple<string, int, double> student{
+        "Alice",
+        20,
+        91.5
+    };
+
+    auto [name, age, grade] = student;
+
+    cout << name << '\n';
+    cout << age << '\n';
+    cout << grade << '\n';
+}
+
+
+// ============================================================
+// 29. OPTIONAL
+// ============================================================
+
+optional<int> findValue(
+    const vector<int>& values,
+    int target)
+{
+    for (int value : values)
+    {
+        if (value == target)
+            return value;
+    }
+
+    return nullopt;
+}
+
+void optionalDemo()
+{
+    cout << "\n=== 29. OPTIONAL ===\n";
+
+    vector<int> values{
+        10, 20, 30
+    };
+
+    auto result = findValue(values, 20);
+
+    if (result)
+        cout << "Found: "
+             << *result
+             << '\n';
+
+    auto missing = findValue(values, 100);
+
+    cout << "Missing: "
+         << missing.value_or(-1)
+         << '\n';
+}
+
+
+// ============================================================
+// 30. VARIANT
+// ============================================================
+
+void variantDemo()
+{
+    cout << "\n=== 30. VARIANT ===\n";
+
+    variant<int, double, string> value;
+
+    value = 42;
+
+    cout << get<int>(value) << '\n';
+
+    value = string("Hello");
+
+    cout << get<string>(value) << '\n';
+}
+
+
+// ============================================================
+// 31. ANY
+// ============================================================
+
+void anyDemo()
+{
+    cout << "\n=== 31. ANY ===\n";
+
+    any value = 42;
+
+    cout << any_cast<int>(value)
+         << '\n';
+
+    value = string("Hello");
+
+    cout << any_cast<string>(value)
+         << '\n';
+}
+
+
+// ============================================================
+// 32. STRING_VIEW
+// ============================================================
+
+void stringViewDemo()
+{
+    cout << "\n=== 32. STRING_VIEW ===\n";
+
+    string text = "Hello World";
+
+    string_view view = text;
+
+    cout << view << '\n';
+}
+
+
+// ============================================================
+// 33. ALGORITHMS
+// ============================================================
+
+void algorithmsDemo()
+{
+    cout << "\n=== 33. ALGORITHMS ===\n";
+
+    vector<int> values{
+        5, 2, 8, 1, 9
+    };
+
+    sort(
+        values.begin(),
+        values.end()
+    );
+
+    cout << "Sorted: ";
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+
+    auto it = find(
+        values.begin(),
+        values.end(),
+        8
+    );
+
+    if (it != values.end())
+        cout << "Found 8\n";
+
+    int sum = accumulate(
+        values.begin(),
+        values.end(),
+        0
+    );
+
+    cout << "Sum: "
+         << sum
+         << '\n';
+
+    int evenCount = count_if(
+        values.begin(),
+        values.end(),
+        [](int value)
+        {
+            return value % 2 == 0;
+        }
+    );
+
+    cout << "Even count: "
+         << evenCount
+         << '\n';
+}
+
+
+// ============================================================
+// 34. LAMBDA CAPTURE
+// ============================================================
+
+void lambdaDemo()
+{
+    cout << "\n=== 34. LAMBDAS ===\n";
+
+    int multiplier = 10;
+
+    auto multiply = [multiplier](int x)
+    {
+        return x * multiplier;
+    };
+
+    cout << multiply(5)
+         << '\n';
+
+    auto change = [&multiplier]()
+    {
+        multiplier = 20;
+    };
+
+    change();
+
+    cout << multiplier << '\n';
+}
+
+
+// ============================================================
+// 35. ITERATORS
+// ============================================================
+
+void iteratorDemo()
+{
+    cout << "\n=== 35. ITERATORS ===\n";
+
+    vector<int> values{
+        10, 20, 30
+    };
+
+    for (auto it = values.begin();
+         it != values.end();
+         ++it)
+    {
+        cout << *it << ' ';
+    }
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 36. std::function
+// ============================================================
+
+void functionDemo()
+{
+    cout << "\n=== 36. STD::FUNCTION ===\n";
+
+    function<int(int, int)> operation =
+        [](int a, int b)
+        {
+            return a + b;
+        };
+
+    cout << operation(10, 20)
+         << '\n';
+}
+
+
+// ============================================================
+// 37. FUNCTION TEMPLATE
+// ============================================================
+
+template<typename T>
+T maximum(T a, T b)
+{
+    return a > b ? a : b;
+}
+
+void templateDemo()
+{
+    cout << "\n=== 37. TEMPLATES ===\n";
+
+    cout << maximum(10, 20)
+         << '\n';
+
+    cout << maximum(
+        3.14,
+        2.71
+    ) << '\n';
+}
+
+
+// ============================================================
+// 38. CLASS TEMPLATE
+// ============================================================
+
+template<typename T>
+class Box
+{
+private:
+    T value;
+
+public:
+    explicit Box(T value)
+        : value(move(value))
+    {
+    }
+
+    const T& get() const
+    {
+        return value;
+    }
+};
+
+void classTemplateDemo()
+{
+    cout << "\n=== 38. CLASS TEMPLATE ===\n";
+
+    Box<int> integerBox(42);
+
+    Box<string> stringBox(
+        "Hello"
+    );
+
+    cout << integerBox.get()
+         << '\n';
+
+    cout << stringBox.get()
+         << '\n';
+}
+
+
+// ============================================================
+// 39. VARIADIC TEMPLATE + FOLD EXPRESSION
+// ============================================================
+
+template<typename... Args>
+void printAll(const Args&... args)
+{
+    (cout << ... << args) << '\n';
+}
+
+void variadicTemplateDemo()
+{
+    cout << "\n=== 39. VARIADIC TEMPLATE ===\n";
+
+    printAll(
+        "Hello ",
+        123,
+        " ",
+        3.14
+    );
+}
+
+
+// ============================================================
+// 40. IF CONSTEXPR
+// ============================================================
+
+template<typename T>
+void typeDemo(T value)
+{
+    if constexpr (is_integral_v<T>)
+    {
+        cout << "Integral type: "
+             << value
+             << '\n';
+    }
+    else if constexpr (is_floating_point_v<T>)
+    {
+        cout << "Floating point: "
+             << value
+             << '\n';
+    }
+    else
+    {
+        cout << "Other type\n";
+    }
+}
+
+void ifConstexprDemo()
+{
+    cout << "\n=== 40. IF CONSTEXPR ===\n";
+
+    typeDemo(42);
+    typeDemo(3.14);
+    typeDemo(string("Hello"));
+}
+
+
+// ============================================================
+// 41. CONCEPTS
+// ============================================================
+
+template<typename T>
+concept Numeric = integral<T> ||
+                  floating_point<T>;
+
+template<Numeric T>
+T add(T a, T b)
+{
+    return a + b;
+}
+
+void conceptsDemo()
+{
+    cout << "\n=== 41. CONCEPTS ===\n";
+
+    cout << add(10, 20)
+         << '\n';
+
+    cout << add(
+        1.5,
+        2.5
+    ) << '\n';
+}
+
+
+// ============================================================
+// 42. TYPE TRAITS
+// ============================================================
+
+void typeTraitsDemo()
+{
+    cout << "\n=== 42. TYPE TRAITS ===\n";
+
+    cout << boolalpha;
+
+    cout << "int is integral: "
+         << is_integral_v<int>
+         << '\n';
+
+    cout << "double is floating point: "
+         << is_floating_point_v<double>
+         << '\n';
+
+    cout << "string is class: "
+         << is_class_v<string>
+         << '\n';
+}
+
+
+// ============================================================
+// 43. EXCEPTIONS
+// ============================================================
+
+double divide(
+    double a,
+    double b)
+{
+    if (b == 0)
+        throw runtime_error(
+            "Division by zero"
+        );
+
+    return a / b;
+}
+
+void exceptionDemo()
+{
+    cout << "\n=== 43. EXCEPTIONS ===\n";
+
+    try
+    {
+        cout << divide(10, 2)
+             << '\n';
+
+        cout << divide(10, 0)
+             << '\n';
+    }
+    catch (const exception& e)
+    {
+        cout << "Exception: "
+             << e.what()
+             << '\n';
+    }
+}
+
+
+// ============================================================
+// 44. CASTS
+// ============================================================
+
+void castsDemo()
+{
+    cout << "\n=== 44. CASTS ===\n";
+
+    double value = 3.14;
+
+    int integer =
+        static_cast<int>(value);
+
+    cout << integer << '\n';
+
+    Animal* animal =
+        new Dog();
+
+    Dog* dog =
+        dynamic_cast<Dog*>(animal);
+
+    if (dog)
+        cout << "dynamic_cast succeeded\n";
+
+    delete animal;
+}
+
+
+// ============================================================
+// 45. FILESYSTEM
+// ============================================================
+
+void filesystemDemo()
+{
+    cout << "\n=== 45. FILESYSTEM ===\n";
+
+    namespace fs = filesystem;
+
+    fs::path current =
+        fs::current_path();
+
+    cout << "Current directory:\n"
+         << current
+         << '\n';
+}
+
+
+// ============================================================
+// 46. CHRONO
+// ============================================================
+
+void chronoDemo()
+{
+    cout << "\n=== 46. CHRONO ===\n";
+
+    using namespace chrono;
+
+    auto start =
+        steady_clock::now();
+
+    this_thread::sleep_for(
+        milliseconds(100)
+    );
+
+    auto end =
+        steady_clock::now();
+
+    auto elapsed =
+        duration_cast<milliseconds>(
+            end - start
+        );
+
+    cout << "Elapsed: "
+         << elapsed.count()
+         << " ms\n";
+}
+
+
+// ============================================================
+// 47. THREAD
+// ============================================================
+
+void worker()
+{
+    cout << "Worker thread running\n";
+}
+
+void threadDemo()
+{
+    cout << "\n=== 47. THREAD ===\n";
+
+    thread t(worker);
+
+    t.join();
+}
+
+
+// ============================================================
+// 48. MUTEX
+// ============================================================
+
+mutex outputMutex;
+
+void safePrint(int id)
+{
+    lock_guard<mutex> lock(
+        outputMutex
+    );
+
+    cout << "Thread "
+         << id
+         << " printing safely\n";
+}
+
+void mutexDemo()
+{
+    cout << "\n=== 48. MUTEX ===\n";
+
+    thread t1(safePrint, 1);
+    thread t2(safePrint, 2);
+
+    t1.join();
+    t2.join();
+}
+
+
+// ============================================================
+// 49. ATOMIC
+// ============================================================
+
+void atomicDemo()
+{
+    cout << "\n=== 49. ATOMIC ===\n";
+
+    atomic<int> counter{0};
+
+    auto increment = [&]()
+    {
+        for (int i = 0; i < 1000; ++i)
+            ++counter;
+    };
+
+    thread t1(increment);
+    thread t2(increment);
+
+    t1.join();
+    t2.join();
+
+    cout << "Counter: "
+         << counter.load()
+         << '\n';
+}
+
+
+// ============================================================
+// 50. CONDITION VARIABLE
+// ============================================================
+
+mutex cvMutex;
+condition_variable cv;
+bool ready = false;
+
+void waitingThread()
+{
+    unique_lock<mutex> lock(cvMutex);
+
+    cv.wait(
+        lock,
+        []
+        {
+            return ready;
+        }
+    );
+
+    cout << "Worker received notification\n";
+}
+
+void conditionVariableDemo()
+{
+    cout << "\n=== 50. CONDITION VARIABLE ===\n";
+
+    thread workerThread(
+        waitingThread
+    );
+
+    this_thread::sleep_for(
+        chrono::milliseconds(100)
+    );
+
+    {
+        lock_guard<mutex> lock(cvMutex);
+
+        ready = true;
+    }
+
+    cv.notify_one();
+
+    workerThread.join();
+}
+
+
+// ============================================================
+// 51. FUTURE / ASYNC
+// ============================================================
+
+int expensiveCalculation()
+{
+    this_thread::sleep_for(
+        chrono::milliseconds(100)
+    );
+
+    return 42;
+}
+
+void futureDemo()
+{
+    cout << "\n=== 51. FUTURE / ASYNC ===\n";
+
+    future<int> result =
+        async(
+            launch::async,
+            expensiveCalculation
+        );
+
+    cout << "Result: "
+         << result.get()
+         << '\n';
+}
+
+
+// ============================================================
+// 52. RANGES
+// ============================================================
+
+void rangesDemo()
+{
+    cout << "\n=== 52. C++20 RANGES ===\n";
+
+    vector<int> values{
+        1, 2, 3, 4, 5, 6
+    };
+
+    auto result =
+        values
+        | views::filter(
+            [](int x)
+            {
+                return x % 2 == 0;
+            }
+        )
+        | views::transform(
+            [](int x)
+            {
+                return x * x;
+            }
+        );
+
+    for (int value : result)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 53. THREE-WAY COMPARISON
+// ============================================================
+
+class Version
+{
+public:
+    int major;
+    int minor;
+
+    auto operator<=>(const Version&) const = default;
+};
+
+void spaceshipDemo()
+{
+    cout << "\n=== 53. THREE-WAY COMPARISON ===\n";
+
+    Version a{1, 2};
+    Version b{1, 3};
+
+    if (a < b)
+        cout << "a < b\n";
+
+    if (a != b)
+        cout << "a != b\n";
+}
+
+
+// ============================================================
+// 54. STRUCTURED BINDINGS
+// ============================================================
+
+void structuredBindingsDemo()
+{
+    cout << "\n=== 54. STRUCTURED BINDINGS ===\n";
+
+    pair<string, int> person{
+        "Alice",
+        25
+    };
+
+    auto [name, age] = person;
+
+    cout << name
+         << " "
+         << age
+         << '\n';
+}
+
+
+// ============================================================
+// 55. SPAN
+// ============================================================
+
+void printSpan(span<const int> values)
+{
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+void spanDemo()
+{
+    cout << "\n=== 55. STD::SPAN ===\n";
+
+    vector<int> values{
+        1, 2, 3, 4, 5
+    };
+
+    printSpan(values);
+}
+
+
+// ============================================================
+// 56. FORWARD_LIST
+// ============================================================
+
+void forwardListDemo()
+{
+    cout << "\n=== 56. FORWARD_LIST ===\n";
+
+    forward_list<int> values{
+        1, 2, 3
+    };
+
+    values.push_front(0);
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 57. DESIGNATED INITIALIZATION
+// C++20
+// ============================================================
+
+struct Config
+{
+    string host;
+    int port;
+    bool debug;
+};
+
+void designatedInitializationDemo()
+{
+    cout << "\n=== 57. DESIGNATED INITIALIZATION ===\n";
+
+    Config config{
+        .host = "localhost",
+        .port = 8080,
+        .debug = true
+    };
+
+    cout << config.host
+         << ":"
+         << config.port
+         << '\n';
+}
+
+
+// ============================================================
+// 58. MOVE SEMANTICS
+// ============================================================
+
+void moveDemo()
+{
+    cout << "\n=== 58. MOVE SEMANTICS ===\n";
+
+    string original =
+        "This is a long string";
+
+    string moved =
+        move(original);
+
+    cout << "Moved value: "
+         << moved
+         << '\n';
+}
+
+
+// ============================================================
+// 59. RANGE ALGORITHM
+// ============================================================
+
+void rangeAlgorithmDemo()
+{
+    cout << "\n=== 59. RANGE ALGORITHMS ===\n";
+
+    vector<int> values{
+        5, 3, 1, 4, 2
+    };
+
+    ranges::sort(values);
+
+    for (int value : values)
+        cout << value << ' ';
+
+    cout << '\n';
+}
+
+
+// ============================================================
+// 60. C++20 COROUTINE
+//
+// A complete coroutine implementation requires several
+// supporting types. The example below shows the basic syntax.
+// ============================================================
+
+/*
+#include <coroutine>
+
+struct Generator
+{
+    struct promise_type
+    {
+        Generator get_return_object()
+        {
+            return {};
+        }
+
+        suspend_always initial_suspend()
+        {
+            return {};
+        }
+
+        suspend_always final_suspend() noexcept
+        {
+            return {};
+        }
+
+        void return_void() {}
+
+        void unhandled_exception()
+        {
+            terminate();
+        }
+
+        suspend_always yield_value(int)
+        {
+            return {};
+        }
+    };
+};
+
+Generator exampleCoroutine()
+{
+    co_yield 1;
+    co_yield 2;
+    co_yield 3;
+}
+*/
+
+// Coroutines are intentionally commented out because the
+// example requires a complete coroutine/generator framework.
+
+
+// ============================================================
+// MAIN
+// ============================================================
+
+int main()
+{
+    cout << R"(
+============================================================
+             C++ FEATURE SHOWCASE
+============================================================
+)";
+
+    basicTypesDemo();
+    referencesDemo();
+    pointersDemo();
+    constDemo();
+    enumDemo();
+    structDemo();
+    classDemo();
+    staticDemo();
+    polymorphismDemo();
+    abstractClassDemo();
+    operatorDemo();
+    copyMoveDemo();
+    raiiDemo();
+    smartPointerDemo();
+
+    vectorDemo();
+    arrayDemo();
+    dequeDemo();
+    listDemo();
+    stackDemo();
+    queueDemo();
+    priorityQueueDemo();
+
+    setDemo();
+    unorderedSetDemo();
+    mapDemo();
+    unorderedMapDemo();
+
+    pairDemo();
+    tupleDemo();
+    optionalDemo();
+    variantDemo();
+    anyDemo();
+    stringViewDemo();
+
+    algorithmsDemo();
+    lambdaDemo();
+    iteratorDemo();
+    functionDemo();
+
+    templateDemo();
+    classTemplateDemo();
+    variadicTemplateDemo();
+    ifConstexprDemo();
+    conceptsDemo();
+    typeTraitsDemo();
+
+    exceptionDemo();
+    castsDemo();
+    filesystemDemo();
+    chronoDemo();
+
+    threadDemo();
+    mutexDemo();
+    atomicDemo();
+    conditionVariableDemo();
+    futureDemo();
+
+    rangesDemo();
+    spaceshipDemo();
+    structuredBindingsDemo();
+    spanDemo();
+    forwardListDemo();
+    designatedInitializationDemo();
+    moveDemo();
+    rangeAlgorithmDemo();
+
+    cout << R"(
+============================================================
+                  END OF SHOWCASE
+============================================================
+)";
+
+    return 0;
+}
+```
+
