@@ -199,7 +199,7 @@ private:
 
 public:
     Person(string name, int age)
-        : name(move(name)), age(age)
+        : name(std::move(name)), age(age)
     {
     }
 
@@ -499,7 +499,7 @@ void copyMoveDemo()
 
     Buffer b = a;
 
-    Buffer c = move(a);
+    Buffer c = std::move(a);
 }
 
 
@@ -1115,7 +1115,7 @@ private:
 
 public:
     explicit Box(T value)
-        : value(move(value))
+        : value(std::move(value))
     {
     }
 
@@ -1690,7 +1690,7 @@ void moveDemo()
         "This is a long string";
 
     string moved =
-        move(original);
+        std::move(original);
 
     cout << "Moved value: "
          << moved
