@@ -39,6 +39,19 @@ impl Animation {
     }
 }
 
+/// For WASM arg in URL
+impl TryFrom<&str> for Animation {
+    type Error = String;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "swr" => Ok(Animation::Swr(WaveApp::default())),
+            "vector" => Ok(Animation::Vector(VectorApp::default())),
+            _ => Err("No animation".to_string()),
+        }
+    }
+}
+
 /// Yakb app
 #[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
 pub struct YakbApp {
