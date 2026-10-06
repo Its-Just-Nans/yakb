@@ -11,5 +11,5 @@ keywords = ["animations"]
 categories = ["science", "multimedia", "graphics"]
 
 [dependencies]
-bladvak = "1.3.26"
+bladvak = "1.4.3"
 serde = { version = "1.0.229", features = ["derive"] }

@@ -444,7 +444,7 @@ fn checkbox(ui: &mut egui::Ui, text: &str, value: &mut bool, color: Color32) {
 }
 
 impl WaveApp {
-    /// show the animations
+    /// show the animation
     pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx();
 

@@ -6,6 +6,7 @@ use bladvak::{
 };
 
 use crate::swr_app::WaveApp;
+use crate::vector_app::VectorApp;
 
 /// All available animations
 #[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
@@ -15,6 +16,8 @@ pub(crate) enum Animation {
     Base,
     /// SWR animation
     Swr(WaveApp),
+    /// Vector animation
+    Vector(VectorApp),
 }
 
 impl Animation {
@@ -26,18 +29,12 @@ impl Animation {
                     ui.label("Welcome to yakb");
                 });
             }
-            Animation::Swr(wave_app) => wave_app.show(ui),
-        }
-    }
-}
-
-impl TryFrom<&str> for Animation {
-    type Error = String;
-
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        match value {
-            "swr" => Ok(Animation::Swr(WaveApp::default())),
-            _ => Err("No animation".to_string()),
+            Animation::Swr(wave_app) => {
+                egui::ScrollArea::vertical()
+                    .id_salt("animation_viewer")
+                    .show(ui, |ui| wave_app.show(ui));
+            }
+            Animation::Vector(app) => app.show(ui),
         }
     }
 }
@@ -86,20 +83,28 @@ impl BladvakApp<'_> for YakbApp {
     }
 
     fn central_panel(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
-        egui::ScrollArea::vertical()
-            .id_salt("animation_viewer")
-            .show(ui, |ui| {
-                self.animation.show(ui);
-            });
+        self.animation.show(ui);
     }
 
     fn menu_file(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
         ui.menu_button("Animation", |ui| {
-            if ui.button("Base").clicked() {
+            if ui
+                .selectable_label(matches!(self.animation, Animation::Base), "Base")
+                .clicked()
+            {
                 self.animation = Animation::Base;
             }
-            if ui.button("SWR").clicked() {
+            if ui
+                .selectable_label(matches!(self.animation, Animation::Swr(_)), "SWR")
+                .clicked()
+            {
                 self.animation = Animation::Swr(WaveApp::default());
+            }
+            if ui
+                .selectable_label(matches!(self.animation, Animation::Vector(_)), "Vector")
+                .clicked()
+            {
+                self.animation = Animation::Vector(VectorApp::default());
             }
         });
     }

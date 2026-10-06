@@ -21,5 +21,6 @@
 
 mod app;
 mod swr_app;
+mod vector_app;
 
 pub use app::YakbApp;
