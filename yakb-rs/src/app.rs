@@ -1,7 +1,7 @@
 //! Yakb app
 
 use bladvak::{
-    BladvakApp,
+    BladvakApp, ErrorManager,
     eframe::{self, egui},
 };
 
@@ -25,7 +25,7 @@ pub(crate) enum Animation {
 
 impl Animation {
     /// Show the current animation
-    pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show(&mut self, ui: &mut egui::Ui, error_manager: &mut ErrorManager) {
         match self {
             Self::Base => {
                 bladvak::utils::central_ui(ui, |ui| {
@@ -38,7 +38,7 @@ impl Animation {
                     .show(ui, |ui| wave_app.show(ui));
             }
             Self::Vector(app) => app.show(ui),
-            Self::UnitCircle(app) => app.show(ui),
+            Self::UnitCircle(app) => app.show(ui, error_manager),
         }
     }
 }
@@ -100,8 +100,8 @@ impl BladvakApp<'_> for YakbApp {
         "https://github.com/Its-Just-Nans/yakb".to_string()
     }
 
-    fn central_panel(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
-        self.animation.show(ui);
+    fn central_panel(&mut self, ui: &mut egui::Ui, error_manager: &mut bladvak::ErrorManager) {
+        self.animation.show(ui, error_manager);
     }
 
     fn menu_file(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {

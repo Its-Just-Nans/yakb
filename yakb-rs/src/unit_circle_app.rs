@@ -1,6 +1,9 @@
 //! Unit Circle
 
-use bladvak::eframe::egui::{self, Color32, Frame, Pos2, Rect, Stroke, Vec2};
+use bladvak::{
+    ErrorManager,
+    eframe::egui::{self, Color32, Frame, Pos2, Rect, Sense, Stroke, Vec2},
+};
 use std::f32::consts::TAU;
 
 /// Unit circle
@@ -36,7 +39,7 @@ impl Default for UnitCircleApp {
 
 impl UnitCircleApp {
     /// show the animation
-    pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show(&mut self, ui: &mut egui::Ui, error_manager: &mut ErrorManager) {
         let dt = ui.ctx().input(|i| i.stable_dt).min(0.05);
 
         egui::panel::Panel::top("controls").show(ui, |ui| {
@@ -62,15 +65,14 @@ impl UnitCircleApp {
         egui::CentralPanel::default()
             .frame(Frame::NONE)
             .show(ui, |ui| {
-                let (response, painter) =
-                    ui.allocate_painter(ui.available_size(), egui::Sense::hover());
                 paint_scene(
-                    &painter,
-                    response.rect,
-                    self.phase,
+                    ui,
                     self.show_projections,
                     self.show_sin,
                     self.show_cos,
+                    &mut self.running,
+                    &mut self.phase,
+                    error_manager.is_debug(),
                 );
             });
     }
@@ -163,37 +165,64 @@ fn draw_angle(p: &egui::Painter, circle_center: Pos2, radius: f32, phase: f32) {
     p.add(egui::Shape::line(points, Stroke::new(2.0, COLOR_PHASE)));
 }
 /// Paint the scene
+#[allow(clippy::fn_params_excessive_bools, clippy::too_many_lines)]
 fn paint_scene(
-    p: &egui::Painter,
-    rect: Rect,
-    phase: f32,
+    ui: &mut egui::Ui,
     show_projection: bool,
     show_sin: bool,
     show_cos: bool,
+    running: &mut bool,
+    phase_mut: &mut f32,
+    debug: bool,
 ) {
+    let (response, painter) = ui.allocate_painter(ui.available_size(), egui::Sense::hover());
+    let area = response.rect;
+    let p = &painter;
     let bg = Color32::from_rgb(255, 255, 255);
     let blue = Color32::from_rgb(28, 40, 180);
     let axis = Color32::from_rgb(65, 65, 65);
     let guide = Color32::from_rgb(100, 110, 205);
 
-    p.rect_filled(rect, 0.0, bg);
+    p.rect_filled(area, 0.0, bg);
 
-    let pad = 18.0;
-    let area = Rect::from_min_max(rect.min + Vec2::splat(pad), rect.max - Vec2::splat(pad));
     let circle_center = Pos2::new(area.center().x, area.top() + area.height() * 0.245);
     let radius = (area.width() * 0.42).min(area.height() * 0.205).max(25.0);
 
+    let phase = *phase_mut;
     paint_circle_and_axis(p, area, circle_center, radius, phase);
 
     let point_on_circle = Pos2::new(
         circle_center.x + radius * phase.cos(),
         circle_center.y - radius * phase.sin(),
     );
+    let allowed_rect = 40.0;
+    let resp = ui.interact(
+        Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
+        ui.id().with("rect"),
+        Sense::click_and_drag(),
+    );
+    if debug {
+        ui.painter().debug_rect(
+            Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
+            Color32::YELLOW,
+            "zone",
+        );
+    }
+    if resp.dragged()
+        && let Some(pointer_pos) = resp.interact_pointer_pos()
+    {
+        *running = false;
+        let delta = pointer_pos - circle_center;
+
+        *phase_mut = (-delta.y).atan2(delta.x).rem_euclid(std::f32::consts::TAU);
+    }
+
     p.line_segment(
         [Pos2::new(circle_center.x, circle_center.y), point_on_circle],
         Stroke::new(2.0, blue),
     );
     p.circle_filled(point_on_circle, 3.8, blue);
+
     p.circle_filled(Pos2::new(circle_center.x, circle_center.y), 2.2, axis);
 
     if show_cos {
@@ -306,7 +335,7 @@ fn paint_text(p: &egui::Painter, phase: f32, circle_center: Pos2, radius: f32) {
         COLOR_COS,
     );
 
-    let text = format!("θ = {phase:.2}");
+    let text = format!("θ = {phase:.2} rad");
     let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
 
     let pos_text = Pos2::new(circle_center.x + 10.0, circle_center.y + 10.0);
