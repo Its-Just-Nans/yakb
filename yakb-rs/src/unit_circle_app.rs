@@ -22,6 +22,8 @@ pub(crate) struct UnitCircleApp {
     show_sin: bool,
     /// show cos
     show_cos: bool,
+    /// show cos hover
+    show_cos_hover: bool,
 }
 
 impl Default for UnitCircleApp {
@@ -33,6 +35,7 @@ impl Default for UnitCircleApp {
             show_projections: true,
             show_sin: true,
             show_cos: true,
+            show_cos_hover: true,
         }
     }
 }
@@ -48,6 +51,7 @@ impl UnitCircleApp {
                 ui.checkbox(&mut self.show_projections, "Show projections");
                 ui.checkbox(&mut self.show_cos, "Cos");
                 ui.checkbox(&mut self.show_sin, "Sin");
+                ui.checkbox(&mut self.show_cos_hover, "Cos hover");
                 ui.add_space(12.0);
                 ui.label("Speed");
                 ui.add(egui::Slider::new(&mut self.speed, 0.1..=3.0).suffix("×"));
@@ -65,16 +69,140 @@ impl UnitCircleApp {
         egui::CentralPanel::default()
             .frame(Frame::NONE)
             .show(ui, |ui| {
-                paint_scene(
-                    ui,
-                    self.show_projections,
-                    self.show_sin,
-                    self.show_cos,
-                    &mut self.running,
-                    &mut self.phase,
-                    error_manager.is_debug(),
-                );
+                self.paint_scene(ui, error_manager.is_debug());
             });
+    }
+
+    /// Paint the scene
+    #[allow(clippy::fn_params_excessive_bools, clippy::too_many_lines)]
+    fn paint_scene(&mut self, ui: &mut egui::Ui, debug: bool) {
+        let (response, painter) = ui.allocate_painter(ui.available_size(), egui::Sense::hover());
+        let area = response.rect;
+        let p = &painter;
+        let bg = Color32::from_rgb(255, 255, 255);
+        let blue = Color32::from_rgb(28, 40, 180);
+        let axis = Color32::from_rgb(65, 65, 65);
+
+        p.rect_filled(area, 0.0, bg);
+
+        let circle_center = Pos2::new(area.center().x, area.top() + area.height() * 0.245);
+        let radius = (area.width() * 0.42).min(area.height() * 0.205).max(25.0);
+
+        let phase = self.phase;
+        paint_circle_and_axis(p, area, circle_center, radius, phase);
+
+        let point_on_circle = Pos2::new(
+            circle_center.x + radius * phase.cos(),
+            circle_center.y - radius * phase.sin(),
+        );
+        let allowed_rect = 40.0;
+        let resp = ui.interact(
+            Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
+            ui.id().with("rect"),
+            Sense::click_and_drag(),
+        );
+        if debug {
+            ui.painter().debug_rect(
+                Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
+                Color32::YELLOW,
+                "zone",
+            );
+        }
+        if resp.dragged()
+            && let Some(pointer_pos) = resp.interact_pointer_pos()
+        {
+            self.running = false;
+            let delta = pointer_pos - circle_center;
+
+            self.phase = (-delta.y).atan2(delta.x).rem_euclid(std::f32::consts::TAU);
+        }
+
+        p.line_segment(
+            [Pos2::new(circle_center.x, circle_center.y), point_on_circle],
+            Stroke::new(2.0, blue),
+        );
+        p.circle_filled(point_on_circle, 3.8, blue);
+
+        p.circle_filled(circle_center, 2.2, axis);
+
+        if self.show_cos {
+            let wave_top = circle_center.y + radius + 18.0;
+            let wave_bottom = area.bottom();
+            let wave_height = (wave_bottom - wave_top).max(40.0);
+            // axis
+            p.line_segment(
+                [
+                    Pos2::new(area.left(), wave_top),
+                    Pos2::new(area.right(), wave_top),
+                ],
+                Stroke::new(1.0, axis),
+            );
+            paint_cos(
+                p,
+                phase,
+                circle_center.x,
+                radius,
+                wave_top,
+                wave_height,
+                blue,
+            );
+            let wave_point = Pos2::new(circle_center.x + radius * phase.cos(), wave_top);
+            p.circle_filled(wave_point, 3.8, COLOR_COS);
+            p.line_segment(
+                [Pos2::new(circle_center.x, wave_top), wave_point],
+                Stroke::new(2.0, COLOR_COS),
+            );
+            if self.show_projections {
+                let projection_bottom = Pos2::new(point_on_circle.x, wave_top);
+                let projection_top =
+                    Pos2::new(point_on_circle.x, point_on_circle.y.max(circle_center.y));
+                dashed_line(p, projection_top, projection_bottom, 4.0, 3.0, COLOR_COS);
+            }
+        }
+        if self.show_sin {
+            let graph_left = circle_center.x + radius + 18.0;
+            let graph_right = area.right();
+            let graph_width = (graph_right - graph_left).max(40.0);
+            let wave_left = circle_center.x + radius + 18.0;
+            p.line_segment(
+                [
+                    Pos2::new(wave_left, area.top()),
+                    Pos2::new(wave_left, area.bottom()),
+                ],
+                Stroke::new(1.0, axis),
+            );
+
+            paint_sin(
+                p,
+                phase,
+                wave_left,
+                radius,
+                circle_center.y,
+                graph_width,
+                blue,
+            );
+            let wave_point = Pos2::new(wave_left, circle_center.y - radius * phase.sin());
+            p.circle_filled(wave_point, 3.8, COLOR_SIN);
+            p.line_segment(
+                [Pos2::new(wave_left, circle_center.y), wave_point],
+                Stroke::new(2.0, COLOR_SIN),
+            );
+            if self.show_projections {
+                let projection_right = Pos2::new(wave_left, point_on_circle.y);
+                let projection_left =
+                    Pos2::new(point_on_circle.x.max(circle_center.x), point_on_circle.y);
+                dashed_line(p, projection_left, projection_right, 4.0, 3.0, COLOR_SIN);
+            }
+        }
+        if self.show_cos_hover {
+            let graph_left = circle_center.x + radius + 18.0;
+            let graph_right = area.right();
+            let graph_width = (graph_right - graph_left).max(40.0);
+            let wave_left = circle_center.x + radius + 18.0;
+            paint_cos_hover(p, phase, wave_left, radius, circle_center, graph_width);
+        }
+        draw_angle(p, circle_center, radius, phase);
+        paint_text(p, phase, circle_center, radius);
     }
 }
 
@@ -84,6 +212,8 @@ const COLOR_SIN: Color32 = Color32::RED;
 const COLOR_COS: Color32 = Color32::DARK_GREEN;
 /// Color phase
 const COLOR_PHASE: Color32 = Color32::DARK_GRAY;
+/// Color of the cos hover
+const COLOR_COS_HOVER: Color32 = Color32::LIGHT_BLUE;
 
 /// Paint circle and axis
 fn paint_circle_and_axis(
@@ -163,139 +293,6 @@ fn draw_angle(p: &egui::Painter, circle_center: Pos2, radius: f32, phase: f32) {
         .collect();
 
     p.add(egui::Shape::line(points, Stroke::new(2.0, COLOR_PHASE)));
-}
-/// Paint the scene
-#[allow(clippy::fn_params_excessive_bools, clippy::too_many_lines)]
-fn paint_scene(
-    ui: &mut egui::Ui,
-    show_projection: bool,
-    show_sin: bool,
-    show_cos: bool,
-    running: &mut bool,
-    phase_mut: &mut f32,
-    debug: bool,
-) {
-    let (response, painter) = ui.allocate_painter(ui.available_size(), egui::Sense::hover());
-    let area = response.rect;
-    let p = &painter;
-    let bg = Color32::from_rgb(255, 255, 255);
-    let blue = Color32::from_rgb(28, 40, 180);
-    let axis = Color32::from_rgb(65, 65, 65);
-    let guide = Color32::from_rgb(100, 110, 205);
-
-    p.rect_filled(area, 0.0, bg);
-
-    let circle_center = Pos2::new(area.center().x, area.top() + area.height() * 0.245);
-    let radius = (area.width() * 0.42).min(area.height() * 0.205).max(25.0);
-
-    let phase = *phase_mut;
-    paint_circle_and_axis(p, area, circle_center, radius, phase);
-
-    let point_on_circle = Pos2::new(
-        circle_center.x + radius * phase.cos(),
-        circle_center.y - radius * phase.sin(),
-    );
-    let allowed_rect = 40.0;
-    let resp = ui.interact(
-        Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
-        ui.id().with("rect"),
-        Sense::click_and_drag(),
-    );
-    if debug {
-        ui.painter().debug_rect(
-            Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
-            Color32::YELLOW,
-            "zone",
-        );
-    }
-    if resp.dragged()
-        && let Some(pointer_pos) = resp.interact_pointer_pos()
-    {
-        *running = false;
-        let delta = pointer_pos - circle_center;
-
-        *phase_mut = (-delta.y).atan2(delta.x).rem_euclid(std::f32::consts::TAU);
-    }
-
-    p.line_segment(
-        [Pos2::new(circle_center.x, circle_center.y), point_on_circle],
-        Stroke::new(2.0, blue),
-    );
-    p.circle_filled(point_on_circle, 3.8, blue);
-
-    p.circle_filled(Pos2::new(circle_center.x, circle_center.y), 2.2, axis);
-
-    if show_cos {
-        let wave_top = circle_center.y + radius + 18.0;
-        let wave_bottom = area.bottom();
-        let wave_height = (wave_bottom - wave_top).max(40.0);
-        // axis
-        p.line_segment(
-            [
-                Pos2::new(area.left(), wave_top),
-                Pos2::new(area.right(), wave_top),
-            ],
-            Stroke::new(1.0, axis),
-        );
-        paint_cos(
-            p,
-            phase,
-            circle_center.x,
-            radius,
-            wave_top,
-            wave_height,
-            blue,
-        );
-        let wave_point = Pos2::new(circle_center.x + radius * phase.cos(), wave_top);
-        p.circle_filled(wave_point, 3.8, blue);
-        p.line_segment(
-            [Pos2::new(circle_center.x, wave_top), wave_point],
-            Stroke::new(2.0, COLOR_COS),
-        );
-        if show_projection {
-            let projection_bottom = Pos2::new(point_on_circle.x, wave_top);
-            let projection_top =
-                Pos2::new(point_on_circle.x, point_on_circle.y.max(circle_center.y));
-            dashed_line(p, projection_top, projection_bottom, 4.0, 3.0, guide);
-        }
-    }
-    if show_sin {
-        let graph_left = circle_center.x + radius + 18.0;
-        let graph_right = area.right();
-        let graph_width = (graph_right - graph_left).max(40.0);
-        let wave_left = circle_center.x + radius + 18.0;
-        p.line_segment(
-            [
-                Pos2::new(wave_left, area.top()),
-                Pos2::new(wave_left, area.bottom()),
-            ],
-            Stroke::new(1.0, axis),
-        );
-
-        paint_sin(
-            p,
-            phase,
-            wave_left,
-            radius,
-            circle_center.y,
-            graph_width,
-            blue,
-        );
-        let wave_point = Pos2::new(wave_left, circle_center.y - radius * phase.sin());
-        p.circle_filled(wave_point, 3.8, blue);
-        p.line_segment(
-            [Pos2::new(wave_left, circle_center.y), wave_point],
-            Stroke::new(2.0, COLOR_SIN),
-        );
-        if show_projection {
-            let projection_right = Pos2::new(wave_left, point_on_circle.y);
-            let projection_left =
-                Pos2::new(point_on_circle.x.max(circle_center.x), point_on_circle.y);
-            dashed_line(p, projection_left, projection_right, 4.0, 3.0, guide);
-        }
-    }
-    draw_angle(p, circle_center, radius, phase);
-    paint_text(p, phase, circle_center, radius);
 }
 
 /// Pain the texts
@@ -409,6 +406,67 @@ fn paint_sin(
 
         p.line_segment([p1, p2], Stroke::new(2.2, blue));
     }
+}
+
+/// show the cos hover
+fn paint_cos_hover(
+    p: &egui::Painter,
+    phase: f32,
+    wave_left: f32,
+    radius: f32,
+    circle_center: Pos2,
+    graph_width: f32,
+) {
+    let point_on_circle = Pos2::new(
+        circle_center.x - radius * phase.sin(),
+        circle_center.y - radius * phase.cos(),
+    );
+
+    p.line_segment(
+        [Pos2::new(circle_center.x, circle_center.y), point_on_circle],
+        Stroke::new(2.0, COLOR_COS_HOVER),
+    );
+    p.circle_filled(point_on_circle, 3.8, COLOR_COS_HOVER);
+
+    let wave_point = Pos2::new(wave_left, circle_center.y - radius * phase.cos());
+    p.circle_filled(wave_point, 3.8, COLOR_COS_HOVER);
+
+    p.line_segment(
+        [Pos2::new(wave_left, circle_center.y), wave_point],
+        Stroke::new(2.0, COLOR_COS_HOVER),
+    );
+
+    let segments = 300;
+    #[allow(clippy::cast_precision_loss)]
+    for i in 0..segments {
+        let t1 = i as f32 / segments as f32;
+        let t2 = (i + 1) as f32 / segments as f32;
+
+        let angle1 = phase + t1 * TAU;
+        let angle2 = phase + t2 * TAU;
+
+        let p1 = Pos2::new(
+            wave_left + t1 * graph_width,
+            circle_center.y - radius * angle1.cos(),
+        );
+
+        let p2 = Pos2::new(
+            wave_left + t2 * graph_width,
+            circle_center.y - radius * angle2.cos(),
+        );
+
+        p.line_segment([p1, p2], Stroke::new(2.2, COLOR_COS_HOVER));
+    }
+    let projection_right = Pos2::new(wave_left, point_on_circle.y);
+    let projection_left = Pos2::new(point_on_circle.x, point_on_circle.y);
+    dashed_line(
+        p,
+        projection_left,
+        projection_right,
+        4.0,
+        3.0,
+        COLOR_COS_HOVER,
+    );
 }
 
 /// draw a dashed line
