@@ -6,6 +6,7 @@ use bladvak::{
 };
 
 use crate::swr_app::WaveApp;
+use crate::unit_circle_app::UnitCircleApp;
 use crate::vector_app::VectorApp;
 
 /// All available animations
@@ -18,23 +19,26 @@ pub(crate) enum Animation {
     Swr(WaveApp),
     /// Vector animation
     Vector(VectorApp),
+    /// Unit circle animation
+    UnitCircle(UnitCircleApp),
 }
 
 impl Animation {
     /// Show the current animation
     pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
         match self {
-            Animation::Base => {
+            Self::Base => {
                 bladvak::utils::central_ui(ui, |ui| {
                     ui.label("Welcome to yakb");
                 });
             }
-            Animation::Swr(wave_app) => {
+            Self::Swr(wave_app) => {
                 egui::ScrollArea::vertical()
                     .id_salt("animation_viewer")
                     .show(ui, |ui| wave_app.show(ui));
             }
-            Animation::Vector(app) => app.show(ui),
+            Self::Vector(app) => app.show(ui),
+            Self::UnitCircle(app) => app.show(ui),
         }
     }
 }
@@ -45,8 +49,9 @@ impl TryFrom<&str> for Animation {
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         match value {
-            "swr" => Ok(Animation::Swr(WaveApp::default())),
-            "vector" => Ok(Animation::Vector(VectorApp::default())),
+            "swr" => Ok(Self::Swr(WaveApp::default())),
+            "vector" => Ok(Self::Vector(VectorApp::default())),
+            "unit_circle" => Ok(Self::UnitCircle(UnitCircleApp::default())),
             _ => Err("No animation".to_string()),
         }
     }
@@ -118,6 +123,15 @@ impl BladvakApp<'_> for YakbApp {
                 .clicked()
             {
                 self.animation = Animation::Vector(VectorApp::default());
+            }
+            if ui
+                .selectable_label(
+                    matches!(self.animation, Animation::UnitCircle(_)),
+                    "Unit circle",
+                )
+                .clicked()
+            {
+                self.animation = Animation::UnitCircle(UnitCircleApp::default());
             }
         });
     }

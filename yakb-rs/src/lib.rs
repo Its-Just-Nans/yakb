@@ -21,6 +21,7 @@
 
 mod app;
 mod swr_app;
+mod unit_circle_app;
 mod vector_app;
 
 pub use app::YakbApp;
