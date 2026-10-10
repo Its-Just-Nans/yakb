@@ -2,7 +2,7 @@
 
 use bladvak::{
     ErrorManager,
-    eframe::egui::{self, Color32, Frame, Pos2, Rect, Sense, Stroke, Vec2},
+    eframe::egui::{self, Color32, CornerRadius, Frame, Pos2, Rect, Sense, Stroke, Vec2},
 };
 use std::f32::consts::TAU;
 
@@ -24,6 +24,8 @@ pub(crate) struct UnitCircleApp {
     show_cos: bool,
     /// show cos hover
     show_cos_hover: bool,
+    /// show text
+    show_texts: bool,
 }
 
 impl Default for UnitCircleApp {
@@ -36,6 +38,7 @@ impl Default for UnitCircleApp {
             show_sin: true,
             show_cos: true,
             show_cos_hover: true,
+            show_texts: true,
         }
     }
 }
@@ -44,22 +47,6 @@ impl UnitCircleApp {
     /// show the animation
     pub(crate) fn show(&mut self, ui: &mut egui::Ui, error_manager: &mut ErrorManager) {
         let dt = ui.ctx().input(|i| i.stable_dt).min(0.05);
-
-        egui::panel::Panel::top("controls").show(ui, |ui| {
-            ui.horizontal(|ui| {
-                ui.checkbox(&mut self.running, "Animate");
-                ui.checkbox(&mut self.show_projections, "Show projections");
-                ui.checkbox(&mut self.show_cos, "Cos");
-                ui.checkbox(&mut self.show_sin, "Sin");
-                ui.checkbox(&mut self.show_cos_hover, "Cos hover");
-                ui.add_space(12.0);
-                ui.label("Speed");
-                ui.add(egui::Slider::new(&mut self.speed, 0.1..=3.0).suffix("×"));
-                if ui.button("Reset").clicked() {
-                    self.phase = 0.0;
-                }
-            });
-        });
 
         if self.running {
             self.phase = (self.phase + dt * self.speed).rem_euclid(TAU);
@@ -70,6 +57,46 @@ impl UnitCircleApp {
             .frame(Frame::NONE)
             .show(ui, |ui| {
                 self.paint_scene(ui, error_manager.is_debug());
+                self.show_settings(ui);
+            });
+    }
+
+    /// show settings
+    fn show_settings(&mut self, ui: &mut egui::Ui) {
+        let panel_top_left = ui.min_rect().min;
+        egui::Area::new(ui.id().with("scene_settings"))
+            .fixed_pos(panel_top_left)
+            .order(egui::Order::Foreground)
+            .show(ui.ctx(), |ui| {
+                egui::Frame::NONE
+                    .fill(egui::Color32::from_black_alpha(250))
+                    .corner_radius(CornerRadius {
+                        nw: 0,
+                        ne: 0,
+                        sw: 0,
+                        se: 4,
+                    })
+                    .inner_margin(egui::Margin::same(6))
+                    .show(ui, |ui| {
+                        ui.collapsing("Menu", |ui| {
+                            ui.checkbox(&mut self.show_projections, "Show projections");
+                            ui.checkbox(&mut self.show_cos, "Cos");
+                            ui.checkbox(&mut self.show_sin, "Sin");
+                            ui.checkbox(&mut self.show_cos_hover, "Cos hover");
+                            ui.checkbox(&mut self.show_texts, "Texts");
+                            ui.checkbox(&mut self.running, "Animate");
+                            ui.label("Speed");
+                            if ui
+                                .add(egui::Slider::new(&mut self.speed, 0.1..=5.0).suffix("×"))
+                                .changed()
+                            {
+                                self.running = true;
+                            }
+                            if ui.button("Reset").clicked() {
+                                self.phase = 0.0;
+                            }
+                        });
+                    });
             });
     }
 
@@ -137,15 +164,7 @@ impl UnitCircleApp {
                 ],
                 Stroke::new(1.0, axis),
             );
-            paint_cos(
-                p,
-                phase,
-                circle_center.x,
-                radius,
-                wave_top,
-                wave_height,
-                blue,
-            );
+            paint_cos(p, phase, circle_center.x, radius, wave_top, wave_height);
             let wave_point = Pos2::new(circle_center.x + radius * phase.cos(), wave_top);
             p.circle_filled(wave_point, 3.8, COLOR_COS);
             p.line_segment(
@@ -172,15 +191,7 @@ impl UnitCircleApp {
                 Stroke::new(1.0, axis),
             );
 
-            paint_sin(
-                p,
-                phase,
-                wave_left,
-                radius,
-                circle_center.y,
-                graph_width,
-                blue,
-            );
+            paint_sin(p, phase, wave_left, radius, circle_center.y, graph_width);
             let wave_point = Pos2::new(wave_left, circle_center.y - radius * phase.sin());
             p.circle_filled(wave_point, 3.8, COLOR_SIN);
             p.line_segment(
@@ -199,10 +210,91 @@ impl UnitCircleApp {
             let graph_right = area.right();
             let graph_width = (graph_right - graph_left).max(40.0);
             let wave_left = circle_center.x + radius + 18.0;
-            paint_cos_hover(p, phase, wave_left, radius, circle_center, graph_width);
+            paint_cos_hover(
+                p,
+                phase,
+                wave_left,
+                radius,
+                circle_center,
+                graph_width,
+                self.show_projections,
+            );
         }
         draw_angle(p, circle_center, radius, phase);
-        paint_text(p, phase, circle_center, radius);
+        if self.show_texts {
+            self.paint_text(p, phase, circle_center, radius);
+        }
+    }
+
+    /// Pain the texts
+    fn paint_text(&self, p: &egui::Painter, phase: f32, circle_center: Pos2, radius: f32) {
+        let font_id = egui::FontId::proportional(13.0);
+
+        if self.show_sin {
+            let text = format!("sin θ = {:.2}", phase.sin());
+            let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
+            let pos_text = Pos2::new(circle_center.x + radius + 24.0, circle_center.y + 6.0);
+            p.rect_filled(
+                Rect::from_min_max(pos_text, pos_text + galley.size()),
+                0.0,
+                Color32::WHITE,
+            );
+            p.text(
+                pos_text,
+                egui::Align2::LEFT_TOP,
+                text,
+                font_id.clone(),
+                COLOR_SIN,
+            );
+        }
+
+        if self.show_cos_hover {
+            let text = format!("cos θ = {:.2}", phase.cos());
+            let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
+            let pos_text = Pos2::new(circle_center.x + radius + 24.0, circle_center.y - 24.0);
+            p.rect_filled(
+                Rect::from_min_max(pos_text, pos_text + galley.size()),
+                0.0,
+                Color32::WHITE,
+            );
+            p.text(
+                pos_text,
+                egui::Align2::LEFT_TOP,
+                text,
+                font_id.clone(),
+                COLOR_COS_HOVER,
+            );
+        }
+
+        if self.show_cos {
+            let text = format!("cos θ = {:.2}", phase.cos());
+            let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
+
+            let pos_text = Pos2::new(circle_center.x - 25.0, circle_center.y + radius + 30.0);
+            p.rect_filled(
+                Rect::from_min_max(pos_text, pos_text + galley.size()),
+                0.0,
+                Color32::WHITE,
+            );
+            p.text(
+                pos_text,
+                egui::Align2::LEFT_TOP,
+                text,
+                font_id.clone(),
+                COLOR_COS,
+            );
+        }
+
+        let text = format!("θ = {phase:.2} rad");
+        let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
+
+        let pos_text = Pos2::new(circle_center.x + 10.0, circle_center.y + 10.0);
+        p.rect_filled(
+            Rect::from_min_max(pos_text, pos_text + galley.size()),
+            0.0,
+            Color32::WHITE,
+        );
+        p.text(pos_text, egui::Align2::LEFT_TOP, text, font_id, COLOR_PHASE);
     }
 }
 
@@ -295,55 +387,6 @@ fn draw_angle(p: &egui::Painter, circle_center: Pos2, radius: f32, phase: f32) {
     p.add(egui::Shape::line(points, Stroke::new(2.0, COLOR_PHASE)));
 }
 
-/// Pain the texts
-fn paint_text(p: &egui::Painter, phase: f32, circle_center: Pos2, radius: f32) {
-    let font_id = egui::FontId::proportional(13.0);
-
-    let text = format!("sin θ = {:.2}", phase.sin());
-    let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
-    let pos_text = Pos2::new(circle_center.x + radius + 24.0, circle_center.y);
-    p.rect_filled(
-        Rect::from_min_max(pos_text, pos_text + galley.size()),
-        0.0,
-        Color32::WHITE,
-    );
-    p.text(
-        pos_text,
-        egui::Align2::LEFT_TOP,
-        text,
-        font_id.clone(),
-        COLOR_SIN,
-    );
-
-    let text = format!("cos θ = {:.2}", phase.cos());
-    let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
-
-    let pos_text = Pos2::new(circle_center.x - 25.0, circle_center.y + radius + 30.0);
-    p.rect_filled(
-        Rect::from_min_max(pos_text, pos_text + galley.size()),
-        0.0,
-        Color32::WHITE,
-    );
-    p.text(
-        pos_text,
-        egui::Align2::LEFT_TOP,
-        text,
-        font_id.clone(),
-        COLOR_COS,
-    );
-
-    let text = format!("θ = {phase:.2} rad");
-    let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
-
-    let pos_text = Pos2::new(circle_center.x + 10.0, circle_center.y + 10.0);
-    p.rect_filled(
-        Rect::from_min_max(pos_text, pos_text + galley.size()),
-        0.0,
-        Color32::WHITE,
-    );
-    p.text(pos_text, egui::Align2::LEFT_TOP, text, font_id, COLOR_PHASE);
-}
-
 /// show the cos
 fn paint_cos(
     p: &egui::Painter,
@@ -352,7 +395,6 @@ fn paint_cos(
     radius: f32,
     wave_top: f32,
     wave_height: f32,
-    blue: Color32,
 ) {
     let segments = 300;
     #[allow(clippy::cast_precision_loss)]
@@ -370,7 +412,7 @@ fn paint_cos(
                     wave_top + t2 * wave_height,
                 ),
             ],
-            Stroke::new(2.2, blue),
+            Stroke::new(2.2, COLOR_COS),
         );
     }
 }
@@ -383,7 +425,6 @@ fn paint_sin(
     radius: f32,
     circle_center_y: f32,
     graph_width: f32,
-    blue: Color32,
 ) {
     let segments = 300;
     #[allow(clippy::cast_precision_loss)]
@@ -404,7 +445,7 @@ fn paint_sin(
             circle_center_y - radius * angle2.sin(),
         );
 
-        p.line_segment([p1, p2], Stroke::new(2.2, blue));
+        p.line_segment([p1, p2], Stroke::new(2.2, COLOR_SIN));
     }
 }
 
@@ -416,6 +457,7 @@ fn paint_cos_hover(
     radius: f32,
     circle_center: Pos2,
     graph_width: f32,
+    show_projection: bool,
 ) {
     let point_on_circle = Pos2::new(
         circle_center.x - radius * phase.sin(),
@@ -457,16 +499,18 @@ fn paint_cos_hover(
 
         p.line_segment([p1, p2], Stroke::new(2.2, COLOR_COS_HOVER));
     }
-    let projection_right = Pos2::new(wave_left, point_on_circle.y);
-    let projection_left = Pos2::new(point_on_circle.x, point_on_circle.y);
-    dashed_line(
-        p,
-        projection_left,
-        projection_right,
-        4.0,
-        3.0,
-        COLOR_COS_HOVER,
-    );
+    if show_projection {
+        let projection_right = Pos2::new(wave_left, point_on_circle.y);
+        let projection_left = Pos2::new(point_on_circle.x, point_on_circle.y);
+        dashed_line(
+            p,
+            projection_left,
+            projection_right,
+            4.0,
+            3.0,
+            COLOR_COS_HOVER,
+        );
+    }
 }
 
 /// draw a dashed line
