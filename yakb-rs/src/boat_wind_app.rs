@@ -115,7 +115,7 @@ impl BoatWindApp {
         let painter = ui.painter();
         let boat_center = Pos2::new(circle_center.x, circle_center.y + 300.0);
         let boat_angle_rad = self.boat_angle_deg.to_radians() + (PI / 2.0);
-        draw_boat(painter, boat_center, self.boat_speed, boat_angle_rad);
+        draw_boat(painter, boat_center, 0.7, boat_angle_rad);
         let end_boat_speed = boat_center
             - Vec2::new(
                 self.boat_speed * 10.0 * boat_angle_rad.cos(),
@@ -130,7 +130,7 @@ impl BoatWindApp {
 
         let wind_angle_rad = self.wind_angle_deg.to_radians() + (PI / 2.0);
 
-        let wind_position = Pos2::new(area.center().x, area.top() + 60.0);
+        let wind_position = Pos2::new(area.center().x, area.top() + 100.0);
 
         let wind_vec = Vec2::angled(wind_angle_rad) * (self.wind_speed * 10.0);
 
@@ -140,6 +140,14 @@ impl BoatWindApp {
             wind_position + wind_vec,
             Color32::RED,
         );
+        painter.text(
+            wind_position,
+            Align2::CENTER_TOP,
+            "WIND",
+            FontId::proportional(12.0),
+            Color32::BLACK,
+        );
+
         north_symbol(
             painter,
             Pos2::new(area.left() + (area.width() / 4.0), area.top() + 60.0),
