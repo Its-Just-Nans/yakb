@@ -24,10 +24,10 @@ pub(crate) struct BoatWindApp {
 impl Default for BoatWindApp {
     fn default() -> Self {
         Self {
-            boat_angle_deg: 0.0,
-            boat_speed: 1.0,
-            wind_angle_deg: 1.0,
-            wind_speed: 1.0,
+            boat_angle_deg: 45.0,
+            boat_speed: 10.0,
+            wind_angle_deg: 0.0,
+            wind_speed: 10.0,
         }
     }
 }
