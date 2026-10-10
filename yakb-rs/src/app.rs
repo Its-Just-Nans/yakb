@@ -5,56 +5,35 @@ use bladvak::{
     eframe::{self, egui},
 };
 
-use crate::swr_app::WaveApp;
+use crate::macros::define_animations;
 use crate::unit_circle_app::UnitCircleApp;
 use crate::vector_app::VectorApp;
+use crate::{boat_wind_app::BoatWindApp, swr_app::WaveApp};
 
-/// All available animations
-#[derive(serde::Serialize, serde::Deserialize, Debug, Default)]
-pub(crate) enum Animation {
-    /// base animation
-    #[default]
-    Base,
+define_animations! {
     /// SWR animation
-    Swr(WaveApp),
+    Swr(WaveApp) {
+        title: "SWR",
+        name: "swr",
+    },
+
     /// Vector animation
-    Vector(VectorApp),
+    Vector(VectorApp) {
+        title: "Vector",
+        name: "vector",
+    },
+
     /// Unit circle animation
-    UnitCircle(UnitCircleApp),
-}
+    UnitCircle(UnitCircleApp) {
+        title: "Unit Circle",
+        name: "unit_circle",
+    },
 
-impl Animation {
-    /// Show the current animation
-    pub(crate) fn show(&mut self, ui: &mut egui::Ui, error_manager: &mut ErrorManager) {
-        match self {
-            Self::Base => {
-                bladvak::utils::central_ui(ui, |ui| {
-                    ui.label("Welcome to yakb");
-                });
-            }
-            Self::Swr(wave_app) => {
-                egui::ScrollArea::vertical()
-                    .id_salt("animation_viewer")
-                    .show(ui, |ui| wave_app.show(ui));
-            }
-            Self::Vector(app) => app.show(ui),
-            Self::UnitCircle(app) => app.show(ui, error_manager),
-        }
-    }
-}
-
-/// For WASM arg in URL
-impl TryFrom<&str> for Animation {
-    type Error = String;
-
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        match value {
-            "swr" => Ok(Self::Swr(WaveApp::default())),
-            "vector" => Ok(Self::Vector(VectorApp::default())),
-            "unit_circle" => Ok(Self::UnitCircle(UnitCircleApp::default())),
-            _ => Err("No animation".to_string()),
-        }
-    }
+    /// Boat wind animation
+    BoatWind(BoatWindApp) {
+        title: "Boat wind",
+        name: "boat_wind",
+    },
 }
 
 /// Yakb app
@@ -106,33 +85,7 @@ impl BladvakApp<'_> for YakbApp {
 
     fn menu_file(&mut self, ui: &mut egui::Ui, _error_manager: &mut bladvak::ErrorManager) {
         ui.menu_button("Animation", |ui| {
-            if ui
-                .selectable_label(matches!(self.animation, Animation::Base), "Base")
-                .clicked()
-            {
-                self.animation = Animation::Base;
-            }
-            if ui
-                .selectable_label(matches!(self.animation, Animation::Swr(_)), "SWR")
-                .clicked()
-            {
-                self.animation = Animation::Swr(WaveApp::default());
-            }
-            if ui
-                .selectable_label(matches!(self.animation, Animation::Vector(_)), "Vector")
-                .clicked()
-            {
-                self.animation = Animation::Vector(VectorApp::default());
-            }
-            if ui
-                .selectable_label(
-                    matches!(self.animation, Animation::UnitCircle(_)),
-                    "Unit circle",
-                )
-                .clicked()
-            {
-                self.animation = Animation::UnitCircle(UnitCircleApp::default());
-            }
+            self.show_menu(ui);
         });
     }
 }

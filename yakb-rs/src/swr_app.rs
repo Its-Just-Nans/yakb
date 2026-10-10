@@ -1,6 +1,9 @@
 //! swr app
 
-use bladvak::eframe::egui::{self, Align2, Color32, FontId, Pos2, Rect, Stroke, Vec2};
+use bladvak::{
+    ErrorManager,
+    eframe::egui::{self, Align2, Color32, FontId, Pos2, Rect, Stroke, Vec2},
+};
 
 /// Wave app
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -445,7 +448,14 @@ fn checkbox(ui: &mut egui::Ui, text: &str, value: &mut bool, color: Color32) {
 
 impl WaveApp {
     /// show the animation
-    pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show(&mut self, ui: &mut egui::Ui, _error_manager: &mut ErrorManager) {
+        egui::ScrollArea::vertical()
+            .id_salt("animation_viewer")
+            .show(ui, |ui| self.inner_show(ui));
+    }
+
+    /// show the animation
+    pub(crate) fn inner_show(&mut self, ui: &mut egui::Ui) {
         let ctx = ui.ctx();
 
         // Animation

@@ -20,6 +20,8 @@
 #![allow(clippy::multiple_crate_versions)]
 
 mod app;
+mod boat_wind_app;
+mod macros;
 mod swr_app;
 mod unit_circle_app;
 mod vector_app;

@@ -1,6 +1,7 @@
 //! vector app
 
 use bladvak::{
+    ErrorManager,
     eframe::egui::{self, Pos2, Rect, Sense, Vec2},
     utils::grid::Grid,
 };
@@ -97,7 +98,7 @@ fn show_info(ui: &mut egui::Ui, pos: Pos2, vec: Vec2) {
 
 impl VectorApp {
     /// show the animation
-    pub(crate) fn show(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show(&mut self, ui: &mut egui::Ui, _error_manager: &mut ErrorManager) {
         if self.scene_rect.any_nan() {
             return;
         }
