@@ -4,7 +4,9 @@ use std::f32::consts::PI;
 
 use bladvak::{
     ErrorManager,
-    eframe::egui::{self, Align2, Color32, CornerRadius, FontId, Frame, Pos2, Shape, Stroke, Vec2},
+    eframe::egui::{
+        self, Align2, Color32, CornerRadius, FontId, Frame, Pos2, Rect, Sense, Shape, Stroke, Vec2,
+    },
 };
 
 /// Unit circle
@@ -26,8 +28,8 @@ impl Default for BoatWindApp {
         Self {
             boat_angle_deg: 45.0,
             boat_speed: 10.0,
-            wind_angle_deg: 0.0,
-            wind_speed: 10.0,
+            wind_angle_deg: 180.0,
+            wind_speed: 15.0,
         }
     }
 }
@@ -35,10 +37,9 @@ impl Default for BoatWindApp {
 impl BoatWindApp {
     /// show the animation
     pub(crate) fn show(&mut self, ui: &mut egui::Ui, error_manager: &mut ErrorManager) {
-        let dt = ui.ctx().input(|i| i.stable_dt).min(0.05);
-
+        // let dt = ui.ctx().input(|i| i.stable_dt).min(0.05);
         // self.phase = (self.phase + dt * self.speed).rem_euclid(TAU);
-        ui.ctx().request_repaint();
+        // ui.ctx().request_repaint();
 
         egui::CentralPanel::default()
             .frame(Frame::NONE)
@@ -70,7 +71,7 @@ impl BoatWindApp {
                             ui.horizontal(|ui| {
                                 ui.label("TWA");
                                 ui.add(
-                                    egui::Slider::new(&mut self.wind_angle_deg, -90.0..=90.0)
+                                    egui::Slider::new(&mut self.wind_angle_deg, 0.0..=360.0)
                                         .suffix("deg"),
                                 );
                             });
@@ -83,7 +84,7 @@ impl BoatWindApp {
                             ui.horizontal(|ui| {
                                 ui.label("Boat angle");
                                 ui.add(
-                                    egui::Slider::new(&mut self.boat_angle_deg, -90.0..=90.0)
+                                    egui::Slider::new(&mut self.boat_angle_deg, 0.0..=360.0)
                                         .suffix("deg"),
                                 );
                             });
@@ -94,8 +95,7 @@ impl BoatWindApp {
                             ui.separator();
 
                             if ui.button("Reset").clicked() {
-                                self.boat_angle_deg = 0.0;
-                                self.wind_angle_deg = 0.0;
+                                *self = Self::default();
                             }
                         });
                     });
@@ -103,7 +103,7 @@ impl BoatWindApp {
     }
 
     /// Paint scene
-    fn paint_scene(&mut self, ui: &mut egui::Ui, _is_debug: bool) {
+    fn paint_scene(&mut self, ui: &mut egui::Ui, is_debug: bool) {
         let (response, painter) = ui.allocate_painter(ui.available_size(), egui::Sense::hover());
         let area = response.rect;
         let p = &painter;
@@ -128,7 +128,29 @@ impl BoatWindApp {
             Stroke::new(4.0, Color32::BLUE),
         );
 
-        let wind_angle_rad = self.wind_angle_deg.to_radians() + (PI / 2.0);
+        let interact = Rect::from_center_size(end_boat_speed, Vec2::splat(35.0));
+        let resp = ui.interact(
+            interact,
+            ui.id().with("speed_drag"),
+            Sense::click_and_drag(),
+        );
+        if is_debug {
+            painter.debug_rect(interact, Color32::YELLOW, "zone speed");
+        }
+        if resp.dragged()
+            && let Some(pos) = resp.interact_pointer_pos()
+        {
+            let wind_vec = boat_center - pos;
+
+            self.boat_speed = (wind_vec.length() / 10.0).round();
+
+            let new_angle = (wind_vec.y.atan2(wind_vec.x) - PI / 2.0)
+                .to_degrees()
+                .rem_euclid(360.0);
+            self.boat_angle_deg = new_angle.round();
+        }
+
+        let wind_angle_rad = self.wind_angle_deg.to_radians() - (PI / 2.0);
 
         let wind_position = Pos2::new(area.center().x, area.top() + 100.0);
 
@@ -173,11 +195,59 @@ impl BoatWindApp {
             boat_center,
             Stroke::new(4.0, Color32::DARK_GREEN),
         );
+        let interact = Rect::from_center_size(start_wind_boat_speed, Vec2::splat(35.0));
+        let resp = ui.interact(interact, ui.id().with("wind_drag"), Sense::click_and_drag());
+        if is_debug {
+            painter.debug_rect(interact, Color32::YELLOW, "zone");
+        }
+        if resp.dragged()
+            && let Some(pos) = resp.interact_pointer_pos()
+        {
+            let wind_vec = end_boat_speed - pos;
+
+            self.wind_speed = (wind_vec.length() / 10.0).round();
+
+            let new_angle = (wind_vec.y.atan2(wind_vec.x) + PI / 2.0)
+                .to_degrees()
+                .rem_euclid(360.0);
+            self.wind_angle_deg = new_angle.round();
+        }
+        draw_wind(painter, boat_center, 150.0, 30.0);
+        draw_wind(painter, wind_position, 70.0, 10.0);
+    }
+}
+
+/// draw wind
+fn draw_wind(painter: &egui::Painter, origin: Pos2, space: f32, size_bar: f32) {
+    #[allow(clippy::cast_precision_loss)]
+    for angle_degree in (0..360).step_by(10) {
+        let angle = (angle_degree as f32 - 90.0).to_radians();
+        let coef_angle = if angle_degree % 90 == 0 { 1.8 } else { 1.0 };
+
+        let point_start = Pos2::new(
+            origin.x + space * angle.cos(),
+            origin.y + space * angle.sin(),
+        );
+        let point_end = point_start
+            + Vec2::new(
+                size_bar * angle.cos() * coef_angle,
+                size_bar * angle.sin() * coef_angle,
+            );
+        let x_text = 10.0;
+        let text_coef = if angle.sin() <= 0.0 { 2.0 } else { 1.0 };
+        painter.text(
+            point_end + Vec2::new(x_text * angle.cos(), x_text * angle.sin() * text_coef),
+            Align2::CENTER_TOP,
+            format!("{angle_degree}"),
+            FontId::proportional(10.0),
+            Color32::BLACK,
+        );
+        painter.line_segment([point_start, point_end], Stroke::new(2.0, Color32::BLACK));
     }
 }
 
 /// draw filled arrow
-pub fn arrow_filled(painter: &egui::Painter, origin: Pos2, tip: Pos2, stroke: Stroke) {
+fn arrow_filled(painter: &egui::Painter, origin: Pos2, tip: Pos2, stroke: Stroke) {
     use egui::emath::Rot2;
 
     let vec = tip - origin;
