@@ -4,12 +4,10 @@ use std::f32::consts::PI;
 
 use bladvak::{
     ErrorManager,
-    eframe::egui::{
-        self, Align2, Color32, CornerRadius, FontId, Frame, Pos2, Rect, Sense, Shape, Stroke, Vec2,
-    },
+    eframe::egui::{self, Align2, Color32, FontId, Frame, Pos2, Rect, Sense, Shape, Stroke, Vec2},
 };
 
-use crate::utils::draw_text_with_background_center;
+use crate::utils::{draw_text_with_background_center, ui_settings};
 
 /// Unit circle
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -53,55 +51,34 @@ impl BoatWindApp {
 
     /// Show settings
     fn show_settings(&mut self, ui: &mut egui::Ui) {
-        let panel_top_left = ui.min_rect().min;
-        egui::Area::new(ui.id().with("scene_settings"))
-            .fixed_pos(panel_top_left)
-            .order(egui::Order::Foreground)
-            .show(ui.ctx(), |ui| {
-                egui::Frame::NONE
-                    .fill(egui::Color32::from_black_alpha(250))
-                    .corner_radius(CornerRadius {
-                        nw: 0,
-                        ne: 0,
-                        sw: 0,
-                        se: 4,
-                    })
-                    .inner_margin(egui::Margin::same(6))
-                    .show(ui, |ui| {
-                        ui.collapsing("Menu", |ui| {
-                            ui.label("Wind");
-                            ui.horizontal(|ui| {
-                                ui.label("TWA");
-                                ui.add(
-                                    egui::Slider::new(&mut self.wind_angle_deg, 0.0..=360.0)
-                                        .suffix("deg"),
-                                );
-                            });
-                            ui.horizontal(|ui| {
-                                ui.label("TWS");
-                                ui.add(egui::Slider::new(&mut self.wind_speed, 0.0..=30.0));
-                            });
-                            ui.separator();
-                            ui.label("Boat");
-                            ui.horizontal(|ui| {
-                                ui.label("Boat angle");
-                                ui.add(
-                                    egui::Slider::new(&mut self.boat_angle_deg, 0.0..=360.0)
-                                        .suffix("deg"),
-                                );
-                            });
-                            ui.horizontal(|ui| {
-                                ui.label("Boat speed");
-                                ui.add(egui::Slider::new(&mut self.boat_speed, 0.0..=30.0));
-                            });
-                            ui.separator();
+        ui_settings(ui, |ui| {
+            ui.collapsing("Menu", |ui| {
+                ui.label("Wind");
+                ui.horizontal(|ui| {
+                    ui.colored_label(Color32::RED, "TWA");
+                    ui.add(egui::Slider::new(&mut self.wind_angle_deg, 0.0..=360.0).suffix("deg"));
+                });
+                ui.horizontal(|ui| {
+                    ui.colored_label(Color32::RED, "TWS");
+                    ui.add(egui::Slider::new(&mut self.wind_speed, 0.0..=30.0));
+                });
+                ui.separator();
+                ui.label("Boat");
+                ui.horizontal(|ui| {
+                    ui.colored_label(Color32::BLUE, "Boat angle");
+                    ui.add(egui::Slider::new(&mut self.boat_angle_deg, 0.0..=360.0).suffix("deg"));
+                });
+                ui.horizontal(|ui| {
+                    ui.colored_label(Color32::BLUE, "Boat speed");
+                    ui.add(egui::Slider::new(&mut self.boat_speed, 0.0..=30.0));
+                });
+                ui.separator();
 
-                            if ui.button("Reset").clicked() {
-                                *self = Self::default();
-                            }
-                        });
-                    });
+                if ui.button("Reset").clicked() {
+                    *self = Self::default();
+                }
             });
+        });
     }
 
     /// Paint scene

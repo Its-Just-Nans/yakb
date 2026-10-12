@@ -2,11 +2,11 @@
 
 use bladvak::{
     ErrorManager,
-    eframe::egui::{self, Color32, CornerRadius, Frame, Pos2, Rect, Sense, Stroke, Vec2},
+    eframe::egui::{self, Color32, Frame, Pos2, Rect, Sense, Stroke, Vec2},
 };
 use std::f32::consts::TAU;
 
-use crate::utils::draw_text_with_background;
+use crate::utils::{draw_text_with_background, ui_settings};
 
 /// Unit circle
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -65,41 +65,26 @@ impl UnitCircleApp {
 
     /// show settings
     fn show_settings(&mut self, ui: &mut egui::Ui) {
-        let panel_top_left = ui.min_rect().min;
-        egui::Area::new(ui.id().with("scene_settings"))
-            .fixed_pos(panel_top_left)
-            .order(egui::Order::Foreground)
-            .show(ui.ctx(), |ui| {
-                egui::Frame::NONE
-                    .fill(egui::Color32::from_black_alpha(250))
-                    .corner_radius(CornerRadius {
-                        nw: 0,
-                        ne: 0,
-                        sw: 0,
-                        se: 4,
-                    })
-                    .inner_margin(egui::Margin::same(6))
-                    .show(ui, |ui| {
-                        ui.collapsing("Menu", |ui| {
-                            ui.checkbox(&mut self.show_projections, "Show projections");
-                            ui.checkbox(&mut self.show_cos, "Cos");
-                            ui.checkbox(&mut self.show_sin, "Sin");
-                            ui.checkbox(&mut self.show_cos_hover, "Cos hover");
-                            ui.checkbox(&mut self.show_texts, "Texts");
-                            ui.checkbox(&mut self.running, "Animate");
-                            ui.label("Speed");
-                            if ui
-                                .add(egui::Slider::new(&mut self.speed, 0.1..=5.0).suffix("×"))
-                                .changed()
-                            {
-                                self.running = true;
-                            }
-                            if ui.button("Reset").clicked() {
-                                self.phase = 0.0;
-                            }
-                        });
-                    });
+        ui_settings(ui, |ui| {
+            ui.collapsing("Menu", |ui| {
+                ui.checkbox(&mut self.show_projections, "Show projections");
+                ui.checkbox(&mut self.show_cos, "Cos");
+                ui.checkbox(&mut self.show_sin, "Sin");
+                ui.checkbox(&mut self.show_cos_hover, "Cos hover");
+                ui.checkbox(&mut self.show_texts, "Texts");
+                ui.checkbox(&mut self.running, "Animate");
+                ui.label("Speed");
+                if ui
+                    .add(egui::Slider::new(&mut self.speed, 0.1..=5.0).suffix("×"))
+                    .changed()
+                {
+                    self.running = true;
+                }
+                if ui.button("Reset").clicked() {
+                    self.phase = 0.0;
+                }
             });
+        });
     }
 
     /// Paint the scene
@@ -263,7 +248,7 @@ const COLOR_COS: Color32 = Color32::DARK_GREEN;
 /// Color phase
 const COLOR_PHASE: Color32 = Color32::DARK_GRAY;
 /// Color of the cos hover
-const COLOR_COS_HOVER: Color32 = Color32::LIGHT_BLUE;
+const COLOR_COS_HOVER: Color32 = Color32::from_rgb(0x00, 0xEE, 0x20);
 
 /// Paint circle and axis
 fn paint_circle_and_axis(

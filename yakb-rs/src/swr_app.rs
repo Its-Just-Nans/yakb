@@ -5,6 +5,8 @@ use bladvak::{
     eframe::egui::{self, Align2, Color32, FontId, Pos2, Rect, Stroke, Vec2},
 };
 
+use crate::utils::ui_settings;
+
 /// Wave app
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[allow(clippy::struct_excessive_bools)]
@@ -81,6 +83,22 @@ fn draw_wave_canvas(
         "Emetteur",
         FontId::proportional(16.0),
         Color32::GRAY,
+    );
+
+    let fond_id = FontId::proportional(13.0);
+    painter.text(
+        plot.center_top(),
+        Align2::CENTER_TOP,
+        format!("Coefficient de Réflexion = {reflection:.2}"),
+        fond_id.clone(),
+        Color32::BLACK,
+    );
+    painter.text(
+        plot.center_top() + Vec2::new(0.0, 15.0),
+        Align2::CENTER_TOP,
+        format!("R / Z₁ = {:.4}", (1.0 + reflection) / (1.0 - reflection)),
+        fond_id,
+        Color32::BLACK,
     );
 
     painter.text(
@@ -452,6 +470,11 @@ impl WaveApp {
         egui::ScrollArea::vertical()
             .id_salt("animation_viewer")
             .show(ui, |ui| self.inner_show(ui));
+        ui_settings(ui, |ui| {
+            ui.collapsing("Menu", |ui| {
+                draw_controls(ui, self);
+            });
+        });
     }
 
     /// show the animation
@@ -503,31 +526,5 @@ impl WaveApp {
                     );
                 });
         });
-
-        draw_controls(ui, self);
-        ui.add_space(10.0);
-        egui::Grid::new("coefficient_grid")
-            .num_columns(2)
-            .spacing([20.0, 6.0])
-            .show(ui, |ui| {
-                ui.label(egui::RichText::new("Coefficient de Réflexion").size(16.0));
-                ui.label(egui::RichText::new(format!("{:.2}", self.reflection)).size(16.0));
-                ui.end_row();
-
-                ui.label("R / Z₁");
-                ui.label(
-                    egui::RichText::new(format!(
-                        "{:.6}",
-                        (1.0 + self.reflection) / (1.0 - self.reflection)
-                    ))
-                    .size(16.0),
-                );
-                ui.end_row();
-
-                ui.label("Longueur d'onde");
-                let wavelength = egui::lerp(80.0..=500.0, self.length / 3.0);
-                ui.label(egui::RichText::new(format!("{wavelength:.1} px")).size(16.0));
-                ui.end_row();
-            });
     }
 }

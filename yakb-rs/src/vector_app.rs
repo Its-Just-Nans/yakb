@@ -2,9 +2,11 @@
 
 use bladvak::{
     ErrorManager,
-    eframe::egui::{self, Pos2, Rect, Sense, Vec2},
+    eframe::egui::{self, Color32, Pos2, Rect, Sense, Vec2},
     utils::grid::Grid,
 };
+
+use crate::utils::ui_settings;
 
 /// Vector app
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -14,6 +16,8 @@ pub(crate) struct VectorApp {
     pos: Pos2,
     /// vector
     vec: Vec2,
+    /// second arrow
+    second_arrow: (bool, Pos2, Vec2),
     /// grid
     grid: Grid,
     /// scene rect
@@ -22,37 +26,53 @@ pub(crate) struct VectorApp {
 
 impl Default for VectorApp {
     fn default() -> Self {
+        let grid = Grid {
+            spacing: Vec2::splat(10.0),
+            ..Grid::default()
+        };
         Self {
             pos: Pos2::new(0.0, 0.0),
             vec: Vec2::new(20.0, 30.0),
-            grid: Grid::default(),
+            second_arrow: (false, Pos2::new(10.0, 10.0), Vec2::new(20.0, 30.0)),
+            grid,
             scene_rect: Rect::ZERO,
         }
     }
 }
 
 /// Draw a arrow
-fn draw_arrow(ui: &mut egui::Ui, pos: &mut egui::Pos2, vec: &mut egui::Vec2) {
+fn draw_arrow(
+    ui: &mut egui::Ui,
+    pos: &mut egui::Pos2,
+    vec: &mut egui::Vec2,
+    color: Color32,
+    name: &str,
+) {
     let end = *pos + *vec;
 
     let full_rect = Rect::from_two_pos(*pos, end).expand(10.0);
     ui.allocate_rect(full_rect, Sense::hover());
 
     let rect_start = Rect::from_center_size(*pos, Vec2::new(10.0, 10.0));
-    let response_start = ui.interact(rect_start, ui.id().with("start"), egui::Sense::drag());
+    let response_start = ui.interact(
+        rect_start,
+        ui.id().with(("start", name)),
+        egui::Sense::drag(),
+    );
     if response_start.dragged() {
-        *pos += response_start.drag_delta();
+        *pos += response_start.drag_delta().round();
     }
 
     let rect_end = egui::Rect::from_center_size(end, Vec2::new(10.0, 10.0));
-    let response_end = ui.interact(rect_end, ui.id().with("end"), egui::Sense::drag());
+    let response_end = ui.interact(rect_end, ui.id().with(("end", name)), egui::Sense::drag());
     if response_end.dragged() {
         *vec += response_end.drag_delta();
     }
+    let end = *pos + *vec;
 
     let painter = ui.painter();
 
-    let stroke = egui::Stroke::new(2.0, egui::Color32::WHITE);
+    let stroke = egui::Stroke::new(2.0, color);
 
     // Line direction.
     let dir = vec.normalized();
@@ -77,24 +97,10 @@ fn draw_arrow(ui: &mut egui::Ui, pos: &mut egui::Pos2, vec: &mut egui::Vec2) {
     painter.line_segment([end, right], stroke);
 }
 
-/// show info
-fn show_info(ui: &mut egui::Ui, pos: Pos2, vec: Vec2) {
-    egui::Area::new(ui.id().with("scene_info"))
-        .anchor(egui::Align2::RIGHT_BOTTOM, egui::vec2(-10.0, -10.0))
-        .order(egui::Order::Foreground)
-        .show(ui.ctx(), |ui| {
-            ui.set_width(220.0);
-            egui::Frame::NONE
-                .fill(egui::Color32::from_black_alpha(180))
-                .corner_radius(4.0)
-                .inner_margin(egui::Margin::same(6))
-                .show(ui, |ui| {
-                    ui.set_width(200.0);
-                    ui.monospace(format!("pos: ({:.1}, {:.1})", pos.x, pos.y));
-                    ui.monospace(format!("vec: ({:.1}, {:.1})", vec.x, vec.y));
-                });
-        });
-}
+/// Color vec
+const COLOR_VEC: Color32 = Color32::RED;
+/// Color second vec
+const COLOR_SECOND: Color32 = Color32::DARK_GREEN;
 
 impl VectorApp {
     /// show the animation
@@ -110,8 +116,46 @@ impl VectorApp {
                 if bg_r.rect.is_finite() {
                     self.grid.draw(&bg_r.rect, painter);
                 }
-                draw_arrow(ui, &mut self.pos, &mut self.vec);
+                draw_arrow(ui, &mut self.pos, &mut self.vec, COLOR_VEC, "base");
+                if self.second_arrow.0 {
+                    let (_, pos, vec) = &mut self.second_arrow;
+                    draw_arrow(ui, pos, vec, COLOR_SECOND, "second");
+                }
             });
-        show_info(ui, self.pos, self.vec);
+        self.show_info(ui);
+    }
+    /// show info
+    fn show_info(&mut self, ui: &mut egui::Ui) {
+        ui_settings(ui, |ui| {
+            ui.set_width(220.0);
+            ui.horizontal(|ui| {
+                ui.colored_label(COLOR_VEC, "pos: (");
+                ui.add(egui::DragValue::new(&mut self.pos.x));
+                ui.add(egui::DragValue::new(&mut self.pos.y));
+                ui.colored_label(COLOR_VEC, ")");
+            });
+            ui.horizontal(|ui| {
+                ui.colored_label(COLOR_VEC, "vec: (");
+                ui.add(egui::DragValue::new(&mut self.vec.x));
+                ui.add(egui::DragValue::new(&mut self.vec.y));
+                ui.colored_label(COLOR_VEC, ")");
+            });
+            ui.checkbox(&mut self.second_arrow.0, "Second vector");
+            if self.second_arrow.0 {
+                let (_, pos, vec) = &mut self.second_arrow;
+                ui.horizontal(|ui| {
+                    ui.colored_label(COLOR_SECOND, "pos: (");
+                    ui.add(egui::DragValue::new(&mut pos.x));
+                    ui.add(egui::DragValue::new(&mut pos.y));
+                    ui.colored_label(COLOR_SECOND, ")");
+                });
+                ui.horizontal(|ui| {
+                    ui.colored_label(COLOR_SECOND, "vec: (");
+                    ui.add(egui::DragValue::new(&mut vec.x));
+                    ui.add(egui::DragValue::new(&mut vec.y));
+                    ui.colored_label(COLOR_SECOND, ")");
+                });
+            }
+        });
     }
 }
