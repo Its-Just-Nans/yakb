@@ -38,6 +38,7 @@ macro_rules! define_animations {
                     Self::Base => {
                         bladvak::utils::central_ui(ui, |ui| {
                             ui.label("Welcome to yakb");
+                            ui.add(egui::Hyperlink::new("https://yakb.n4n5.dev").open_in_new_tab(true));
                         });
                     }
                     $(

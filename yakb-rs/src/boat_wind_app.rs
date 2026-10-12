@@ -9,6 +9,8 @@ use bladvak::{
     },
 };
 
+use crate::utils::draw_text_with_background_center;
+
 /// Unit circle
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[allow(clippy::struct_excessive_bools)]
@@ -103,6 +105,7 @@ impl BoatWindApp {
     }
 
     /// Paint scene
+    #[allow(clippy::too_many_lines)]
     fn paint_scene(&mut self, ui: &mut egui::Ui, is_debug: bool) {
         let (response, painter) = ui.allocate_painter(ui.available_size(), egui::Sense::hover());
         let area = response.rect;
@@ -115,7 +118,10 @@ impl BoatWindApp {
         let painter = ui.painter();
         let boat_center = Pos2::new(circle_center.x, circle_center.y + 300.0);
         let boat_angle_rad = self.boat_angle_deg.to_radians() + (PI / 2.0);
+        draw_wind(painter, boat_center, 150.0, 30.0);
         draw_boat(painter, boat_center, 0.7, boat_angle_rad);
+
+        let font_id = &FontId::proportional(12.0);
         let end_boat_speed = boat_center
             - Vec2::new(
                 self.boat_speed * 10.0 * boat_angle_rad.cos(),
@@ -126,6 +132,15 @@ impl BoatWindApp {
             boat_center,
             end_boat_speed,
             Stroke::new(4.0, Color32::BLUE),
+        );
+        let pos_text = (boat_center + end_boat_speed.to_vec2()) / 2.0;
+        draw_text_with_background_center(
+            p,
+            font_id,
+            Color32::BLUE,
+            Color32::WHITE,
+            pos_text,
+            "Boat".to_string(),
         );
 
         let interact = Rect::from_center_size(end_boat_speed, Vec2::splat(35.0));
@@ -151,10 +166,9 @@ impl BoatWindApp {
         }
 
         let wind_angle_rad = self.wind_angle_deg.to_radians() - (PI / 2.0);
-
         let wind_position = Pos2::new(area.center().x, area.top() + 100.0);
-
         let wind_vec = Vec2::angled(wind_angle_rad) * (self.wind_speed * 10.0);
+        draw_wind(painter, wind_position, 70.0, 10.0);
 
         fat_arrow(
             painter,
@@ -187,6 +201,15 @@ impl BoatWindApp {
             end_boat_speed,
             Stroke::new(4.0, Color32::RED),
         );
+        let pos_text = (start_wind_boat_speed + end_boat_speed.to_vec2()) / 2.0;
+        draw_text_with_background_center(
+            p,
+            font_id,
+            Color32::RED,
+            Color32::WHITE,
+            pos_text,
+            "True Wind".to_string(),
+        );
 
         // AWS
         arrow_filled(
@@ -195,6 +218,16 @@ impl BoatWindApp {
             boat_center,
             Stroke::new(4.0, Color32::DARK_GREEN),
         );
+        let pos_text = (start_wind_boat_speed + boat_center.to_vec2()) / 2.0;
+        draw_text_with_background_center(
+            p,
+            font_id,
+            Color32::DARK_GREEN,
+            Color32::WHITE,
+            pos_text,
+            "Apparent Wind".to_string(),
+        );
+
         let interact = Rect::from_center_size(start_wind_boat_speed, Vec2::splat(35.0));
         let resp = ui.interact(interact, ui.id().with("wind_drag"), Sense::click_and_drag());
         if is_debug {
@@ -212,8 +245,6 @@ impl BoatWindApp {
                 .rem_euclid(360.0);
             self.wind_angle_deg = new_angle.round();
         }
-        draw_wind(painter, boat_center, 150.0, 30.0);
-        draw_wind(painter, wind_position, 70.0, 10.0);
     }
 }
 

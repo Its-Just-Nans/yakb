@@ -6,6 +6,8 @@ use bladvak::{
 };
 use std::f32::consts::TAU;
 
+use crate::utils::draw_text_with_background;
+
 /// Unit circle
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 #[allow(clippy::struct_excessive_bools)]
@@ -232,69 +234,25 @@ impl UnitCircleApp {
 
         if self.show_sin {
             let text = format!("sin θ = {:.2}", phase.sin());
-            let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
             let pos_text = Pos2::new(circle_center.x + radius + 24.0, circle_center.y + 6.0);
-            p.rect_filled(
-                Rect::from_min_max(pos_text, pos_text + galley.size()),
-                0.0,
-                Color32::WHITE,
-            );
-            p.text(
-                pos_text,
-                egui::Align2::LEFT_TOP,
-                text,
-                font_id.clone(),
-                COLOR_SIN,
-            );
+            draw_text_with_background(p, &font_id, COLOR_SIN, Color32::WHITE, pos_text, text);
         }
 
         if self.show_cos_hover {
             let text = format!("cos θ = {:.2}", phase.cos());
-            let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
             let pos_text = Pos2::new(circle_center.x + radius + 24.0, circle_center.y - 24.0);
-            p.rect_filled(
-                Rect::from_min_max(pos_text, pos_text + galley.size()),
-                0.0,
-                Color32::WHITE,
-            );
-            p.text(
-                pos_text,
-                egui::Align2::LEFT_TOP,
-                text,
-                font_id.clone(),
-                COLOR_COS_HOVER,
-            );
+            draw_text_with_background(p, &font_id, COLOR_COS_HOVER, Color32::WHITE, pos_text, text);
         }
 
         if self.show_cos {
             let text = format!("cos θ = {:.2}", phase.cos());
-            let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
-
             let pos_text = Pos2::new(circle_center.x - 25.0, circle_center.y + radius + 30.0);
-            p.rect_filled(
-                Rect::from_min_max(pos_text, pos_text + galley.size()),
-                0.0,
-                Color32::WHITE,
-            );
-            p.text(
-                pos_text,
-                egui::Align2::LEFT_TOP,
-                text,
-                font_id.clone(),
-                COLOR_COS,
-            );
+            draw_text_with_background(p, &font_id, COLOR_COS, Color32::WHITE, pos_text, text);
         }
 
         let text = format!("θ = {phase:.2} rad");
-        let galley = p.layout_no_wrap(text.clone(), font_id.clone(), Color32::WHITE);
-
         let pos_text = Pos2::new(circle_center.x + 10.0, circle_center.y + 10.0);
-        p.rect_filled(
-            Rect::from_min_max(pos_text, pos_text + galley.size()),
-            0.0,
-            Color32::WHITE,
-        );
-        p.text(pos_text, egui::Align2::LEFT_TOP, text, font_id, COLOR_PHASE);
+        draw_text_with_background(p, &font_id, COLOR_PHASE, Color32::WHITE, pos_text, text);
     }
 }
 
