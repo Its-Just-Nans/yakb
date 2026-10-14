@@ -44,16 +44,16 @@ impl BoatWindApp {
         egui::CentralPanel::default()
             .frame(Frame::NONE)
             .show(ui, |ui| {
-                self.paint_scene(ui, error_manager.is_debug());
-                self.show_settings(ui);
+                let (aws, awa) = self.paint_scene(ui, error_manager.is_debug());
+                self.show_settings(ui, aws, awa);
             });
     }
 
     /// Show settings
-    fn show_settings(&mut self, ui: &mut egui::Ui) {
+    fn show_settings(&mut self, ui: &mut egui::Ui, aws: f32, awa: f32) {
         ui_settings(ui, |ui| {
             ui.collapsing("Menu", |ui| {
-                ui.label("Wind");
+                ui.label("True Wind");
                 ui.horizontal(|ui| {
                     ui.colored_label(Color32::RED, "TWA");
                     ui.add(egui::Slider::new(&mut self.wind_angle_deg, 0.0..=360.0).suffix("deg"));
@@ -78,12 +78,15 @@ impl BoatWindApp {
                     *self = Self::default();
                 }
             });
+            ui.colored_label(Color32::DARK_GREEN, "Apparent Wind");
+            ui.colored_label(Color32::DARK_GREEN, format!("AWS: {aws:.2}"));
+            ui.colored_label(Color32::DARK_GREEN, format!("AWA: {awa:.2}deg"));
         });
     }
 
     /// Paint scene
     #[allow(clippy::too_many_lines)]
-    fn paint_scene(&mut self, ui: &mut egui::Ui, is_debug: bool) {
+    fn paint_scene(&mut self, ui: &mut egui::Ui, is_debug: bool) -> (f32, f32) {
         let (response, painter) = ui.allocate_painter(ui.available_size(), egui::Sense::hover());
         let area = response.rect;
         let p = &painter;
@@ -98,11 +101,12 @@ impl BoatWindApp {
         draw_wind(painter, boat_center, 150.0, 30.0);
         draw_boat(painter, boat_center, 0.7, boat_angle_rad);
 
+        let multi = 10.0;
         let font_id = &FontId::proportional(12.0);
         let end_boat_speed = boat_center
             - Vec2::new(
-                self.boat_speed * 10.0 * boat_angle_rad.cos(),
-                self.boat_speed * 10.0 * boat_angle_rad.sin(),
+                self.boat_speed * multi * boat_angle_rad.cos(),
+                self.boat_speed * multi * boat_angle_rad.sin(),
             );
         arrow_filled(
             painter,
@@ -168,8 +172,8 @@ impl BoatWindApp {
 
         let start_wind_boat_speed = end_boat_speed
             - Vec2::new(
-                self.wind_speed * 10.0 * wind_angle_rad.cos(),
-                self.wind_speed * 10.0 * wind_angle_rad.sin(),
+                self.wind_speed * multi * wind_angle_rad.cos(),
+                self.wind_speed * multi * wind_angle_rad.sin(),
             );
         // TWS
         arrow_filled(
@@ -222,6 +226,11 @@ impl BoatWindApp {
                 .rem_euclid(360.0);
             self.wind_angle_deg = new_angle.round();
         }
+        let vec_aw = start_wind_boat_speed - boat_center;
+        let aws = vec_aw.length() / multi;
+        let awa = vec_aw.y.atan2(vec_aw.x) + (PI / 2.0);
+        let awa = awa.to_degrees().rem_euclid(360.0);
+        (aws, awa)
     }
 }
 
