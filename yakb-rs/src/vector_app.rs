@@ -60,7 +60,7 @@ fn draw_arrow(
         egui::Sense::drag(),
     );
     if response_start.dragged() {
-        *pos += response_start.drag_delta().round();
+        *pos += response_start.drag_delta();
     }
 
     let rect_end = egui::Rect::from_center_size(end, Vec2::new(10.0, 10.0));
