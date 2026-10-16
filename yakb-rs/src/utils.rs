@@ -3,13 +3,13 @@
 use bladvak::eframe::egui::{self, Align2, Color32, CornerRadius, Pos2};
 
 /// Draw text with background color
-pub(crate) fn draw_text_with_background(
+pub(crate) fn draw_text_with_background<S: Into<String>>(
     p: &egui::Painter,
     font_id: &egui::FontId,
     color_text: Color32,
     background_color: Color32,
     pos_text: Pos2,
-    text: String,
+    text: S,
 ) {
     draw_text_with_background_align(
         p,
@@ -23,15 +23,16 @@ pub(crate) fn draw_text_with_background(
 }
 
 /// Draw text with background and align param
-pub(crate) fn draw_text_with_background_align(
+pub(crate) fn draw_text_with_background_align<S: Into<String>>(
     p: &egui::Painter,
     font_id: &egui::FontId,
     color_text: Color32,
     background_color: Color32,
     pos_text: Pos2,
     align: Align2,
-    text: String,
+    text: S,
 ) {
+    let text = text.into();
     let galley = p.layout_no_wrap(text.clone(), font_id.clone(), background_color);
     let rect = align.anchor_size(pos_text, galley.size());
     p.rect_filled(rect, 0.0, background_color);
@@ -39,13 +40,13 @@ pub(crate) fn draw_text_with_background_align(
 }
 
 /// Draw text with background and centered
-pub(crate) fn draw_text_with_background_center(
+pub(crate) fn draw_text_with_background_center<S: Into<String>>(
     p: &egui::Painter,
     font_id: &egui::FontId,
     color_text: Color32,
     background_color: Color32,
     pos_text: Pos2,
-    text: String,
+    text: S,
 ) {
     draw_text_with_background_align(
         p,

@@ -2,11 +2,11 @@
 
 use bladvak::{
     ErrorManager,
-    eframe::egui::{self, Color32, Frame, Pos2, Rect, Sense, Stroke, Vec2},
+    eframe::egui::{self, Align2, Color32, FontId, Frame, Pos2, Rect, Sense, Stroke, Vec2},
 };
 use std::f32::consts::TAU;
 
-use crate::utils::{draw_text_with_background, ui_settings};
+use crate::utils::{draw_text_with_background, draw_text_with_background_align, ui_settings};
 
 /// Unit circle
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
@@ -28,6 +28,10 @@ pub(crate) struct UnitCircleApp {
     show_cos_hover: bool,
     /// show text
     show_texts: bool,
+    /// show point
+    show_point: bool,
+    /// show angle
+    show_angles: bool,
 }
 
 impl Default for UnitCircleApp {
@@ -41,6 +45,8 @@ impl Default for UnitCircleApp {
             show_cos: true,
             show_cos_hover: true,
             show_texts: true,
+            show_point: true,
+            show_angles: false,
         }
     }
 }
@@ -72,6 +78,8 @@ impl UnitCircleApp {
                 ui.checkbox(&mut self.show_sin, "Sin");
                 ui.checkbox(&mut self.show_cos_hover, "Cos hover");
                 ui.checkbox(&mut self.show_texts, "Texts");
+                ui.checkbox(&mut self.show_angles, "Angles");
+                ui.checkbox(&mut self.show_point, "Point");
                 ui.checkbox(&mut self.running, "Animate");
                 ui.label("Speed");
                 if ui
@@ -103,42 +111,64 @@ impl UnitCircleApp {
         let radius = (area.width() * 0.42).min(area.height() * 0.205).max(25.0);
 
         let phase = self.phase;
-        paint_circle_and_axis(p, area, circle_center, radius, phase);
-
+        paint_circle_and_axis(p, area, circle_center, radius);
         let point_on_circle = Pos2::new(
             circle_center.x + radius * phase.cos(),
             circle_center.y - radius * phase.sin(),
         );
-        let allowed_rect = 40.0;
-        let resp = ui.interact(
-            Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
-            ui.id().with("rect"),
-            Sense::click_and_drag(),
-        );
-        if debug {
-            ui.painter().debug_rect(
+
+        if self.show_point {
+            let allowed_rect = 40.0;
+            let resp = ui.interact(
                 Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
-                Color32::YELLOW,
-                "zone",
+                ui.id().with("rect"),
+                Sense::click_and_drag(),
+            );
+            if debug {
+                ui.painter().debug_rect(
+                    Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
+                    Color32::YELLOW,
+                    "zone",
+                );
+            }
+            if resp.dragged()
+                && let Some(pointer_pos) = resp.interact_pointer_pos()
+            {
+                self.running = false;
+                let delta = pointer_pos - circle_center;
+
+                self.phase = (-delta.y).atan2(delta.x).rem_euclid(std::f32::consts::TAU);
+            }
+
+            p.line_segment(
+                [Pos2::new(circle_center.x, circle_center.y), point_on_circle],
+                Stroke::new(2.0, blue),
+            );
+            p.circle_filled(point_on_circle, 3.8, blue);
+
+            p.circle_filled(circle_center, 2.2, axis);
+
+            p.line_segment(
+                [
+                    Pos2::new(circle_center.x + radius * phase.cos(), circle_center.y),
+                    Pos2::new(
+                        circle_center.x + radius * phase.cos(),
+                        circle_center.y - radius * phase.sin(),
+                    ),
+                ],
+                Stroke::new(2.0, COLOR_SIN),
+            );
+            p.line_segment(
+                [
+                    Pos2::new(
+                        circle_center.x + radius * phase.cos(),
+                        circle_center.y - radius * phase.sin(),
+                    ),
+                    Pos2::new(circle_center.x, circle_center.y - radius * phase.sin()),
+                ],
+                Stroke::new(2.0, COLOR_COS),
             );
         }
-        if resp.dragged()
-            && let Some(pointer_pos) = resp.interact_pointer_pos()
-        {
-            self.running = false;
-            let delta = pointer_pos - circle_center;
-
-            self.phase = (-delta.y).atan2(delta.x).rem_euclid(std::f32::consts::TAU);
-        }
-
-        p.line_segment(
-            [Pos2::new(circle_center.x, circle_center.y), point_on_circle],
-            Stroke::new(2.0, blue),
-        );
-        p.circle_filled(point_on_circle, 3.8, blue);
-
-        p.circle_filled(circle_center, 2.2, axis);
-
         if self.show_cos {
             let wave_top = circle_center.y + radius + 18.0;
             let wave_bottom = area.bottom();
@@ -207,9 +237,14 @@ impl UnitCircleApp {
                 self.show_projections,
             );
         }
-        draw_angle(p, circle_center, radius, phase);
+        if self.show_point {
+            draw_angle(p, circle_center, radius, phase);
+        }
         if self.show_texts {
             self.paint_text(p, phase, circle_center, radius);
+        }
+        if self.show_angles {
+            paint_angles(p, circle_center, radius);
         }
     }
 
@@ -231,8 +266,16 @@ impl UnitCircleApp {
 
         if self.show_cos {
             let text = format!("cos θ = {:.2}", phase.cos());
-            let pos_text = Pos2::new(circle_center.x - 25.0, circle_center.y + radius + 30.0);
-            draw_text_with_background(p, &font_id, COLOR_COS, Color32::WHITE, pos_text, text);
+            let pos_text = Pos2::new(circle_center.x, circle_center.y + radius + 40.0);
+            draw_text_with_background_align(
+                p,
+                &font_id,
+                COLOR_COS,
+                Color32::WHITE,
+                pos_text,
+                Align2::CENTER_TOP,
+                text,
+            );
         }
 
         let text = format!("θ = {phase:.2} rad");
@@ -251,13 +294,7 @@ const COLOR_PHASE: Color32 = Color32::DARK_GRAY;
 const COLOR_COS_HOVER: Color32 = Color32::from_rgb(0x00, 0xEE, 0x20);
 
 /// Paint circle and axis
-fn paint_circle_and_axis(
-    p: &egui::Painter,
-    area: Rect,
-    circle_center: Pos2,
-    radius: f32,
-    phase: f32,
-) {
+fn paint_circle_and_axis(p: &egui::Painter, area: Rect, circle_center: Pos2, radius: f32) {
     let axis = Color32::from_rgb(65, 65, 65);
     let blue = Color32::from_rgb(28, 40, 180);
     p.line_segment(
@@ -294,26 +331,6 @@ fn paint_circle_and_axis(
             p.line_segment([q0, q1], Stroke::new(1.8, blue));
         }
     }
-    p.line_segment(
-        [
-            Pos2::new(circle_center.x + radius * phase.cos(), circle_center.y),
-            Pos2::new(
-                circle_center.x + radius * phase.cos(),
-                circle_center.y - radius * phase.sin(),
-            ),
-        ],
-        Stroke::new(2.0, COLOR_SIN),
-    );
-    p.line_segment(
-        [
-            Pos2::new(
-                circle_center.x + radius * phase.cos(),
-                circle_center.y - radius * phase.sin(),
-            ),
-            Pos2::new(circle_center.x, circle_center.y - radius * phase.sin()),
-        ],
-        Stroke::new(2.0, COLOR_COS),
-    );
 }
 
 /// draw angle
@@ -453,6 +470,110 @@ fn paint_cos_hover(
             3.0,
             COLOR_COS_HOVER,
         );
+    }
+}
+
+/// paint angles
+fn paint_angles(p: &egui::Painter, circle_center: Pos2, radius: f32) {
+    let space_degree = radius - 60.0;
+    let space_rad = radius - 30.0;
+    let space_coord = radius + 30.0;
+    let angles = [
+        ("0"),
+        ("π/6"),
+        ("π/4"),
+        ("π/3"),
+        ("π/2"),
+        ("2π/3"),
+        ("3π/4"),
+        ("5π/6"),
+        ("π"),
+        ("7π/6"),
+        ("5π/4"),
+        ("4π/3"),
+        ("3π/2"),
+        ("5π/3"),
+        ("7π/4"),
+        ("11π/6"),
+    ];
+
+    let font_id = FontId::proportional(10.0);
+    #[allow(clippy::cast_precision_loss)]
+    for i in 0..4 {
+        for (idx, angle_degree) in ([0, 30, 45, 60]).iter().enumerate() {
+            let correct_angle = (i * 90) + angle_degree;
+
+            let angle = (correct_angle as f32).to_radians();
+
+            let angle_rad = angles[(i * 4) + idx];
+            // radians
+            let point_start = Pos2::new(
+                circle_center.x + space_rad * angle.cos(),
+                circle_center.y - space_rad * angle.sin(),
+            );
+            draw_text_with_background_align(
+                p,
+                &FontId::proportional(10.5),
+                Color32::BLACK,
+                Color32::WHITE,
+                point_start,
+                Align2::CENTER_CENTER,
+                angle_rad,
+            );
+
+            // degree
+            let point_start = Pos2::new(
+                circle_center.x + space_degree * angle.cos(),
+                circle_center.y - space_degree * angle.sin(),
+            );
+            draw_text_with_background_align(
+                p,
+                &FontId::proportional(10.5),
+                Color32::BLACK,
+                Color32::WHITE,
+                point_start,
+                Align2::CENTER_CENTER,
+                format!("{correct_angle}°"),
+            );
+            // coords
+            let point_start = Pos2::new(
+                circle_center.x + space_coord * angle.cos(),
+                circle_center.y - space_coord * angle.sin(),
+            );
+            let (x, y) = match angle_degree {
+                0 => ("1", "0"),
+                30 => ("√3/2", "1/2"),
+                45 => ("√2/2", "√2/2"),
+                60 => ("1/2", "√3/2"),
+                _ => unreachable!(),
+            };
+
+            let (x, y) = match i {
+                0 => (x.to_string(), y.to_string()),
+                1 => (add_minus(y), x.to_string()),
+                2 => (add_minus(x), add_minus(y)),
+                3 => (y.to_string(), add_minus(x)),
+                _ => unreachable!(),
+            };
+            draw_text_with_background_align(
+                p,
+                &font_id,
+                Color32::BLACK,
+                Color32::WHITE,
+                point_start,
+                Align2::CENTER_CENTER,
+                format!("({x}, {y})"),
+            );
+        }
+    }
+}
+
+/// Add minus
+fn add_minus(s: &str) -> String {
+    if s == "0" {
+        "0".to_string()
+    } else {
+        format!("-{s}")
     }
 }
 
