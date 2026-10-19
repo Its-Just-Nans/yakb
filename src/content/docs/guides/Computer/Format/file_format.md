@@ -77,3 +77,5 @@ title: File format
 
 - <https://github.com/pdf-association>
 - <https://pdfa.org/>
+- <https://opensource.adobe.com/dc-acrobat-sdk-docs/pdfstandards/PDF32000_2008.pdf> - PDF 1.7
+- <https://pdfa.org/announcing-no-cost-access-to-iso-32000-2-pdf-2-0/> - PDF 2.0
