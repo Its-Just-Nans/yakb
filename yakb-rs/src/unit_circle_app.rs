@@ -28,8 +28,8 @@ pub(crate) struct UnitCircleApp {
     show_cos_hover: bool,
     /// show text
     show_texts: bool,
-    /// show point
-    show_point: bool,
+    /// show point on circle
+    show_point_on_circle: bool,
     /// show angle
     show_angles: bool,
 }
@@ -45,7 +45,7 @@ impl Default for UnitCircleApp {
             show_cos: true,
             show_cos_hover: true,
             show_texts: true,
-            show_point: true,
+            show_point_on_circle: true,
             show_angles: false,
         }
     }
@@ -79,7 +79,7 @@ impl UnitCircleApp {
                 ui.checkbox(&mut self.show_cos_hover, "Cos hover");
                 ui.checkbox(&mut self.show_texts, "Texts");
                 ui.checkbox(&mut self.show_angles, "Angles");
-                ui.checkbox(&mut self.show_point, "Point");
+                ui.checkbox(&mut self.show_point_on_circle, "Point on circle");
                 ui.checkbox(&mut self.running, "Animate");
                 ui.label("Speed");
                 if ui
@@ -117,7 +117,7 @@ impl UnitCircleApp {
             circle_center.y - radius * phase.sin(),
         );
 
-        if self.show_point {
+        if self.show_point_on_circle {
             let allowed_rect = 40.0;
             let resp = ui.interact(
                 Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
@@ -237,7 +237,7 @@ impl UnitCircleApp {
                 self.show_projections,
             );
         }
-        if self.show_point {
+        if self.show_point_on_circle {
             draw_angle(p, circle_center, radius, phase);
         }
         if self.show_texts {
