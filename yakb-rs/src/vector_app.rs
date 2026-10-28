@@ -140,9 +140,12 @@ impl VectorApp {
                 ui.add(egui::DragValue::new(&mut self.vec.y));
                 ui.colored_label(COLOR_VEC, ")");
             });
+            let mag1 = self.vec.length();
+            ui.label(format!("Magnitude: {mag1:.3}"));
+            ui.separator();
             ui.checkbox(&mut self.second_arrow.0, "Second vector");
             if self.second_arrow.0 {
-                let (_, pos, vec) = &mut self.second_arrow;
+                let (_, pos, vec2) = &mut self.second_arrow;
                 ui.horizontal(|ui| {
                     ui.colored_label(COLOR_SECOND, "pos: (");
                     ui.add(egui::DragValue::new(&mut pos.x));
@@ -151,10 +154,52 @@ impl VectorApp {
                 });
                 ui.horizontal(|ui| {
                     ui.colored_label(COLOR_SECOND, "vec: (");
-                    ui.add(egui::DragValue::new(&mut vec.x));
-                    ui.add(egui::DragValue::new(&mut vec.y));
+                    ui.add(egui::DragValue::new(&mut vec2.x));
+                    ui.add(egui::DragValue::new(&mut vec2.y));
                     ui.colored_label(COLOR_SECOND, ")");
                 });
+                let dot = self.vec.x * vec2.x + self.vec.y * vec2.y;
+                let mag2 = vec2.length();
+                let relationship = if mag1 == 0.0 || mag2 == 0.0 {
+                    "Undefined (zero vector)"
+                } else if dot.abs() < 1e-5 {
+                    "Perpendicular"
+                } else if dot > 0.0 {
+                    "Pointing in similar directions"
+                } else {
+                    "Pointing in opposite directions"
+                };
+                ui.label(format!("Dot product: {dot:.3}"));
+                ui.label(relationship);
+                ui.label(format!("Magnitude: {mag2:.3}"));
+
+                let angle = if mag1 > 0.0 && mag2 > 0.0 {
+                    (dot / (mag1 * mag2)).clamp(-1.0, 1.0).acos().to_degrees()
+                } else {
+                    0.0
+                };
+                ui.label(format!("Angle between: {angle:.2}°"));
+                let cross = self.vec.x * vec2.y - self.vec.y * vec2.x;
+                ui.label(format!("2D Cross product: {cross:.3}"));
+
+                ui.label(format!(
+                    "Distance between vectors: {:.3}",
+                    (self.vec.x - vec2.x).hypot(self.vec.y - vec2.y)
+                ));
+
+                ui.label(format!(
+                    "Sum: ({:.3}, {:.3})",
+                    self.vec.x + vec2.x,
+                    self.vec.y + vec2.y
+                ));
+
+                ui.label(format!(
+                    "Difference: ({:.3}, {:.3})",
+                    self.vec.x - vec2.x,
+                    self.vec.y - vec2.y
+                ));
+
+                ui.separator();
             }
         });
     }
