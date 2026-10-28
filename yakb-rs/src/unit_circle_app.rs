@@ -43,7 +43,7 @@ impl Default for UnitCircleApp {
             show_projections: true,
             show_sin: true,
             show_cos: true,
-            show_cos_hover: true,
+            show_cos_hover: false,
             show_texts: true,
             show_point_on_circle: true,
             show_angles: false,

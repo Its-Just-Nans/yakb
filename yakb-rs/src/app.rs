@@ -5,6 +5,7 @@ use bladvak::{
     eframe::{self, egui},
 };
 
+use crate::coordinates_app::CoordConverterApp;
 use crate::macros::define_animations;
 use crate::unit_circle_app::UnitCircleApp;
 use crate::vector_app::VectorApp;
@@ -33,6 +34,12 @@ define_animations! {
     BoatWind(BoatWindApp) {
         title: "Boat wind",
         name: "boat_wind",
+    },
+
+    /// Coord converter animation
+    Coords(CoordConverterApp) {
+        title: "Coordinates",
+        name: "coordinates",
     },
 }
 

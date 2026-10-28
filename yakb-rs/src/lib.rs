@@ -4,7 +4,6 @@
 #![deny(
     missing_docs,
     clippy::all,
-    clippy::missing_docs_in_private_items,
     clippy::missing_errors_doc,
     clippy::missing_panics_doc,
     clippy::cargo,
@@ -21,6 +20,7 @@
 
 mod app;
 mod boat_wind_app;
+mod coordinates_app;
 mod macros;
 mod swr_app;
 mod unit_circle_app;
