@@ -1,7 +1,7 @@
 #!/bin/bash
 
 npm install --force
-npm run build
+npm run build || exit 1
 
 
 mkdir -p dist/animations/
