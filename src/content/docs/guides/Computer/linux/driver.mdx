@@ -20,6 +20,26 @@ title: Linux driver
 - `JTAG/SWD` on the processor
 - QEMU (and `gdb`)
 
+## Allocation
+
+
+- Allocation functions sometimes needs flags
+  - `GFP_KERNEL`: allocation can block
+  - `GFP_ATOMIC`: allocation cannot block (for interruption control)
+  - Allocation can fails (returning NULL)
+  - Memory leak exists - `devm_` function can limit them
+- Allocation
+  - `kmalloc`, `kzalloc`, `kcalloc` using flags
+  - `kfree`, `kzfree`, `kzfree_sensitive`
+  - for device: `devm_k*alloc` (unalloc on device deletion) or `devm_kfree`
+- Page allocation (big content or continuous memory)
+  - `get_zeroed_page` (get blank page), `__get_free_page` (get page - not blank), `__get_free_pages` (get second order pages)
+  - `free_page`, `free_pages`: must free the same number of pages
+  - for device: `devm_get_free_pages`, `devm_free_pages`
+- Print function
+  - `kasprintf`: `asprintf` equivalent (need `kfree`)
+  - `devm_kasprintf`
+
 ## Links
 
 - https://github.com/ghaerr/elks
