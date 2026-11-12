@@ -1,0 +1,348 @@
+---
+title: Identifiers in 4G
+---
+
+
+import "./identifiers.css"
+
+export const Balise = ({children})=>{
+    return <div className="helper">
+        {children}
+    </div>
+};
+
+export const Spacing = ()=>{
+    return <div style={{height: "40px"}}></div>
+}
+
+export const Plmn = ()=>{
+    return     (<div className="accro plmn">
+            <p className="name">PLMN</p>
+            <p className="def">(Public Land Mobile Network) - 5-6 digits</p>
+            <div className="details">
+            </div>
+        </div>
+    )
+}
+
+export const MCC = ()=>{
+    return (<div className="accro mcc">
+                <p className="name">MCC</p>
+                <p className="def">(Mobile Country Code) - 3 digits</p>
+                <div className="details">
+                </div>
+            </div>)
+}
+
+export const MNC = ()=>{
+    return ( <div className="accro mnc">
+                <p className="name">MNC</p>
+                <p className="def">(Mobile Network Code) - 2-3 digits</p>
+                <div className="details">
+                opérateur dans un pays
+                </div>
+            </div>)
+}
+
+export const TAC = ({cls})=>{
+    return (
+        <div className={"accro tac " + cls}>
+            <p className="name">TAC</p>
+            <p className="def">(Tracking Area Code) - 16 bits</p>
+            <div className="details">
+                To indicate eNB to which Tracking Area the eNB belongs
+            </div>
+        </div>)
+}
+
+export const TAC2 = ({cls})=>{
+    return (
+        <div className={"accro tac2 " + cls}>
+            <p className="name">TAC</p>
+            <p className="def">(Type Allocation Code) - 8 digits</p>
+            <div className="details">
+            avant TAC (6 digits) + FAC (2 digits)
+            <br/>
+            FAC = Final Assembly Code
+            </div>
+        </div>)
+}
+
+export const MMEC = ()=>{
+    return (
+        <div className="accro mmec">
+            <p className="name">MMEC</p>
+            <p className="def">(MME Code) - 8 bits</p>
+            <div className="details"></div>
+        </div>
+    )
+}
+
+export const MTMSI = ({cls})=>{
+    return (
+        <div className={"accro mtmsi " + cls}>
+            <p className="name">M-TMSI</p>
+            <p className="def">(MME Temporary Mobile Subscriber Identity) - 32 bit</p>
+            <div className="details"></div>
+        </div>
+    )
+}
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">GUTI</p>
+            <p className="def">(Globally Unique TemporaryIdentity)</p>
+            <div className="details">
+            Identité temporaire attribué à l'utilisateur lors de la procédured'attachement
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <div className="accro">
+            <p className="name">GUMMEI</p>
+            <p className="def">(Globally Unique Mobility Management Entity Identifier)</p>
+            <div className="details"></div>
+        </div>
+        <MTMSI cls="noborder"/>
+    </div>
+    <div className="named">
+        <div style={{flex: "0.5", display: "flex"}}>
+            <Plmn />
+            <div className="accro">
+                <p className="name">MMEI</p>
+                <p className="def">(MME Identifier) - 24 bits</p>
+                <div className="details"></div>
+            </div>
+        </div>
+        <div className="accro mtmsi noborder" style={{flex: "0.5"}}>
+        </div>
+    </div>
+    <div className="named">
+        <div style={{flex: "0.5", display: "flex"}}>
+            <MCC />
+            <MNC />
+            <div className="accro">
+                <p className="name">MMEGI</p>
+                <p className="def">(MME Group ID) - 16 bits</p>
+                <div className="details"></div>
+            </div>
+            <MMEC />
+        </div>
+        <div className="accro mtmsi" style={{flex: "0.5"}}>
+        </div>
+    </div>
+</Balise>
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">S-TMSI</p>
+            <p className="def">(SAE-Temporary Mobile Subscriber Identity)</p>
+            <div className="details">
+            Used for paging
+
+            shortened form of the GUTI
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <MMEC />
+        <MTMSI />
+    </div>
+</Balise>
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">IMSI</p>
+            <p className="def">(International Mobile Subscriber Identity)</p>
+            <div className="details">
+            Identifiant de la carte SIM placé dans le terminal (numéro d"abonnement), il est unique dans le monde
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <Plmn />
+        <div className="accro noborder">
+            <p className="name">MSIN</p>
+            <p className="def">(Mobile Subscriber Identification Number)</p>
+            <div className="details">
+            Identifie de manière unique un client de l'opérateur
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <div style={{flex: "0.5", display: "flex"}}>
+            <MCC />
+            <MNC />
+        </div>
+        <div className="accro" style={{flex: "0.5"}}>
+
+        </div>
+    </div>
+</Balise>
+
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">TAI</p>
+            <p className="def">(Tracking Area Identity)</p>
+            <div className="details">
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <Plmn />
+        <TAC cls="noborder"/>
+    </div>
+    <div className="named">
+        <div style={{flex: "0.5", display: "flex"}}>
+            <MCC />
+            <MNC />
+        </div>
+        <div className="accro tac" style={{flex: "0.5"}}>
+        </div>
+    </div>
+</Balise>
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">ECGI</p>
+            <p className="def">(E-UTRAN Cell Global Identifier)</p>
+            <div className="details">
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <Plmn />
+        <div className="accro noborder">
+            <p className="name">ECI</p>
+            <p className="def">(E-UTRAN Cell Identifier)</p>
+            <div className="details">
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <div style={{flex: "0.5", display: "flex"}}>
+            <MCC />
+            <MNC />
+        </div>
+        <div className="accro" style={{flex: "0.5"}}>
+            
+        </div>
+    </div>
+</Balise>
+
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">MSISDN</p>
+            <p className="def">(Mobile Station International Subscriber Directory Number)</p>
+            <div className="details">
+            Numéro de téléphone associé à l'abonné
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <div className="accro">
+            <p className="name">CC</p>
+            <p className="def">(Country Code) - 1-3 digits</p>
+            <div className="details">
+            identifie le pays
+            </div>
+        </div>
+        <div className="accro">
+            <p className="name">NDC</p>
+            <p className="def">(National Destination Code) </p>
+            <div className="details">
+            identifie l'opérateur dans le pays
+            </div>
+        </div>
+        <div className="accro">
+            <p className="name">SN</p>
+            <p className="def">(Subscriber Number)</p>
+            <div className="details">
+            partie du numéro de téléphone identifiant l'abonné dans le réseau de l'opérateur
+            </div>
+        </div>
+    </div>
+</Balise>
+
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">IMEI</p>
+            <p className="def">(International MobileEquipment Identifier) - 14-15 digits</p>
+            <div className="details">
+            Identifie le hardware du terminal
+
+            (14 chiffres utiles + 1 chiffre de contrôle)
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <TAC2 />
+        <div className="accro">
+            <p className="name">SNR</p>
+            <p className="def">(Serial number) - 6 digits</p>
+            <div className="details">
+            </div>
+        </div>
+        <div className="accro">
+            <p className="name">CD</p>
+            <p className="def">(Check Digit) - 1 digit</p>
+            <div className="details">
+            Somme de controle calculé via la formule de Luhn.
+            </div>
+        </div>
+    </div>
+</Balise>
+
+<Spacing />
+
+<Balise>
+    <div className="named">
+        <div className="accro">
+            <p className="name">IMEISV</p>
+            <p className="def">(International Mobile EquipmentIdentifier Software Version)</p>
+            <div className="details">
+            Identifie la version du logicielle installée sur le terminal
+            </div>
+        </div>
+    </div>
+    <div className="named">
+        <TAC2 />
+        <div className="accro">
+            <p className="name">SNR</p>
+            <p className="def">(Serial number) - 6 digits</p>
+            <div className="details">
+            </div>
+        </div>
+        <div className="accro">
+            <p className="name">SVN</p>
+            <p className="def">(Software Version Number) - 2 digits</p>
+            <div className="details">
+            identifying the revision of the software installed on the phone
+            
+            99 is reserved
+            </div>
+        </div>
+    </div>
+</Balise>
