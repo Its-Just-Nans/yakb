@@ -5,11 +5,13 @@ use bladvak::{
     eframe::{self, egui},
 };
 
+use crate::boat_wind_app::BoatWindApp;
 use crate::coordinates_app::CoordConverterApp;
+use crate::eye_diagram_app::EyeDiagramApp;
 use crate::macros::define_animations;
+use crate::swr_app::WaveApp;
 use crate::unit_circle_app::UnitCircleApp;
 use crate::vector_app::VectorApp;
-use crate::{boat_wind_app::BoatWindApp, swr_app::WaveApp};
 
 define_animations! {
     /// SWR animation
@@ -17,29 +19,30 @@ define_animations! {
         title: "SWR",
         name: "swr",
     },
-
     /// Vector animation
     Vector(VectorApp) {
         title: "Vector",
         name: "vector",
     },
-
     /// Unit circle animation
     UnitCircle(UnitCircleApp) {
         title: "Unit Circle",
         name: "unit_circle",
     },
-
     /// Boat wind animation
     BoatWind(BoatWindApp) {
         title: "Boat wind",
         name: "boat_wind",
     },
-
     /// Coord converter animation
     Coords(CoordConverterApp) {
         title: "Coordinates",
         name: "coordinates",
+    },
+    /// Eye diagram animation
+    EyeDiagram(EyeDiagramApp) {
+        title: "Eye diagram",
+        name: "eye_diagram",
     },
 }
 
