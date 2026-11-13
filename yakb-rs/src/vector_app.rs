@@ -56,7 +56,7 @@ fn draw_arrow(
     let rect_start = Rect::from_center_size(*pos, Vec2::new(10.0, 10.0));
     let response_start = ui.interact(
         rect_start,
-        ui.id().with(("start", name)),
+        ui.scope_id().with(("start", name)),
         egui::Sense::drag(),
     );
     if response_start.dragged() {
@@ -64,7 +64,11 @@ fn draw_arrow(
     }
 
     let rect_end = egui::Rect::from_center_size(end, Vec2::new(10.0, 10.0));
-    let response_end = ui.interact(rect_end, ui.id().with(("end", name)), egui::Sense::drag());
+    let response_end = ui.interact(
+        rect_end,
+        ui.scope_id().with(("end", name)),
+        egui::Sense::drag(),
+    );
     if response_end.dragged() {
         *vec += response_end.drag_delta();
     }

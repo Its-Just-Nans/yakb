@@ -68,7 +68,7 @@ pub(crate) fn ui_settings(ui: &mut egui::Ui, add_contents: impl FnOnce(&mut egui
     } else {
         Color32::from_white_alpha(250)
     };
-    egui::Area::new(ui.id().with("scene_settings"))
+    egui::Area::new(ui.scope_id().with("scene_settings"))
         .fixed_pos(panel_top_left)
         .order(egui::Order::Foreground)
         .show(ui.ctx(), |ui| {

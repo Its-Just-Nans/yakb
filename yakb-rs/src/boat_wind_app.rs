@@ -127,7 +127,7 @@ impl BoatWindApp {
         let interact = Rect::from_center_size(end_boat_speed, Vec2::splat(35.0));
         let resp = ui.interact(
             interact,
-            ui.id().with("speed_drag"),
+            ui.scope_id().with("speed_drag"),
             Sense::click_and_drag(),
         );
         if is_debug {
@@ -210,7 +210,11 @@ impl BoatWindApp {
         );
 
         let interact = Rect::from_center_size(start_wind_boat_speed, Vec2::splat(35.0));
-        let resp = ui.interact(interact, ui.id().with("wind_drag"), Sense::click_and_drag());
+        let resp = ui.interact(
+            interact,
+            ui.scope_id().with("wind_drag"),
+            Sense::click_and_drag(),
+        );
         if is_debug {
             painter.debug_rect(interact, Color32::YELLOW, "zone");
         }

@@ -121,7 +121,7 @@ impl UnitCircleApp {
             let allowed_rect = 40.0;
             let resp = ui.interact(
                 Rect::from_center_size(point_on_circle, Vec2::splat(allowed_rect)),
-                ui.id().with("rect"),
+                ui.scope_id().with("rect"),
                 Sense::click_and_drag(),
             );
             if debug {
