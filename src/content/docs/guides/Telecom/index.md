@@ -97,7 +97,7 @@ To plot it, we take a period (either `T` or `2T`) and overlay the signal on that
 
 We can measure the horizontal distance, also called the "eye opening".
 
-<iframe src="https://yakb.n4n5.dev/animations/?animation=boat_wind" height="50vh" width="100%" style="height: 50vh !important"></iframe>
+<iframe src="https://yakb.n4n5.dev/animations/?animation=eye_diagram" height="50vh" width="100%" style="height: 50vh !important"></iframe>
 
 ---
 
