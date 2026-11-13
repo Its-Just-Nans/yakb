@@ -1,7 +1,7 @@
 //! Eye diagram
 
 use bladvak::{ErrorManager, eframe::egui};
-use egui::{Align2, Color32, FontId, Pos2, Rect, Sense, Stroke, Vec2};
+use egui::{Align2, Color32, FontId, Pos2, Rect, ScrollArea, Sense, Stroke, Vec2};
 
 /// Eye Diagram app
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
