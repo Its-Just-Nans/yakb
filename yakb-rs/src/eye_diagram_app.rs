@@ -79,7 +79,9 @@ fn draw_grid(painter: &egui::Painter, plot: Rect, divisions: usize, labels: &[(&
 impl EyeDiagramApp {
     pub(crate) fn show(&mut self, ui: &mut egui::Ui, _error_manager: &mut ErrorManager) {
         egui::CentralPanel::default().show(ui, |ui| {
-            self.ui(ui);
+            ScrollArea::vertical().show(ui, |ui| {
+                self.ui(ui);
+            });
         });
     }
 
