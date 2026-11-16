@@ -23,6 +23,7 @@ mod boat_wind_app;
 mod coordinates_app;
 mod eye_diagram_app;
 mod macros;
+mod motion_calculator_app;
 mod swr_app;
 mod unit_circle_app;
 mod utils;

@@ -9,6 +9,7 @@ use crate::boat_wind_app::BoatWindApp;
 use crate::coordinates_app::CoordConverterApp;
 use crate::eye_diagram_app::EyeDiagramApp;
 use crate::macros::define_animations;
+use crate::motion_calculator_app::MotionCalculatorApp;
 use crate::swr_app::WaveApp;
 use crate::unit_circle_app::UnitCircleApp;
 use crate::vector_app::VectorApp;
@@ -43,6 +44,11 @@ define_animations! {
     EyeDiagram(EyeDiagramApp) {
         title: "Eye diagram",
         name: "eye_diagram",
+    },
+    /// Motion Calculator App
+    MotionCalculator(MotionCalculatorApp) {
+        title: "Motion calculator",
+        name: "motion_calculator",
     },
 }
 
