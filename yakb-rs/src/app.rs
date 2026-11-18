@@ -1,7 +1,7 @@
 //! Yakb app
 
 use bladvak::{
-    BladvakApp, ErrorManager,
+    BladvakApp, ErrorManager, app::BladvakPanel,
     eframe::{self, egui},
 };
 
@@ -95,7 +95,12 @@ impl BladvakApp<'_> for YakbApp {
         "https://github.com/Its-Just-Nans/yakb".to_string()
     }
 
-    fn central_panel(&mut self, ui: &mut egui::Ui, error_manager: &mut bladvak::ErrorManager) {
+    fn central_panel(
+        &mut self,
+        ui: &mut egui::Ui,
+        error_manager: &mut bladvak::ErrorManager,
+        _panel_list: &mut [std::boxed::Box<dyn BladvakPanel<App = Self>>],
+    ) {
         self.animation.show(ui, error_manager);
     }
 
