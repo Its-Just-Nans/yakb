@@ -3,6 +3,12 @@
     <marker id="head" markerWidth="6" markerHeight="6" refX="3.5" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L6,3 L0,6 Z" fill="#1ea0e6"/>
     </marker>
+    <marker id="head-green" markerWidth="6" markerHeight="6" refX="3.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#00e000"/>
+    </marker>
+    <marker id="head-wind" markerWidth="6" markerHeight="6" refX="3.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#e00000"/>
+    </marker>
     <g id="boat">
       <path d="M0,-95 C25,-60 35,0 28,70 L28,95 L-28,95 L-28,70 C-35,0 -25,-60 0,-95 Z" fill="#e8e2c0" stroke="#555" stroke-width="2"/>
       <path d="M0,-92 C14,-62 19,-25 14,5 L-14,5 C-19,-25 -14,-62 0,-92 Z" fill="#2b3a9e"/>
@@ -13,8 +19,9 @@
   </defs>
   <rect width="960" height="910" fill="#fff"/>
   <path d="M340,80 H382 M361,59 V101" stroke="#000" stroke-width="3" fill="none"/>
-  <text x="283" y="120" font-size="42" fill="#000">2</text>
-  <line x1="363" y1="137" x2="363" y2="762" stroke="#e0112b" stroke-width="4"/>
+  <text x="100" y="220" font-size="42" fill="#e00000">Wind</text>
+  <line x1="150" y1="80" x2="150" y2="170" stroke="#e00000" stroke-width="4" marker-end="url(#head-wind)"/>
+  <line x1="363" y1="762" x2="363" y2="137" stroke="#00e000" stroke-width="4" marker-end="url(#head-green)"/>
   <text x="95" y="390" font-size="40" fill="#111">VMG : 4.9 Nds</text>
   <text x="95" y="626" font-size="40" fill="#000">VMG : 4.9 Nds</text>
   <g stroke="#000" stroke-width="4">
