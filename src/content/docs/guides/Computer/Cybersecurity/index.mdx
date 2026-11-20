@@ -3,33 +3,107 @@ title: Cybersecurity
 description: Cyber Security
 ---
 
+## Security properties
+
+- Confidentiality - a private message
+- Integrity - the correct message
+- Authentification - the correct person
+- Disponibility - the correct time
+- Tracability - the correct logs
+
 ## Material attack
 
-- Side channel attack (timing attack, power analysis, electromagnetic analysis)
-- Intrusive attack (microprobe to record the internal state of the chip)
-- Material bug (0-day attack)
-- Sying on memory
-- Peripheral attack (e.g., USB attack, Thunderbolt, Keyboard, Mouse, Network card chip, battery chip, etc.)
-- Attack on optimization (e.g., Spectre and Meltdown)
+- Side Channel Attack (SCA)
+  - Timing attack
+  - Power Analysis (DPA - difference, CPA - correlation, VPA - variance, MIA - mutual information)
+  - Electromagnetic analysis
+  - Caching attack
+- Intrusive attack
+  - Circuit rewiring
+  - microprobe to record the internal state of the chip
+  - Fault injection
+  - Sying on memory (Cold Boot Attack)
+  - evil maid attack
+- Material bug
+  - Instruction bug (Pentium F0 0F C7 C8)
+  - 0-day attack
+- Attack on optimization
+  - Meltdown (out of order execution)
+  - Spectre (branch prediction)
+- Peripheral attack
+  - Ports attacks: USB, Thunderbolt (Thunderstrike), Keyboard, Mouse
+  - USB Killer
+  - Poison tap: traffic in redirected in the peripheral (fake USB to Ethernet)
+  - compromised peripheral  - Network card chip (with RMCP - remote management and control protocol), battery chip
 
 ## OS Security
 
-- rings
-- sandbox
-- virtual memory
+- Protection rings
+- virtual memory (MMU - memory management unit)
+  - MMU cache with a Translation Lookaside Buffer
+    - MMU known the first level page and checks it
+    - MMU triggers an expection and the OS load the entry
+  - When a proccess checks a wrong address, the OS can handle the execption
+  - SWAP memory
 - Users isolation (password, key/chip, iris/fingerprint, etc.)
-    - Password attack (e.g., brute-force attack, dictionary attack, rainbow table attack, etc.)
-    - Password defense (e.g., salt, key stretching, unique password, etc.)
-- DAC (Discretionary Access Control) - permissions
-- MAC (Mandatory Access Control) - deny by default authorize on demand - SELinux, AppArmor, etc.
+    - Password attack
+      - brute-force
+      - dictionary
+      - rainbow tables
+    - Password defense
+      - salting
+      - key stretching (more time to decrypt)
+      - one time password
+- DAC (Discretionary Access Control) - file permissions
+- MAC (Mandatory Access Control) - deny by default authorize on demand
+  - SELinux
+  - TOMOYO Linux
+  - Smack (Simplified Mandatory Access Control Kernel)
+  - AppArmor
+- Virtualization
+  - Hypervisor
+    - Bare-Metal (Hyper-V)
+    - Hosted (VirtualBox, VMWare)
+  - Lightweight
+    - Containers
+    - MicroVMs
+  - Emulation
+  - Sandboxing
+  - Ressource specific
+    - Network (NVF - network functions virtualization, SDN - software defined network)
+    - Desktop (VDI)
+    - Storage
 
 ## Software Security
 
-- Buffer overflow attack (e.g., Heartbleed)
-- User input attack (e.g., SQL injection, XSS, etc.)
+- Buffer overflow attack
+  - Heartbleed (OpenSSL)
+  - Return-to-libc
+  - Protection
+    - Special C function with size (`strcpy` is `strncpy`)
+    - StackGuard (a random terminator is written)
+    - Non exectuable heap
+    - Address Space Layout Randomization
+    - Dynamically check for overflow
+- User input attack
+  - SQL injection
+    - Quote injection
+        - `SELECT * FROM users WHERE login=’<login>’ AND password=’<password>’`
+        - Input: `x’ OR 'a'='a`
+        - `SELECT * FROM users WHERE login=’admin’ AND password=’x’ OR ’a’=’a’`
+        - `SELECT * FROM users WHERE login=’admin’`
+    - Comment injection
+      - `SELECT * FROM products WHERE id=’<id>’`
+      - Input `x’; DELETE FROM products; - -`
+    - Developper must use the correct API (with variable bindings)
+  - XSS
+    - Reflected XSS
+    - Stored XSS (the XSS is saved in the server and displayed on the victim)
+    - DOM-Based XSS (client only)
 - Man-in-the-middle attack (e.g., ARP spoofing, DNS spoofing, etc.)
 - Misusage attack (CSRF: Cross-Site Request Forgery)
 - Hardcoded password attack
+  - Firmware with hardcoded default
 
 ## Tools
 
