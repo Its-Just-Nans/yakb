@@ -2,6 +2,98 @@
 title: Linux driver
 ---
 
+## Linux driver developpement
+
+- Developpement at the kernel level
+  - crutial security level
+  - API can change between kernel versions
+  - low level
+    - no standard C library
+    - no floating point
+    - portability (endianness)
+    - restricted heap
+- Interface with the hardware
+  - model discovery
+  - interuptions
+  - communication with the hardware abstraction in memory
+- Interface with the kernel
+  - module separation and abstraction
+  - allocations
+  - concurrency (access)
+  - debug tools
+- Interface with the application
+  - create a file abstraction
+  - framework developpement (or library)
+  - handling ordering and waits between differents applications
+
+## Alternative to kernel developpement
+
+- Using a generic driver (USB Human Interface Device)
+- Using a direct access from user space
+  - using a library (libusb)
+  - using a file abstraction (`/dev/`, for example `/dev/i2c-X`)
+- Using userpace I/O Driver
+  - a tiny kernel driver
+  - most of the code in user space
+
+## Driver developpement
+
+- Driver can be
+  - Compiled during kernel compilation
+  - Added dynamically to the kernel
+
+## Basic example
+
+```c
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+
+// headers contains macros and functions declarations
+// No standard libc stdio
+
+
+// __init means that we can discord the code once charged
+static int __init first_init(void)
+{
+    pr_info("Triggered when module is loaded !\n");
+    // initialize the module
+    return 0; // < 0 when error
+}
+
+// __exit means that this code should not be loaded when static compilation OR the kernel module loading is disabled
+static void __exit first_exit(void)
+{
+    pr_info("Triggered when module is unloaded \n");
+    // unitiliaza the module (clear the allocations)
+}
+
+module_init(first_init); // this macro bind the init to the correct function
+module_exit(first_exit); // this macro bind the exit to the correct function
+
+
+MODULE_LICENSE("GPL"); // is license is different than GPL the module is will have a restricted access to functions
+// can be "license+GPL"
+MODULE_DESCRIPTION("Module desc");
+MODULE_AUTHOR("Name and email");
+```
+
+```
+ifneq ($(KERNELRELEASE) ,)
+# second pass
+# kbuild part of makefile
+obj-m := first.o
+else
+# first pass
+KDIR ?= /lib/modules/`uname -r`/build
+
+default:
+    # call make in the KDIR directory and M contains the path
+    # this make will trigger again but with the kernel build system
+    $(MAKE) -C $(KDIR) M=$$PWD
+endif
+```
+
 ## Kernel modules tools
 
 - `modinfo <module_name|module.ko>` provides information about a module (author, description, license, kernel version it was compiled for, list of accepted parameters, etc.).

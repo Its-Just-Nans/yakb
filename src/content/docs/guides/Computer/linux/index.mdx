@@ -50,3 +50,19 @@ Examples of bootloader:
 - Filesystem Hierarchy Standard - https://refspecs.linuxfoundation.org/fhs.shtml
 
 - Linux Standard Base - https://refspecs.linuxfoundation.org/lsb.shtml
+
+
+## Kernel space and user space
+
+- kernel space handles
+  - processus (processor time - multitasking)
+  - memory
+  - peripheral
+  - abstraction of hardware
+  - forces the applications to use it
+- during interuptions the processor switch to kernel space
+  - interuptions from hardware (event, clock)
+  - interuptions from applications (syscall)
+  - interuptions from applications error (page fault, divide by 0)
+
+Most of the time, syscalls are triggered by applications by using standard library (GNU C library)
