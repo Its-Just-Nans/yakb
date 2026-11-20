@@ -132,6 +132,21 @@ endif
   - `kasprintf`: `asprintf` equivalent (need `kfree`)
   - `devm_kasprintf`
 
+## Commons errors
+
+- In embed developpement
+  - No updates possible
+  - Find a way to make an update
+  - Find a way to make any update failure recoverable
+  - low level - error during bootloader update
+  - high level - error during library/dependency update
+- Low randomness at startup of the kernel
+- No real-time (we don't know the current time at startup)
+  - use an external dependency (GNSS, NTP, or hardware)
+  - Incorrect real time
+- Incorrect License usage and code redistribution
+- Poor security
+
 ## Links
 
 - https://github.com/ghaerr/elks - Embeddable Linux Kernel Subset
