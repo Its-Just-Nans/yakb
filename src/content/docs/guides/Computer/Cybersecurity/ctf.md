@@ -2,6 +2,8 @@
 title: CTF
 ---
 
+CTF stands for Capture the Flag, a cybersecurity competition where participants solve security challenges to find hidden pieces of data—called "flags"—to earn points.
+
 ## Cheatsheet
 
 - Check if there are `.git` folder
